@@ -1,10 +1,14 @@
 # Here for CLion's autocompletion
 CMAKE_MINIMUM_REQUIRED(VERSION 3.13)
-PROJECT(dummy)
+PROJECT(main)
 
 SET(CMAKE_CXX_STANDARD 17)
+
 INCLUDE_DIRECTORIES(include)
+INCLUDE_DIRECTORIES(shape/include)
+INCLUDE_DIRECTORIES(game/include)
 
+ADD_SUBDIRECTORY(${PROJECT_SOURCE_DIR}/shape)
+ADD_SUBDIRECTORY(${PROJECT_SOURCE_DIR}/game)
 
-
-add_executable(tangram  src/main.cpp)
+add_custom_target(tangram COMMAND make)

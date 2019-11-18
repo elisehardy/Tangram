@@ -1,3 +1,5 @@
 .idea/
 *.o
 cmake-build-debug/
+cmake_install.cmake
+CMakeFiles/

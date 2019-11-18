@@ -1,4 +1,4 @@
-#include "ShapeSet.hpp"
+#include "../include/ShapeSet.hpp"
 
 
 using namespace Tangram::Shape;

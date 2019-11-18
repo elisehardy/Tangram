@@ -1,34 +1,35 @@
-CC = g++
-FLAGS = -g -O2 -Wall -Wextra -Werror -Wfatal-errors -Wshadow -Weffc++ -Wpointer-arith -std=c++11
-IGNORED = -Wno-shadow -Wno-unused-parameter
-LIB = -lm -lMLV
-CFLAGS = $(FLAGS) $(IGNORED) $(LIB)
+exec = tangram
+modules = shape game
 
-src = src/
-bin = bin/
-header = include/
+################################################################################
+
+export CC = g++
+export FLAGS = -g -O2 -Wall -Wextra -Werror -Wfatal-errors -Weffc++ -Wpointer-arith -std=c++17
+export IGNORED = -Wno-unused-parameter
+export LIB = -lm -lMLV
+export CFLAGS = $(FLAGS) $(IGNORED) $(LIB)
+
+export src = src/
+export bin = bin/
+export header = include/
 
 vpath %.cpp $(src)
 vpath %.hpp $(header)
 vpath %.o $(bin)
 
-################################################################################
-
 # Create bin if it does not exists
 $(shell mkdir -p $(bin))
+cleansubbin = $(addsuffix /bin/*, $(modules))
 
 ################################################################################
 
-all : tangram
+all : $(modules)
 
-.PHONY: clean all info
+.PHONY: clean all info $(modules)
 
 
-tangram: Set.o Game.o Polygon.o Square.o Triangle.o Parallelogram.o
-	true
-
-%.o: %.cpp %.hpp Polygon.hpp
-	$(CC) -c $< -o $@  $(CFLAGS)
+$(modules):
+	$(MAKE) -C $@
 
 
 info:
@@ -40,5 +41,4 @@ info:
 
 
 clean:
-	rm -f rm $(exec)
-	rm -Rf $(bin)*
+	rm -f rm $(exec) $(bin)* $(cleansubbin)
