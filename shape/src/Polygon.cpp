@@ -21,7 +21,7 @@ Polygon::~Polygon() {
 
 
 bool Polygon::operator==(const Polygon &other) const {
-    std::vector<Point> v1 = this->getPoints(), v2 = other.getPoints();
+    std::vector <Point> v1 = this->getPoints(), v2 = other.getPoints();
     return std::is_permutation(v1.begin(), v1.end(), v2.begin());
 }
 
@@ -58,13 +58,14 @@ void Polygon::move(Point p) {
 
 
 void Polygon::rotate(int8_t n) {
-    this->angle = (this->angle + n % ANGLE_STEP_PER_CYCLE * ANGLE_STEP) % 360;
+    this->angle = (this->angle + n % ANGLE_STEP_PER_CYCLE
+    * ANGLE_STEP) % 360;
     this->update();
 }
 
 
 void Polygon::draw() const {
-    std::vector<Point> points = this->getPoints();
+    std::vector <Point> points = this->getPoints();
     uint8_t size = points.size(), i = 0;
     int32_t X[size], Y[size];
     

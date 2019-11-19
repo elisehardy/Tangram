@@ -7,8 +7,7 @@
 
 #include <MLV/MLV_window.h>
 
-class State;
-
+#include "State.hpp"
 
 namespace Tangram::Game {
     

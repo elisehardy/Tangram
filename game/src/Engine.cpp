@@ -1,18 +1,17 @@
 #include "../include/Engine.hpp"
-#include "../include/State.hpp"
 
 
-using namespace Tangram::Game;
+using namespace Tangram;
 
 
-void Engine::init() {
+void Game::Engine::init() {
     MLV_create_window("Tangram", nullptr, WIDTH, HEIGHT);
     
     this->running = true;
 }
 
 
-void Engine::cleanup() {
+void Game::Engine::cleanup() {
     while (!this->states.empty()) {
         this->states.back()->cleanup();
         this->states.pop_back();
@@ -22,7 +21,7 @@ void Engine::cleanup() {
 }
 
 
-void Engine::pushState(State *state) {
+void Game::Engine::pushState(State *state) {
     if (!this->states.empty()) {
         this->states.back()->pause();
     }
@@ -32,7 +31,7 @@ void Engine::pushState(State *state) {
 }
 
 
-void Engine::popState() {
+void Game::Engine::popState() {
     if (!this->states.empty()) {
         this->states.back()->cleanup();
         this->states.pop_back();
@@ -44,21 +43,21 @@ void Engine::popState() {
 }
 
 
-void Engine::handleEvents() {
+void Game::Engine::handleEvents() {
     this->states.back()->handleEvents();
 }
 
 
-void Engine::update() {
+void Game::Engine::update() {
     this->states.back()->update();
 }
 
 
-void Engine::draw() {
+void Game::Engine::draw() {
     this->states.back()->draw();
 }
 
 
-bool Engine::over() {
+bool Game::Engine::over() {
     return !this->running;
 }

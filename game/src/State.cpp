@@ -1,8 +1,7 @@
 #include "../include/State.hpp"
 
-namespace Tangram::Game;
+using namespace Tangram::Game;
 
 
-void changeState(Engine *engine, State *state) {
-    engine->changeState(state);
+void State::changeState() {
 }

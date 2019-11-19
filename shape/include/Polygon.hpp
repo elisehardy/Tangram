@@ -10,6 +10,9 @@
 #include "Point.hpp"
 
 
+#define ANGLE_STEP 20
+#define ANGLE_STEP_PER_CYCLE 360 / ANGLE_STEP
+
 namespace Tangram::Shape {
     
     typedef enum {
@@ -17,9 +20,6 @@ namespace Tangram::Shape {
         MEDIUM = SMALL * 2,
         LARGE = MEDIUM * 2
     } Size;
-    
-    uint8_t ANGLE_STEP = 20;
-    uint8_t ANGLE_STEP_PER_CYCLE = 360 / ANGLE_STEP;
     
     
     
@@ -60,7 +60,7 @@ namespace Tangram::Shape {
             /**
              * @returns A vector of the points representing the polygon.
              */
-            virtual std::vector<Point> getPoints() const = 0;
+            virtual std::vector <Point> getPoints() const = 0;
             
             /**
              * This method is called at the end of Polygon's constructor.
