@@ -19,7 +19,8 @@ namespace Tangram::Shape {
             Point p4;
         
         public:
-            using Polygon::Polygon;
+            Parallelogram(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color);
+            Parallelogram(Point center, uint8_t angle, Size size, MLV_Color color);
             ~Parallelogram();
             std::vector<Point> getPoints() const override;
             void init() override;

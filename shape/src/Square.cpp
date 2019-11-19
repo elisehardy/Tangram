@@ -4,6 +4,18 @@
 using namespace Tangram::Shape;
 
 
+Square::Square(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) : Polygon(x, y, angle, size, color),
+                                                                                  p1(Point({0, 0})),
+                                                                                  p2(Point({0, 0})),
+                                                                                  p3(Point({0, 0})),
+                                                                                  p4(Point({0, 0})) {}
+
+Square::Square(Point center, uint8_t angle, Size size, MLV_Color color) : Polygon(center, angle, size, color),
+                                                                          p1(Point({0, 0})),
+                                                                          p2(Point({0, 0})),
+                                                                          p3(Point({0, 0})),
+                                                                          p4(Point({0, 0})) {}
+
 void Square::init() {
     this->update();
 }
@@ -14,7 +26,7 @@ void Square::update() {
     Point center = this->getCenter();
     Size size = this->getSize();
     Point ul = {-size, -size}, ur = {size, -size}, bl = {-size, size}, br = {size, size};
-    
+
     this->p1 = (center + ur).rotate(angle);
     this->p2 = (center + ul).rotate(angle);
     this->p3 = (center + bl).rotate(angle);
@@ -22,7 +34,7 @@ void Square::update() {
 }
 
 
-std::vector<Point> Square::getPoints() const {
+std::vector <Point> Square::getPoints() const {
     return {this->p1, this->p2, this->p3, this->p4};
 }
 

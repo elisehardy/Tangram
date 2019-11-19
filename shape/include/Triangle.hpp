@@ -14,7 +14,8 @@ namespace Tangram::Shape {
             Point p3;
         
         public:
-            using Polygon::Polygon;
+            Triangle(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color);
+            Triangle(Point center, uint8_t angle, Size size, MLV_Color color);
             ~Triangle();
             std::vector<Point> getPoints() const override;
             void init() override;

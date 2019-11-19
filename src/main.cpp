@@ -1,8 +1,16 @@
 #include <MLV/MLV_all.h>
 #include <iostream>
 #include "../shape/include/Point.hpp"
+#include "../shape/include/Triangle.hpp"
+
+using namespace Tangram::Shape;
+
 int main(int argc, char **argv) {
-    Tangram::Shape::Point a = {1, 2};
-    std::cout << a.first << " " << a.second << std::endl;
+    Triangle t = Triangle(Point({0, 0}), 0, MEDIUM, MLV_COLOR_RED);
+    Point a = {-4, 3};
+
+    for (Point &p: t.getPoints()) {
+        std::cout << p << std::endl;
+    }
     return 0;
 }

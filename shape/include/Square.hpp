@@ -15,7 +15,8 @@ namespace Tangram::Shape {
             Point p4;
         
         public:
-            using Polygon::Polygon;
+            Square(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color);
+            Square(Point center, uint8_t angle, Size size, MLV_Color color);
             ~Square();
             std::vector<Point> getPoints() const override;
             void init() override;
