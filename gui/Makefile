@@ -1,4 +1,4 @@
-targets = Engine.o main.o
+targets = Button.o
 
 ################################################################################
 
@@ -15,10 +15,7 @@ vpath %.o $(bin)
 
 all: $(objects)
 
-bin/Engine.o: src/Engine.cpp include/Engine.hpp
-	$(CC) -c $< -o $@  $(CFLAGS)
-
-bin/%.o: %.cpp
+bin/%.o: %.cpp %.hpp Drawable.hpp
 	$(CC) -c $< -o $@  $(CFLAGS)
 
 clean:

@@ -9,7 +9,7 @@
 
 namespace Tangram::Shape {
     
-    class ShapeSet : private std::vector<Polygon> {
+    class ShapeSet : public Drawable, private std::vector<Polygon> {
         
         public:
             

@@ -1,4 +1,4 @@
-targets = Engine.o main.o
+targets = State.o Menu.o
 
 ################################################################################
 
@@ -15,10 +15,10 @@ vpath %.o $(bin)
 
 all: $(objects)
 
-bin/Engine.o: src/Engine.cpp include/Engine.hpp
+bin/State.o: src/State.cpp include/StateAbstract.hpp ../game/include/Engine.hpp
 	$(CC) -c $< -o $@  $(CFLAGS)
 
-bin/%.o: %.cpp
+bin/%.o: %.cpp %.hpp StateAbstract.hpp
 	$(CC) -c $< -o $@  $(CFLAGS)
 
 clean:

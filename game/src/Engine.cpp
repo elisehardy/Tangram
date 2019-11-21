@@ -21,7 +21,7 @@ void Game::Engine::cleanup() {
 }
 
 
-void Game::Engine::pushState(State *state) {
+void Game::Engine::pushState(State::StateAbstract*state) {
     if (!this->states.empty()) {
         this->states.back()->pause();
     }

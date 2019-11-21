@@ -1,5 +1,5 @@
 exec = tangram
-modules = shape game
+modules = shape game state
 
 ################################################################################
 
@@ -27,16 +27,11 @@ subbins = $(addsuffix /bin/*, $(modules))
 
 all: $(modules) tangram
 
-tangram: src/main.cpp $(modules)
-	gcc $< $(subbins) -o $@ $(LIB)
-
-
+tangram: $(modules)
+	gcc $(subbins) -o $@ $(LIB)
 
 $(modules):
 	$(MAKE) -C $@
-
-bin/%.o: %.cpp %.hpp
-	$(CC) -c $< -o $@  $(CFLAGS)
 
 
 info:

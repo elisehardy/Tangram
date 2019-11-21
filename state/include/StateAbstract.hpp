@@ -1,16 +1,19 @@
 #ifndef STATE_HPP
 #define STATE_HPP
 
+
+
 class Engine;
 
-namespace Tangram::Game {
+namespace Tangram::State {
     
-    class State {
-        private:
+    class StateAbstract {
+        protected:
             /**
-             * Destructor
+             * Making constructor protected since States will be singletons.
              */
-            virtual ~State() = 0;
+            StateAbstract() {
+            };
         
         public:
             virtual void init() = 0;

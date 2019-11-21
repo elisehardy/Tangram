@@ -1,13 +1,11 @@
 #ifndef POLYGON_HPP
 #define POLYGON_HPP
 
-#include <cstdint>
 #include <vector>
 #include <algorithm>
-#include <MLV/MLV_color.h>
-#include <MLV/MLV_shape.h>
 
 #include "Point.hpp"
+#include "../../gui/include/Drawable.hpp"
 
 
 #define ANGLE_STEP 20
@@ -23,7 +21,7 @@ namespace Tangram::Shape {
     
     
     
-    class Polygon {
+    class Polygon : public Tangram::GUI::Drawable {
         
         private:
             Point center;    /**< Coordinates of the center of the shape. */
@@ -151,10 +149,7 @@ namespace Tangram::Shape {
              */
             void rotate(int8_t n);
             
-            /**
-             * Draw this polygon on the screen.
-             */
-            void draw() const;
+            void draw() const override;
     };
 };
 

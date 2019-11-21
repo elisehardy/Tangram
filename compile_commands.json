@@ -1,0 +1,200 @@
+[
+ {
+  "directory": "/home/qcoumes/git/Tangram/shape",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/Point.cpp",
+   "-o",
+   "bin/Point.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/Point.cpp"
+ },
+ {
+  "directory": "/home/qcoumes/git/Tangram/shape",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/Polygon.cpp",
+   "-o",
+   "bin/Polygon.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/Polygon.cpp"
+ },
+ {
+  "directory": "/home/qcoumes/git/Tangram/shape",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/Square.cpp",
+   "-o",
+   "bin/Square.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/Square.cpp"
+ },
+ {
+  "directory": "/home/qcoumes/git/Tangram/shape",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/Triangle.cpp",
+   "-o",
+   "bin/Triangle.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/Triangle.cpp"
+ },
+ {
+  "directory": "/home/qcoumes/git/Tangram/shape",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/Parallelogram.cpp",
+   "-o",
+   "bin/Parallelogram.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/Parallelogram.cpp"
+ },
+ {
+  "directory": "/home/qcoumes/git/Tangram/game",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/Engine.cpp",
+   "-o",
+   "bin/Engine.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/Engine.cpp"
+ },
+ {
+  "directory": "/home/qcoumes/git/Tangram/game",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/main.cpp",
+   "-o",
+   "bin/main.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/main.cpp"
+ },
+ {
+  "directory": "/home/qcoumes/git/Tangram/state",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/State.cpp",
+   "-o",
+   "bin/State.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/State.cpp"
+ },
+ {
+  "directory": "/home/qcoumes/git/Tangram/state",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/Menu.cpp",
+   "-o",
+   "bin/Menu.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/Menu.cpp"
+ }
+]

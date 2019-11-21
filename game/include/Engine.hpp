@@ -6,8 +6,9 @@
 #include <cstdint>
 
 #include <MLV/MLV_window.h>
+#include <MLV/MLV_window.h>
 
-#include "State.hpp"
+#include "../../state/include/StateAbstract.hpp"
 
 namespace Tangram::Game {
     
@@ -16,13 +17,13 @@ namespace Tangram::Game {
     
     class Engine {
         private:
-            std::vector<State *> states;
+            std::vector<Tangram::State::StateAbstract*> states;
             bool running;
     
         public:
             void init();
             void cleanup();
-            void pushState(State *state);
+            void pushState(Tangram::State::StateAbstract*state);
             void popState();
             void handleEvents();
             void update();
