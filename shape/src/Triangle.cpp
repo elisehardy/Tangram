@@ -3,15 +3,22 @@
 
 using namespace Tangram::Shape;
 
-Triangle::Triangle(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) : Polygon(x, y, angle, size, color),
-                                                                                      p1(Point({0, 0})),
-                                                                                      p2(Point({0, 0})),
-                                                                                      p3(Point({0, 0})) {}
 
-Triangle::Triangle(Point center, uint8_t angle, Size size, MLV_Color color) : Polygon(center, angle, size, color),
-                                                                              p1(Point({0, 0})),
-                                                                              p2(Point({0, 0})),
-                                                                              p3(Point({0, 0})) {}
+Triangle::Triangle(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) :
+        Polygon(x, y, angle, size, color) {
+    this->init();
+}
+
+
+Triangle::Triangle(Point center, uint8_t angle, Size size, MLV_Color color) :
+        Polygon(center, angle, size, color) {
+    this->init();
+}
+
+
+Triangle::~Triangle() {
+}
+
 
 void Triangle::init() {
     this->update();
@@ -23,7 +30,6 @@ void Triangle::update() {
     Point center = this->getCenter();
     Size size = this->getSize();
     Point ul = {-size, -size}, ur = {size, -size}, bl = {-size, size};
-
     this->p1 = (center + ur).rotate(angle);
     this->p2 = (center + ul).rotate(angle);
     this->p3 = (center + bl).rotate(angle);
@@ -40,6 +46,7 @@ int crossProductAG(Point v1, Point v2) {
     return {v1.first * v2.second - v1.second * v2.first};
 }
 
+
 bool Triangle::contains(uint16_t x, uint16_t y) const {
     // TODO
     Point Vab = p1.getVector(this->p2);
@@ -53,6 +60,7 @@ bool Triangle::contains(uint16_t x, uint16_t y) const {
     int crossC = crossProductAG(Vca, Vcx);
     return ((crossA >= 0 && crossB >= 0 && crossC >= 0) || (crossA < 0 && crossB < 0 && crossC < 0));
 }
+
 
 bool Triangle::contains(const Tangram::Shape::Point &p) const {
     return this->contains(p.first, p.second);

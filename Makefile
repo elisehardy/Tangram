@@ -5,7 +5,7 @@ modules = shape game
 
 export CC = g++
 export FLAGS = -g -O2 -Wall -Wextra -Werror -Wfatal-errors -Weffc++ -Wpointer-arith -std=c++17
-export IGNORED = -Wno-unused-parameter
+export IGNORED = -Wno-unused-parameter -Wno-effc++
 export LIB = -lm -lstdc++ `pkg-config --libs-only-other --libs-only-L MLV` `pkg-config --libs-only-l MLV`
 export CFLAGS = $(FLAGS) $(IGNORED)
 
@@ -27,8 +27,8 @@ cleansubbin = $(addsuffix /bin/*, $(modules))
 
 all: $(modules) tangram
 
-tangram: src/main.cpp
-	gcc $^ $(cleansubbin) -o $@ $(LIB)
+tangram: src/main.cpp $(cleansubbin)
+	gcc $^ -o $@ $(LIB)
 
 $(modules):
 	$(MAKE) -C $@
