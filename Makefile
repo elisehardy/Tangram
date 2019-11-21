@@ -19,7 +19,7 @@ vpath %.o $(bin)
 
 # Create bin if it does not exists
 $(shell mkdir -p $(bin))
-cleansubbin = $(addsuffix /bin/*, $(modules))
+subbins = $(addsuffix /bin/*, $(modules))
 
 ################################################################################
 
@@ -27,8 +27,10 @@ cleansubbin = $(addsuffix /bin/*, $(modules))
 
 all: $(modules) tangram
 
-tangram: src/main.cpp $(cleansubbin)
-	gcc $^ -o $@ $(LIB)
+tangram: src/main.cpp $(modules)
+	gcc $< $(subbins) -o $@ $(LIB)
+
+
 
 $(modules):
 	$(MAKE) -C $@
@@ -46,4 +48,4 @@ info:
 
 
 clean:
-	rm -f rm $(exec) $(bin)* $(cleansubbin) tangram
+	rm -f rm $(exec) $(bin)* $(subbins) tangram
