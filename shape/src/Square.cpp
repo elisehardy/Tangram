@@ -3,7 +3,7 @@
 
 using namespace Tangram::Shape;
 
-
+/*
 Square::Square(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) :
         Polygon(x, y, angle, size, color) {
 }
@@ -11,6 +11,16 @@ Square::Square(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) 
 
 Square::Square(Point center, uint8_t angle, Size size, MLV_Color color) :
         Polygon(center, angle, size, color) {
+}*/
+
+Square::Square(Tangram::Shape::Point t_p1, Tangram::Shape::Point t_p2, Tangram::Shape::Point t_p3, Tangram::Shape::Point t_p4, uint8_t angle, MLV_Color color) :
+        Polygon(angle, color) {
+    list_point.push_back(t_p1);
+    list_point.push_back(t_p2);
+    list_point.push_back(t_p3);
+    list_point.push_back(t_p4);
+    this->init();
+
 }
 
 
@@ -19,20 +29,22 @@ Square::~Square() {
 
 
 void Square::init() {
+    this->p1 = list_point[0];
+    this->p2 = list_point[1];
+    this->p3 = list_point[2];
+    this->p4 = list_point[3];
+
     this->update();
 }
 
 
 void Square::update() {
     uint8_t angle = this->getAngle();
-    Point center = this->getCenter();
-    Size size = this->getSize();
-    Point ul = {-size, -size}, ur = {size, -size}, bl = {-size, size}, br = {size, size};
-    
-    this->p1 = (center + ur).rotate(angle);
-    this->p2 = (center + ul).rotate(angle);
-    this->p3 = (center + bl).rotate(angle);
-    this->p4 = (center + br).rotate(angle);
+    this->setCenter(center().rotate(angle));
+    this->p1 = this->p1.rotate(angle);
+    this->p2 = this->p2.rotate(angle);
+    this->p3 = this->p3.rotate(angle);
+    this->p4 = this->p4.rotate(angle);
 }
 
 
@@ -43,10 +55,18 @@ std::vector <Point> Square::getPoints() const {
 
 bool Square::contains(uint16_t x, uint16_t y) const {
     // TODO
-    return true;
+    Tangram::Shape::Triangle t1 = Tangram::Shape::Triangle(this->p1, this->p2, this->p3, 0, 0);
+    Tangram::Shape::Triangle t2 = Tangram::Shape::Triangle(this->p1, this->p4, this->p3, 0, 0);
+
+    return (t1.contains(x,y) || t2.contains(x,y));
 }
 
 
 bool Square::contains(const Tangram::Shape::Point &p) const {
     return this->contains(p.first, p.second);
+}
+
+// centroid  center of mass
+Point Square::center(){
+    return {(this->p1.first + this->p4.first)/2, (this->p1.second + this->p4.second)/2} ;
 }

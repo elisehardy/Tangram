@@ -26,11 +26,15 @@ Point Point::rotate(uint8_t angle) const {
 }
 
 
-Point Point::getVector(const Point &p2) const {
+Vector Point::getVector(const Point &p2) const {
     return {p2.first - this->first, p2.second - this->second};
 }
 
 
-Point Point::dotProduct(const Point &v2) const {
-    return {this->first * v2.first, this->second * v2.second};
+// centroid  center of mass triangle
+ Point Point::center(Point p1, Point p2, Point p3){
+    std::cout << "p1" <<p1 << "p2" << p2 << "p3"  << p3 << std::endl;
+    std::cout << (p1.first + p2.first + p3.first)/3 << std::endl;
+    std::cout << (p1.second + p2.second + p3.second)/3 << std::endl;
+    return {(p1.first + p2.first + p3.first)/3, (p1.second + p2.second + p3.second)/3} ;
 }

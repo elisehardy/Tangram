@@ -4,14 +4,14 @@
 using namespace Tangram::Shape;
 
 
-Polygon::Polygon(uint8_t t_x, uint8_t t_y, uint8_t t_angle, Size t_size, MLV_Color t_color) :
-        center(t_x, t_y), angle(t_angle), size(t_size), color(t_color) {
+Polygon::Polygon(uint8_t t_angle, MLV_Color t_color) :
+            angle(t_angle), color(t_color) {
 }
 
 
-Polygon::Polygon(Point t_center, uint8_t t_angle, Size t_size, MLV_Color t_color) :
+/*Polygon::Polygon(Point t_center, uint8_t t_angle, Size t_size, MLV_Color t_color) :
         center(t_center), angle(t_angle), size(t_size), color(t_color) {
-}
+}*/
 
 
 Polygon::~Polygon() {
@@ -28,15 +28,14 @@ Point Polygon::getCenter() const {
     return this->center;
 }
 
+void Polygon::setCenter(Point c)  {
+    this->center = c;
+}
 
 uint8_t Polygon::getAngle() const {
     return this->angle;
 }
 
-
-Size Polygon::getSize() const {
-    return this->size;
-}
 
 
 void Polygon::move(uint16_t x, uint16_t y) {

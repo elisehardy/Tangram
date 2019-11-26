@@ -5,6 +5,7 @@
 #include <utility>
 #include <cstdint>
 #include <iostream>
+#include "Vector.hpp"
 
 namespace Tangram::Shape {
 
@@ -13,9 +14,9 @@ namespace Tangram::Shape {
             using std::pair<uint16_t, uint16_t>::pair;
             Point operator+(const Point &other) const;
             Point rotate(uint8_t angle) const;
-            Point getVector(const Point &p2) const;
-            Point dotProduct(const Point &v2) const;
+            Vector getVector(const Point &p2) const;
             friend std::ostream& operator<<(std::ostream& os, const Point& dt);
+           static Point center(Point p1, Point p2, Point p3);
 
         };
 };

@@ -1,4 +1,4 @@
-targets = Point.o Polygon.o Square.o Triangle.o Parallelogram.o
+targets = Point.o Vector.o Polygon.o Square.o Triangle.o Parallelogram.o
 
 ################################################################################
 
@@ -15,10 +15,14 @@ vpath %.o $(bin)
 
 all: $(objects)
 
-bin/Point.o: src/Point.cpp include/Point.hpp
+bin/Vector.o: src/Vector.cpp include/Vector.hpp
 	$(CC) -c $< -o $@  $(CFLAGS)
 
-bin/Polygon.o: src/Polygon.cpp include/Polygon.hpp include/Point.hpp
+bin/Point.o: src/Point.cpp include/Point.hpp include/Vector.hpp
+	$(CC) -c $< -o $@  $(CFLAGS)
+
+
+bin/Polygon.o: src/Polygon.cpp include/Polygon.hpp include/Point.hpp include/Vector.hpp
 	$(CC) -c $< -o $@  $(CFLAGS)
 
 bin/%.o: %.cpp %.hpp Polygon.hpp

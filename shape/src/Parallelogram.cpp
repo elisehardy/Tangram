@@ -4,13 +4,20 @@
 using namespace Tangram::Shape;
 
 
-Parallelogram::Parallelogram(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) :
+/*Parallelogram::Parallelogram(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) :
         Polygon(x, y, angle, size, color) {
-}
+}*/
 
 
-Parallelogram::Parallelogram(Point center, uint8_t angle, Size size, MLV_Color color) :
-        Polygon(center, angle, size, color) {
+Parallelogram::Parallelogram(Tangram::Shape::Point t_p1, Tangram::Shape::Point t_p2, Tangram::Shape::Point t_p3,
+                             Tangram::Shape::Point t_p4, uint8_t angle, MLV_Color color) :
+        Polygon(angle, color) {
+    list_point.push_back(t_p1);
+    list_point.push_back(t_p2);
+    list_point.push_back(t_p3);
+    list_point.push_back(t_p4);
+    this->init();
+
 }
 
 
@@ -19,46 +26,45 @@ Parallelogram::~Parallelogram() {
 
 
 void Parallelogram::init() {
-    uint16_t size = this->getSize();
-    double hsize = size / 2, h, i, j, k;
-    
-    h = std::sqrt(size * size * 2); // Pythagorean Theorem
-    i = h * (hsize / size); // Thales Theorem (Intercept theorem)
-    j = (h - i) / 2; // h = i + j * 2
-    k = std::sqrt(hsize * hsize + j * j); // Pythagorean Theorem
-    
-    this->i = i;
-    this->j = j;
-    this->k = k;
-    
+    this->p1 = list_point[0];
+    this->p2 = list_point[1];
+    this->p3 = list_point[2];
+    this->p4 = list_point[3];
+
     this->update();
 }
 
 
 void Parallelogram::update() {
-    uint8_t a = this->getAngle();
-    Point c = this->getCenter();
-    Point ul = {-this->k, -this->j}, ur = {this->k, -this->i - this->j};
-    Point bl = {-this->k, this->i + this->j}, br = {this->k, this->j};
-    
-    this->p1 = (c + ur).rotate(a);
-    this->p2 = (c + ul).rotate(a);
-    this->p3 = (c + bl).rotate(a);
-    this->p4 = (c + br).rotate(a);
+    uint8_t angle = this->getAngle();
+    this->setCenter(center().rotate(angle));
+    this->p1 = this->p1.rotate(angle);
+    this->p2 = this->p2.rotate(angle);
+    this->p3 = this->p3.rotate(angle);
+    this->p4 = this->p4.rotate(angle);
 }
 
 
 std::vector <Point> Parallelogram::getPoints() const {
-    return {this->p1, this->p2, this->p3};
+    return {this->p1, this->p2, this->p3, this->p4};
 }
 
 
 bool Parallelogram::contains(uint16_t x, uint16_t y) const {
     // TODO
-    return true;
+    Tangram::Shape::Triangle t1 = Tangram::Shape::Triangle(this->p1, this->p2, this->p3, 0, 0);
+    Tangram::Shape::Triangle t2 = Tangram::Shape::Triangle(this->p1, this->p4, this->p3, 0, 0);
+
+    return (t1.contains(x,y) || t2.contains(x,y));
+
 }
 
 
 bool Parallelogram::contains(const Tangram::Shape::Point &p) const {
     return this->contains(p.first, p.second);
+}
+
+// centroid  center of mass
+Point Parallelogram::center(){
+    return {(this->p1.first + this->p4.first)/2, (this->p1.second + this->p4.second)/2} ;
 }
