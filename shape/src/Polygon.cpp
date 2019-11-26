@@ -4,6 +4,8 @@
 using namespace Tangram::Shape;
 
 
+
+
 Polygon::Polygon(uint8_t t_angle, MLV_Color t_color) :
             angle(t_angle), color(t_color) {
 }
@@ -51,8 +53,14 @@ void Polygon::move(Point p) {
 
 
 void Polygon::rotate(int8_t n) {
+    std::cout << "angle" <<int(this->angle) << std::endl;
+
     this->angle = (this->angle + n % ANGLE_STEP_PER_CYCLE
-                                 * ANGLE_STEP) % 360;
+                                 * ANGLE_STEP )% 360;
+    std::cout << "angle" <<int(this->angle) << std::endl;
+    for(unsigned int i=0; i < list_point.size(); i++){
+        list_point[i] = list_point[i].rotate(this->angle, this->center);
+    }
     this->update();
 }
 

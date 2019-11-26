@@ -1,5 +1,9 @@
 #include "../include/Parallelogram.hpp"
 
+//////////////
+// square et aprallelogram identique avoir si fusionne
+/////////////
+
 
 using namespace Tangram::Shape;
 
@@ -36,12 +40,12 @@ void Parallelogram::init() {
 
 
 void Parallelogram::update() {
-    uint8_t angle = this->getAngle();
-    this->setCenter(center().rotate(angle));
-    this->p1 = this->p1.rotate(angle);
-    this->p2 = this->p2.rotate(angle);
-    this->p3 = this->p3.rotate(angle);
-    this->p4 = this->p4.rotate(angle);
+    //uint8_t angle = this->getAngle();
+    this->setCenter(center());
+    this->p1 = this->p1;
+    this->p2 = this->p2;
+    this->p3 = this->p3;
+    this->p4 = this->p4;
 }
 
 

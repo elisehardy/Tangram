@@ -21,6 +21,7 @@ Triangle::Triangle(Tangram::Shape::Point t_p1, Tangram::Shape::Point t_p2, Tangr
     list_point.push_back(t_p1);
     list_point.push_back(t_p2);
     list_point.push_back(t_p3);
+    std::cout << "angle2" << getAngle() <<"z" << std::endl;
 
     this->init();
 }
@@ -39,11 +40,12 @@ void Triangle::init() {
 
 
 void Triangle::update() {
-    uint8_t angle = this->getAngle();
-    this->setCenter(center().rotate(angle));
-    this->p1 = this->p1.rotate(angle);
-    this->p2 = this->p2.rotate(angle);
-    this->p3 = this->p3.rotate(angle);
+    //uint8_t angle = this->getAngle();
+    this->setCenter(center());
+    std::cout << "center" << getCenter() <<std::endl;
+    this->p1 = list_point[0];
+    this->p2 = list_point[1];
+    this->p3 = list_point[2];
 }
 
 
@@ -82,5 +84,5 @@ bool Triangle::contains(const Tangram::Shape::Point &p) const {
 
 // centroid  center of mass
 Point Triangle::center(){
-        return {(this->p1.first + this->p2.first + this->p3.first)/3, (this->p1.second + this->p2.second + this->p3.second)/3} ;
+        return {(this->p1.first + this->p2.first + this->p3.first)/3., (this->p1.second + this->p2.second + this->p3.second)/3.} ;
 }

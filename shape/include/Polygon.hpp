@@ -9,7 +9,7 @@
 
 
 #define ANGLE_STEP 20
-#define ANGLE_STEP_PER_CYCLE 360 / ANGLE_STEP
+#define ANGLE_STEP_PER_CYCLE (360 / ANGLE_STEP)
 
 namespace Tangram::Shape {
     

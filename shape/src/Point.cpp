@@ -10,18 +10,24 @@ namespace Tangram::Shape {
     }
 }
 
+double DegToRad(double deg){
+    return (deg * M_PI)/180.0;
+}
 
 Point Point::operator+(const Point &other) const {
     return {this->first + other.first, this->second + other.second};
 }
 
 
-Point Point::rotate(uint8_t angle) const {
+Point Point::rotate(uint8_t angle, Point centre) const {
+    double angle_rad = DegToRad(angle);
+    std::cout << angle_rad << std::endl;
     uint16_t x = this->first, y = this->second;
+    Vector p = Vector(x-centre.first, y-centre.second);
     
     return {
-            x * cos(angle) + y * sin(angle),
-            -x * sin(angle) + y * cos(angle)
+            p.first * cos(angle_rad) - p.second * sin(angle_rad) + centre.first,
+            p.first * sin(angle_rad) + p.second * cos(angle_rad) + centre.second
     };
 }
 

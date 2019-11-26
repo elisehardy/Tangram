@@ -4,26 +4,39 @@
 #include "../../shape/include/Square.hpp"
 #include "../../shape/include/Polygon.hpp"
 #include "../../shape/include/Point.hpp"
+#include <MLV/MLV_all.h>
 
 
 int main(int argc, char **argv) {
     //Tangram::Game::Engine game;
 
-    Tangram::Shape::Point p1 = Tangram::Shape::Point(15,5);
-    Tangram::Shape::Point p2 = Tangram::Shape::Point(5,5);
-    Tangram::Shape::Point p3 = Tangram::Shape::Point(5,15);
-    Tangram::Shape::Point p4 = Tangram::Shape::Point(15,15);
+    Tangram::Shape::Point p1 = Tangram::Shape::Point(150,100);
+    Tangram::Shape::Point p2 = Tangram::Shape::Point(50,50);
+    Tangram::Shape::Point p3 = Tangram::Shape::Point(50,100);
+    Tangram::Shape::Point p4 = Tangram::Shape::Point(150,150);
+
+    Tangram::Shape::Point p5 = Tangram::Shape::Point(1700,1000);
+    Tangram::Shape::Point p6 = Tangram::Shape::Point(700,1000);
+
 
 
     Tangram::Shape::Triangle t = Tangram::Shape::Triangle(p1,p2,p3, 0,  MLV_COLOR_RED);
     Tangram::Shape::Square q = Tangram::Shape::Square(p1,p2,p3, p4 ,0,  MLV_COLOR_RED);
-    Tangram::Shape::Parallelogram p = Tangram::Shape::Parallelogram(p1,p2,p3, p4 ,0,  MLV_COLOR_RED);
+    Tangram::Shape::Parallelogram p = Tangram::Shape::Parallelogram(p5,p6,p2, p1 ,0,  MLV_COLOR_RED);
+
+    std::cout << "triangle" << std::endl;
+    std::cout << t.getPoints()[0] <<std::endl;
+    std::cout << t.getPoints()[1] <<std::endl;
+    std::cout << t.getPoints()[2] <<std::endl;
+    std::cout << t.center() << std::endl;
+    std::cout << t.contains(400,1000) << std::endl;
+
 
     std::cout << t.getPoints()[0] <<std::endl;
     std::cout << t.getPoints()[1] <<std::endl;
     std::cout << t.getPoints()[2] <<std::endl;
-    std::cout << t.contains(4,10) << std::endl;
 
+    std::cout << "square" << std::endl;
 
     std::cout << q.getPoints()[0] <<std::endl;
     std::cout << q.getPoints()[1] <<std::endl;
@@ -36,11 +49,19 @@ int main(int argc, char **argv) {
     std::cout << p.getPoints()[1] <<std::endl;
     std::cout << p.getPoints()[2] <<std::endl;
     std::cout << p.getPoints()[3] <<std::endl;
-    std::cout << p.contains(10,10) << std::endl;
+    std::cout << p.contains(100,100) << std::endl;
 
-
-
-
+    MLV_create_window( "beginner - 2 - shapes", "shapes", 640, 480 );
+    t.draw();
+    //q.draw();
+    //p.draw();
+    MLV_actualise_window();
+    MLV_wait_mouse(nullptr, nullptr);
+    t.rotate(9);
+    t.draw();
+    MLV_actualise_window();
+    MLV_wait_seconds( 5 );
+    MLV_free_window();
 
     // initialize the engine
     //game.init();
