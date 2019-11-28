@@ -37,6 +37,7 @@ void Button::update(const Game::Event &event, Game::Engine &engine) {
         }
     }
     else if (this->hovered && leftClick && event.state == MLV_PRESSED) {  // Pressed on button
+        std::cout << "truc" << std::endl;
         this->pressed = true;
     }
 }
