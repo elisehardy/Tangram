@@ -1,7 +1,7 @@
 #include "../include/Triangle.hpp"
 
 
-using namespace Tangram::Shape;
+using namespace Shape;
 
 
 Triangle::Triangle(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) :
@@ -62,7 +62,7 @@ bool Triangle::contains(uint16_t x, uint16_t y) const {
 }
 
 
-bool Triangle::contains(const Tangram::Shape::Point &p) const {
+bool Triangle::contains(const Shape::Point &p) const {
     return this->contains(p.first, p.second);
 }
 

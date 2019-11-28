@@ -5,7 +5,7 @@
 #include "Polygon.hpp"
 
 
-namespace Tangram::Shape {
+namespace Shape {
     
     class Triangle : public Polygon {
         private:

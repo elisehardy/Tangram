@@ -1,4 +1,4 @@
-targets = Engine.o main.o
+targets = Engine.o Event.o main.o
 
 ################################################################################
 
@@ -18,7 +18,10 @@ all: $(objects)
 bin/Engine.o: src/Engine.cpp include/Engine.hpp
 	$(CC) -c $< -o $@  $(CFLAGS)
 
-bin/%.o: %.cpp
+bin/main.o: main.cpp
+	$(CC) -c $< -o $@  $(CFLAGS)
+
+bin/%.o: %.cpp %.hpp
 	$(CC) -c $< -o $@  $(CFLAGS)
 
 clean:

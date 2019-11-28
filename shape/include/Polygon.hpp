@@ -11,7 +11,7 @@
 #define ANGLE_STEP 20
 #define ANGLE_STEP_PER_CYCLE 360 / ANGLE_STEP
 
-namespace Tangram::Shape {
+namespace Shape {
     
     typedef enum {
         SMALL = 5,
@@ -21,7 +21,7 @@ namespace Tangram::Shape {
     
     
     
-    class Polygon : public Tangram::GUI::Drawable {
+    class Polygon : public GUI::Drawable {
         
         private:
             Point center;    /**< Coordinates of the center of the shape. */

@@ -1,22 +1,18 @@
 #include "../include/Engine.hpp"
-
+#include "../../state/include/Menu.hpp"
 
 int main(int argc, char **argv) {
-    Tangram::Game::Engine game;
+    Game::Engine game;
     
-    // initialize the engine
     game.init();
+    game.pushState(State::Menu::getInstance());
     
-    // load the intro
-    
-    // main loop
     while (!game.over()) {
-        game.handleEvents();
-        game.update();
+        game.update(Game::Event::get());
         game.draw();
     }
     
-    // cleanup the engine
     game.cleanup();
+    
     return 0;
 }

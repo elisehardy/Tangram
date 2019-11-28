@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <iostream>
 
-namespace Tangram::Shape {
+namespace Shape {
 
     class Point : public std::pair<uint16_t, uint16_t> {
         public:

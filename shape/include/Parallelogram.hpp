@@ -6,7 +6,7 @@
 #include "Polygon.hpp"
 
 
-namespace Tangram::Shape {
+namespace Shape {
     
     class Parallelogram : public Polygon {
         private:

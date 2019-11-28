@@ -1,9 +1,9 @@
 #include "../include/Point.hpp"
 
 
-using namespace Tangram::Shape;
+using namespace Shape;
 
-namespace Tangram::Shape {
+namespace Shape {
     std::ostream &operator<<(std::ostream &os, const Point &p) {
         os << "(" << p.first << ", " << p.second << ")";
         return os;

@@ -6,27 +6,30 @@
 #include <cstdint>
 
 #include <MLV/MLV_window.h>
-#include <MLV/MLV_window.h>
+#include <MLV/MLV_time.h>
 
+#include "../../game/include/Event.hpp"
 #include "../../state/include/StateAbstract.hpp"
 
-namespace Tangram::Game {
+
+namespace Game {
     
     const uint16_t WIDTH = 800;
     const uint16_t HEIGHT = 800;
     
+    
+    
     class Engine {
         private:
-            std::vector<Tangram::State::StateAbstract*> states;
+            std::vector<State::StateAbstract *> states;
             bool running;
-    
+        
         public:
             void init();
             void cleanup();
-            void pushState(Tangram::State::StateAbstract*state);
+            void pushState(State::StateAbstract *state);
             void popState();
-            void handleEvents();
-            void update();
+            void update(const Game::Event &even);
             void draw();
             bool over();
     };

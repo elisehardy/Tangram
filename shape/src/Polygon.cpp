@@ -1,7 +1,7 @@
 #include "../include/Polygon.hpp"
 
 
-using namespace Tangram::Shape;
+using namespace Shape;
 
 
 Polygon::Polygon(uint8_t t_x, uint8_t t_y, uint8_t t_angle, Size t_size, MLV_Color t_color) :

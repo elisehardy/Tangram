@@ -1,11 +1,11 @@
 #include "../include/ShapeSet.hpp"
 
 
-using namespace Tangram::Shape;
+using namespace Shape;
 
 
 bool ShapeSet::operator==(const Set &other) const {
-    return std::is_permutation(this->begin(), this->end(), v2->other());
+    return std::is_permutation(this->begin(), this->end(), v2->other.begin());
 }
 
 

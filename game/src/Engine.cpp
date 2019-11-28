@@ -1,12 +1,9 @@
 #include "../include/Engine.hpp"
 
 
-using namespace Tangram;
-
-
 void Game::Engine::init() {
     MLV_create_window("Tangram", nullptr, WIDTH, HEIGHT);
-    
+    MLV_change_frame_rate(60);
     this->running = true;
 }
 
@@ -21,7 +18,7 @@ void Game::Engine::cleanup() {
 }
 
 
-void Game::Engine::pushState(State::StateAbstract*state) {
+void Game::Engine::pushState(State::StateAbstract *state) {
     if (!this->states.empty()) {
         this->states.back()->pause();
     }
@@ -43,18 +40,15 @@ void Game::Engine::popState() {
 }
 
 
-void Game::Engine::handleEvents() {
-    this->states.back()->handleEvents();
-}
 
-
-void Game::Engine::update() {
-    this->states.back()->update();
+void Game::Engine::update(const Game::Event &event) {
+    this->states.back()->update(event, *this);
 }
 
 
 void Game::Engine::draw() {
     this->states.back()->draw();
+    MLV_delay_according_to_frame_rate();
 }
 
 

@@ -1,7 +1,7 @@
 #include "../include/Parallelogram.hpp"
 
 
-using namespace Tangram::Shape;
+using namespace Shape;
 
 
 Parallelogram::Parallelogram(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) :
@@ -59,6 +59,6 @@ bool Parallelogram::contains(uint16_t x, uint16_t y) const {
 }
 
 
-bool Parallelogram::contains(const Tangram::Shape::Point &p) const {
+bool Parallelogram::contains(const Shape::Point &p) const {
     return this->contains(p.first, p.second);
 }

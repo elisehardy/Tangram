@@ -7,7 +7,7 @@
 #include "Polygon.hpp"
 
 
-namespace Tangram::Shape {
+namespace Shape {
     
     class ShapeSet : public Drawable, private std::vector<Polygon> {
         

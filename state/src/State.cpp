@@ -1,7 +1,5 @@
 #include "../include/StateAbstract.hpp"
 
-using namespace Tangram::State;
+using namespace State;
 
 
-void StateAbstract::changeState() {
-}

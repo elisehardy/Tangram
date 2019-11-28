@@ -1,5 +1,5 @@
 exec = tangram
-modules = shape game state
+modules = shape game state gui
 
 ################################################################################
 
