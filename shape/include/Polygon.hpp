@@ -137,14 +137,8 @@ namespace Tangram::Shape {
              * @param P coordinates of the new center.
              */
             void move(const Point &p);
-            
-            /**
-             * Move the center of the polygon to the new coordinates.
-             *
-             * @param p Point corresponding to the new coordinate.
-             */
-            void move(Point p);
-            
+
+
             /**
              * Rotate the shape by n step.
              *

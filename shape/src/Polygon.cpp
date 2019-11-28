@@ -46,18 +46,19 @@ void Polygon::move(uint16_t x, uint16_t y) {
 }
 
 
-void Polygon::move(Point p) {
-    this->center = p;
+void Polygon::move(const Point &p) {
+    //this->center = p;
+    for(unsigned int i=0; i < list_point.size(); i++){
+        list_point[i] = list_point[i].move(p);
+    }
     this->update();
 }
 
 
 void Polygon::rotate(int8_t n) {
-    std::cout << "angle" <<int(this->angle) << std::endl;
 
     this->angle = (this->angle + n % ANGLE_STEP_PER_CYCLE
                                  * ANGLE_STEP )% 360;
-    std::cout << "angle" <<int(this->angle) << std::endl;
     for(unsigned int i=0; i < list_point.size(); i++){
         list_point[i] = list_point[i].rotate(this->angle, this->center);
     }

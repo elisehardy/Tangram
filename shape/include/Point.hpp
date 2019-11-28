@@ -17,6 +17,7 @@ namespace Tangram::Shape {
             Vector getVector(const Point &p2) const;
             friend std::ostream& operator<<(std::ostream& os, const Point& dt);
            static Point center(Point p1, Point p2, Point p3);
+        Point move(Point translation) const;
 
         };
 };

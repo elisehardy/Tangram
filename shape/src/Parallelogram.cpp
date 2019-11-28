@@ -8,9 +8,7 @@
 using namespace Tangram::Shape;
 
 
-/*Parallelogram::Parallelogram(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) :
-        Polygon(x, y, angle, size, color) {
-}*/
+
 
 
 Parallelogram::Parallelogram(Tangram::Shape::Point t_p1, Tangram::Shape::Point t_p2, Tangram::Shape::Point t_p3,
@@ -42,10 +40,10 @@ void Parallelogram::init() {
 void Parallelogram::update() {
     //uint8_t angle = this->getAngle();
     this->setCenter(center());
-    this->p1 = this->p1;
-    this->p2 = this->p2;
-    this->p3 = this->p3;
-    this->p4 = this->p4;
+    this->p1 = list_point[0];
+    this->p2 = list_point[1];
+    this->p3 = list_point[2];
+    this->p4 = list_point[3];
 }
 
 

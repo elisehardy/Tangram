@@ -4,24 +4,12 @@
 using namespace Tangram::Shape;
 
 
-/*Triangle::Triangle(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) :
-        Polygon(x, y, angle, size, color) {
-    this->init();
-}
-
-
-Triangle::Triangle(Point center, uint8_t angle, Size size, MLV_Color color) :
-        Polygon(center, angle, size, color) {
-    this->init();
-}*/
-
 
 Triangle::Triangle(Tangram::Shape::Point t_p1, Tangram::Shape::Point t_p2, Tangram::Shape::Point t_p3, uint8_t angle, MLV_Color color):
     Polygon(angle, color){
     list_point.push_back(t_p1);
     list_point.push_back(t_p2);
     list_point.push_back(t_p3);
-    std::cout << "angle2" << getAngle() <<"z" << std::endl;
 
     this->init();
 }
@@ -40,9 +28,7 @@ void Triangle::init() {
 
 
 void Triangle::update() {
-    //uint8_t angle = this->getAngle();
     this->setCenter(center());
-    std::cout << "center" << getCenter() <<std::endl;
     this->p1 = list_point[0];
     this->p2 = list_point[1];
     this->p3 = list_point[2];

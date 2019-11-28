@@ -21,7 +21,6 @@ Point Point::operator+(const Point &other) const {
 
 Point Point::rotate(uint8_t angle, Point centre) const {
     double angle_rad = DegToRad(angle);
-    std::cout << angle_rad << std::endl;
     uint16_t x = this->first, y = this->second;
     Vector p = Vector(x-centre.first, y-centre.second);
     
@@ -30,6 +29,15 @@ Point Point::rotate(uint8_t angle, Point centre) const {
             p.first * sin(angle_rad) + p.second * cos(angle_rad) + centre.second
     };
 }
+
+
+Point Point::move(Point translation) const {
+    return {
+            this->first + translation.first,
+            this->second + translation.second
+    };
+}
+
 
 
 Vector Point::getVector(const Point &p2) const {
