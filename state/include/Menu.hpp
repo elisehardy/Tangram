@@ -9,12 +9,20 @@
 #include "../../gui/include/Drawable.hpp"
 #include "../../gui/include/Observer.hpp"
 #include "../../gui/include/Button.hpp"
+#include "../../game/include/Engine.hpp"
 
 #include "StateAbstract.hpp"
 #include "Play.hpp"
 
+
 namespace State {
-    
+
+    const uint16_t BUTTON_WIDTH = 140;
+    const uint16_t BUTTON_HEIGTH = 50;
+    const uint16_t NUMBER_BUTTON = 5;
+    const uint16_t SPACE_2_BUTTON = 5;
+
+
     class Menu : public StateAbstract {
         private:
             static Menu instance;

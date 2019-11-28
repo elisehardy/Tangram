@@ -39,6 +39,9 @@ void Button::update(const Game::Event &event, Game::Engine &engine) {
             this->pressed = false;
         }
     }
+    else if (this->hovered && leftClick && event.state == MLV_PRESSED) {  // Pressed on button
+        this->pressed = true;
+    }
 }
 
 

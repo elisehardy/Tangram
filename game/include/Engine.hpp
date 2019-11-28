@@ -14,8 +14,8 @@
 
 namespace Game {
     
-    const uint16_t WIDTH = 800;
-    const uint16_t HEIGHT = 800;
+    const uint16_t WIDTH = 1200;
+    const uint16_t HEIGHT = 600;
     
     
     
