@@ -4,49 +4,24 @@
 using namespace Shape;
 
 
-Square::Square(uint8_t x, uint8_t y, uint8_t angle, Size size, MLV_Color color) :
-        Polygon(x, y, angle, size, color) {
-}
-
-
-Square::Square(Point center, uint8_t angle, Size size, MLV_Color color) :
-        Polygon(center, angle, size, color) {
-}
-
-
-Square::~Square() {
-}
-
-
-void Square::init() {
-    this->update();
-}
-
-
-void Square::update() {
-    uint8_t angle = this->getAngle();
-    Point center = this->getCenter();
-    Size size = this->getSize();
-    Point ul = {-size, -size}, ur = {size, -size}, bl = {-size, size}, br = {size, size};
+Square::Square(Shape::Point t_p1, Shape::Point t_p2, Shape::Point t_p3, Shape::Point t_p4, uint8_t angle,
+               MLV_Color color) :
+        Polygon(angle, color) {
+    this->points.push_back(t_p1);
+    this->points.push_back(t_p2);
+    this->points.push_back(t_p3);
+    this->points.push_back(t_p4);
     
-    this->p1 = (center + ur).rotate(angle);
-    this->p2 = (center + ul).rotate(angle);
-    this->p3 = (center + bl).rotate(angle);
-    this->p4 = (center + br).rotate(angle);
-}
-
-
-std::vector <Point> Square::getPoints() const {
-    return {this->p1, this->p2, this->p3, this->p4};
+    this->updateCenter();
 }
 
 
 bool Square::contains(uint16_t x, uint16_t y) const {
-    // TODO
-    return true;
-}
-
-
-bool Square::contains(const Shape::Point &p) const {
-    return this->contains(p.first, p.second);
+    std::vector<Point> points = this->getPoints();
+    Point p1 = points[0], p2 = points[1], p3 = points[2], p4 = points[3];
+    
+    Shape::Triangle t1 = Shape::Triangle(p1, p2, p3, 0, 0);
+    Shape::Triangle t2 = Shape::Triangle(p1, p4, p3, 0, 0);
+    
+    return t1.contains(x, y) || t2.contains(x, y);
 }

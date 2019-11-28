@@ -88,28 +88,6 @@
   "file": "src/Triangle.cpp"
  },
  {
-  "directory": "/home/qcoumes/git/Tangram/shape",
-  "arguments": [
-   "g++",
-   "-c",
-   "src/Parallelogram.cpp",
-   "-o",
-   "bin/Parallelogram.o",
-   "-g",
-   "-O2",
-   "-Wall",
-   "-Wextra",
-   "-Werror",
-   "-Wfatal-errors",
-   "-Weffc++",
-   "-Wpointer-arith",
-   "-std=c++17",
-   "-Wno-unused-parameter",
-   "-Wno-effc++"
-  ],
-  "file": "src/Parallelogram.cpp"
- },
- {
   "directory": "/home/qcoumes/git/Tangram/game",
   "arguments": [
    "g++",
@@ -262,5 +240,27 @@
    "-Wno-effc++"
   ],
   "file": "src/Event.cpp"
+ },
+ {
+  "directory": "/home/qcoumes/git/Tangram/shape",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/Vector.cpp",
+   "-o",
+   "bin/Vector.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/Vector.cpp"
  }
 ]

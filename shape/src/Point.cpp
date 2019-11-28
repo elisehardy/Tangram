@@ -3,6 +3,12 @@
 
 using namespace Shape;
 
+
+static double radians(double deg) {
+    return (deg * M_PI) / 180.0;
+}
+
+
 namespace Shape {
     std::ostream &operator<<(std::ostream &os, const Point &p) {
         os << "(" << p.first << ", " << p.second << ")";
@@ -16,21 +22,32 @@ Point Point::operator+(const Point &other) const {
 }
 
 
-Point Point::rotate(uint8_t angle) const {
+Point Point::rotate(uint8_t angle, Point center) const {
+    double angle_rad = radians(angle);
+    
     uint16_t x = this->first, y = this->second;
+    Vector p = Vector(x - center.first, y - center.second);
     
     return {
-            x * cos(angle) + y * sin(angle),
-            -x * sin(angle) + y * cos(angle)
+            p.first * cos(angle_rad) - p.second * sin(angle_rad) + center.first,
+            p.first * sin(angle_rad) + p.second * cos(angle_rad) + center.second
     };
 }
 
 
-Point Point::getVector(const Point &p2) const {
+Vector Point::getVector(const Point &p2) const {
     return {p2.first - this->first, p2.second - this->second};
 }
 
 
-Point Point::dotProduct(const Point &v2) const {
-    return {this->first * v2.first, this->second * v2.second};
+Point Point::center(const std::vector<Point> &points) {
+    int size = points.size();
+    double x = 0, y = 0;
+    
+    for (Point p: points) {
+        x += p.first;
+        y += p.second;
+    }
+    
+    return Point(x / size, y / size);
 }
