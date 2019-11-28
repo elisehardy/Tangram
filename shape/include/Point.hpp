@@ -17,12 +17,14 @@ namespace Shape {
             using std::pair<uint16_t, uint16_t>::pair;
             
             Point operator+(const Point &other) const;
+        
+            Vector operator-(const Point &other) const;
             
             friend std::ostream &operator<<(std::ostream &os, const Point &dt);
             
-            [[nodiscard]] Point rotate(uint8_t angle, const Point centre) const;
+            [[nodiscard]] Point rotate(uint8_t angle, const Point &center) const;
             
-            [[nodiscard]] Vector getVector(const Point &p2) const;
+            [[nodiscard]] Point translate(const Vector &translation) const;
             
             [[nodiscard]] static Point center(const std::vector<Point> &points);
     };

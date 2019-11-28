@@ -22,21 +22,28 @@ Point Point::operator+(const Point &other) const {
 }
 
 
-Point Point::rotate(uint8_t angle, Point center) const {
-    double angle_rad = radians(angle);
-    
+Vector Point::operator-(const Point &other) const {
+    return {this->first - other.first, this->second - other.second};
+}
+
+
+Point Point::rotate(uint8_t angle, const Point &center) const {
+    double rad = radians(angle);
     uint16_t x = this->first, y = this->second;
     Vector p = Vector(x - center.first, y - center.second);
     
     return {
-            p.first * cos(angle_rad) - p.second * sin(angle_rad) + center.first,
-            p.first * sin(angle_rad) + p.second * cos(angle_rad) + center.second
+            p.first * cos(rad) - p.second * sin(rad) + center.first,
+            p.first * sin(rad) + p.second * cos(rad) + center.second
     };
 }
 
 
-Vector Point::getVector(const Point &p2) const {
-    return {p2.first - this->first, p2.second - this->second};
+Point Point::translate(const Vector &translation) const {
+    return {
+            this->first + translation.first,
+            this->second + translation.second
+    };
 }
 
 

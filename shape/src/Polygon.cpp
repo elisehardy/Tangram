@@ -25,13 +25,16 @@ std::vector<Point> Polygon::getPoints() const {
 }
 
 
-void Polygon::move(uint16_t x, uint16_t y) {
-    this->center = Point(x, y);
+void Polygon::translate(uint16_t x, uint16_t y) {
+    this->translate(Point(x, y));
 }
 
 
-void Polygon::move(const Point &p) {
-    this->move(p.first, p.second);
+void Polygon::translate(const Point &p) {
+    for (auto &point : this->points) {
+        point = point.translate(p);
+    }
+    this->updateCenter();
 }
 
 
@@ -49,11 +52,10 @@ bool Polygon::contains(const Point &p) {
 
 
 void Polygon::draw() const {
-    std::vector<Point> points = this->getPoints();
-    uint8_t size = points.size(), i = 0;
+    uint8_t size = this->points.size(), i = 0;
     int32_t X[size], Y[size];
     
-    for (auto &p: points) {
+    for (auto &p: this->points) {
         X[i] = p.first;
         Y[i++] = p.second;
     }

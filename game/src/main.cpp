@@ -1,6 +1,7 @@
 #include "../include/Engine.hpp"
 #include "../../state/include/Menu.hpp"
 
+
 int main(int argc, char **argv) {
     Game::Engine game;
     
@@ -13,6 +14,6 @@ int main(int argc, char **argv) {
     }
     
     game.cleanup();
-
+    
     return 0;
 }

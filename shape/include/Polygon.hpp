@@ -52,14 +52,14 @@ namespace Shape {
              * @param x X coordinate of the new center.
              * @param y Y coordinate of the new center.
              */
-            void move(uint16_t x, uint16_t y);
+            void translate(uint16_t x, uint16_t y);
             
             /**
              * Move the center of the polygon to the new coordinates.
              *
              * @param P coordinates of the new center.
              */
-            void move(const Point &p);
+            void translate(const Point &p);
             
             /**
              * Rotate the shape by n step.
@@ -99,7 +99,7 @@ namespace Shape {
              */
             [[nodiscard]] bool contains(const Point &p);
             
-            void update(const Game::Event &event, Game::Engine &engine);
+            void update(const Game::Event &event, Game::Engine &engine) override;
             
             void draw() const override;
     };

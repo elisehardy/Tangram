@@ -40,7 +40,6 @@ void Game::Engine::popState() {
 }
 
 
-
 void Game::Engine::update(const Game::Event &event) {
     this->states.back()->update(event, *this);
 }

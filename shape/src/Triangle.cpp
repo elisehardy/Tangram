@@ -21,15 +21,15 @@ Triangle::Triangle(Shape::Point t_p1, Shape::Point t_p2, Shape::Point t_p3, uint
 
 bool Triangle::contains(uint16_t x, uint16_t y) const {
     std::vector<Point> points = this->getPoints();
-    Point p1 = points[0], p2 = points[1], p3 = points[2];
+    Point p1 = points[0], p2 = points[1], p3 = points[2], pxy = Point(x, y);
     
-    Vector Vab = p1.getVector(p2);
-    Vector Vbc = p2.getVector(p3);
-    Vector Vca = p3.getVector(p1);
+    Vector Vab = p1 - p2;
+    Vector Vbc = p2 - p3;
+    Vector Vca = p3 - p1;
     
-    Vector Vax = p1.getVector(Point(x, y));
-    Vector Vbx = p2.getVector(Point(x, y));
-    Vector Vcx = p3.getVector(Point(x, y));
+    Vector Vax = p1 - pxy;
+    Vector Vbx = p2 - pxy;
+    Vector Vcx = p3 - pxy;
     
     int crossA = crossProduct(Vab, Vax);
     int crossB = crossProduct(Vbc, Vbx);
