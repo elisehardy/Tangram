@@ -27,6 +27,12 @@ Vector Point::operator-(const Point &other) const {
 }
 
 
+bool Point::operator==(const Point &other) const {
+    return (std::abs(this->first - other.first) < NEAR_THRESHOLD
+            && std::abs(this->second - other.second) < NEAR_THRESHOLD);
+}
+
+
 Point Point::rotate(uint8_t angle, const Point &center) const {
     double rad = radians(angle);
     uint16_t x = this->first, y = this->second;

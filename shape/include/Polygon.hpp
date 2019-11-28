@@ -13,14 +13,18 @@
 
 namespace Shape {
     
-    class Polygon : public GUI::Drawable {
+    class Polygon : public GUI::Drawable, public GUI::Observable {
         
         protected:
             uint8_t angle;             /**< Angle of the shape. */
             MLV_Color color;           /**< Color of the shape. */
             Point center;              /**< Coordinates of the center of the shape. */
-            bool held;                 /**< Whether the Polygon is held by the mouse. */
             std::vector<Point> points; /**< Points of the polygon. */
+            
+            Point startHeld;           /**< Position of the mouse when the Polygon was first held. */
+            bool hovered;              /**< Whether the Polygon is hovered by the mouse. */
+            bool lpressed;
+            bool rpressed;
             
             /**
              * Polygon's default constructor.
@@ -37,30 +41,14 @@ namespace Shape {
             virtual ~Polygon() = default;
             
             /**
-             * @returns A vector of the points representing the polygon.
-             */
-            [[nodiscard]] std::vector<Point> getPoints() const;
-            
-            /**
              * Update the center of the polygon according to the points in 'points' field.
              */
             void updateCenter();
-            
-            /**
-             * Move the center of the polygon to the new coordinates.
-             *
-             * @param x X coordinate of the new center.
-             * @param y Y coordinate of the new center.
-             */
+        
             void translate(uint16_t x, uint16_t y);
-            
-            /**
-             * Move the center of the polygon to the new coordinates.
-             *
-             * @param P coordinates of the new center.
-             */
-            void translate(const Point &p);
-            
+        
+            void translate(const Vector &p);
+        
             /**
              * Rotate the shape by n step.
              *
@@ -69,17 +57,7 @@ namespace Shape {
             void rotate(int8_t n);
         
         public:
-            
-            /**
-             * Return whether two Polygons are equal or not by checking if their
-             * set of points is the same.
-             *
-             * @param other Other Polygon to compare with.
-             *
-             * @return true if the Polygons are equal, false otherwise.
-             */
-            bool operator==(const Polygon &other) const;
-            
+        
             /**
              * Check if the Polygon contains the point p;
              *
@@ -89,7 +67,7 @@ namespace Shape {
              * @return true if the Point is inside the Polygon, false otherwise.
              */
             [[nodiscard]] virtual bool contains(uint16_t x, uint16_t y) const = 0;
-            
+        
             /**
              * Check if the Polygon contains the point p;
              *
@@ -98,9 +76,14 @@ namespace Shape {
              * @return true if the Point is inside the Polygon, false otherwise.
              */
             [[nodiscard]] bool contains(const Point &p);
-            
+        
+            /**
+             * @returns A vector of the points representing the polygon.
+             */
+            [[nodiscard]] std::vector<Point> getPoints() const;
+        
             void update(const Game::Event &event, Game::Engine &engine) override;
-            
+        
             void draw() const override;
     };
 };

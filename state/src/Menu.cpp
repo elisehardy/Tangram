@@ -7,16 +7,19 @@ Menu Menu::instance = Menu();
 
 
 void Menu::init() {
-    this->drawables.push_back(new GUI::Button(
+    auto *b = new GUI::Button(
             100, 100, 200, 50, 1,
             "Coucou", "resources/fonts/helvetica.ttf",
             MLV_COLOR_GREY60, MLV_COLOR_BLACK, MLV_COLOR_GREY80,
             MLV_COLOR_GREY50, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY60,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](Game::Engine &e) { std::cout << "Mon beau bouton qui marche" << std::endl; }
-    ));
-    std::for_each(this->drawables.begin(), this->drawables.end(), [this](GUI::Drawable *d) { this->observer.add(d); });
+            [](Game::Engine &e) { e.pushState(Play::getInstance()); }
+    );
+    
+    this->drawables.push_back(b);
+    this->observer.add(b);
+    this->initialized = true;
 }
 
 

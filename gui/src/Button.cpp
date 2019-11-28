@@ -27,7 +27,10 @@ void Button::update(const Game::Event &event, Game::Engine &engine) {
     
     this->hovered = mx >= x1 && my >= y1 && mx <= x2 && my <= y2;
     
-    if (this->pressed && leftClick && event.state == MLV_RELEASED) { // Left click released
+    if (this->hovered && leftClick && event.state == MLV_PRESSED) {  // Pressed on button
+        this->pressed = true;
+    }
+    else if (this->pressed && leftClick && event.state == MLV_RELEASED) { // Left click released
         if (this->hovered) { // Released on button
             this->pressed = false;
             this->execute(engine);
@@ -35,9 +38,6 @@ void Button::update(const Game::Event &event, Game::Engine &engine) {
         else { // Released outside button
             this->pressed = false;
         }
-    }
-    else if (this->hovered && leftClick && event.state == MLV_PRESSED) {  // Pressed on button
-        this->pressed = true;
     }
 }
 

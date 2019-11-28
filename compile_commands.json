@@ -136,28 +136,6 @@
   "arguments": [
    "g++",
    "-c",
-   "src/State.cpp",
-   "-o",
-   "bin/State.o",
-   "-g",
-   "-O2",
-   "-Wall",
-   "-Wextra",
-   "-Werror",
-   "-Wfatal-errors",
-   "-Weffc++",
-   "-Wpointer-arith",
-   "-std=c++17",
-   "-Wno-unused-parameter",
-   "-Wno-effc++"
-  ],
-  "file": "src/State.cpp"
- },
- {
-  "directory": "/home/qcoumes/git/Tangram/state",
-  "arguments": [
-   "g++",
-   "-c",
    "src/Menu.cpp",
    "-o",
    "bin/Menu.o",
@@ -262,5 +240,49 @@
    "-Wno-effc++"
   ],
   "file": "src/Vector.cpp"
+ },
+ {
+  "directory": "/home/qcoumes/git/Tangram/state",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/Play.cpp",
+   "-o",
+   "bin/Play.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/Play.cpp"
+ },
+ {
+  "directory": "/home/qcoumes/git/Tangram/shape",
+  "arguments": [
+   "g++",
+   "-c",
+   "src/ShapeSet.cpp",
+   "-o",
+   "bin/ShapeSet.o",
+   "-g",
+   "-O2",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wfatal-errors",
+   "-Weffc++",
+   "-Wpointer-arith",
+   "-std=c++17",
+   "-Wno-unused-parameter",
+   "-Wno-effc++"
+  ],
+  "file": "src/ShapeSet.cpp"
  }
 ]

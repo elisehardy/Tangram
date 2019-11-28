@@ -1,4 +1,4 @@
-targets = Point.o Vector.o Polygon.o Square.o Triangle.o
+targets = Point.o Vector.o Polygon.o Square.o Triangle.o ShapeSet.o
 
 ################################################################################
 

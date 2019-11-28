@@ -10,6 +10,8 @@
 #include "Vector.hpp"
 
 
+#define NEAR_THRESHOLD 10
+
 namespace Shape {
     
     class Point : public std::pair<uint16_t, uint16_t> {
@@ -17,8 +19,10 @@ namespace Shape {
             using std::pair<uint16_t, uint16_t>::pair;
             
             Point operator+(const Point &other) const;
-        
+            
             Vector operator-(const Point &other) const;
+            
+            bool operator==(const Point &other) const;
             
             friend std::ostream &operator<<(std::ostream &os, const Point &dt);
             

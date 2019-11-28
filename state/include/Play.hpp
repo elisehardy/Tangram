@@ -1,34 +1,34 @@
-#ifndef MAIN_MENU_HPP
-#define MAIN_MENU_HPP
+#ifndef PLAY_HPP
+#define PLAY_HPP
 
 #include <vector>
-
-#include <MLV/MLV_window.h>
-#include <MLV/MLV_color.h>
 
 #include "../../gui/include/Drawable.hpp"
 #include "../../gui/include/Observer.hpp"
 #include "../../gui/include/Button.hpp"
+#include "../../shape/include/ShapeSet.hpp"
 
 #include "StateAbstract.hpp"
-#include "Play.hpp"
+
 
 namespace State {
     
-    class Menu : public StateAbstract {
+    class Play : public StateAbstract {
         private:
-            static Menu instance;
+            static Play instance;
             GUI::Observer observer;
             std::vector<GUI::Drawable *> drawables;
+            Shape::ShapeSet goal;
+            Shape::ShapeSet player;
             bool initialized = false;
-            
+        
             void init() override;
         
         protected:
-            Menu() = default;
+            Play() = default;
         
         public:
-            static Menu *getInstance();
+            static Play *getInstance();
             void cleanup() override;
             void pause() override;
             void resume() override;
@@ -37,4 +37,4 @@ namespace State {
     };
 };
 
-#endif // MENU_HPP
+#endif // PLAY_HPP

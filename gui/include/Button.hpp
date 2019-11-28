@@ -12,7 +12,7 @@ namespace GUI {
     /**
      * Represents a clickable button on the GUI.
      */
-    class Button : public Drawable {
+    class Button : public Drawable, public Observable {
         private:
             const uint16_t x; /**< X coordinate of the north-west corner. */
             const uint16_t y; /**< Y coordinate of the north-west corner. */
