@@ -3,7 +3,7 @@
 
 void Game::Engine::init() {
     MLV_create_window("Tangram", nullptr, WIDTH, HEIGHT);
-    MLV_change_frame_rate(60);
+    MLV_change_frame_rate(120);
     this->running = true;
 }
 
@@ -24,7 +24,6 @@ void Game::Engine::pushState(State::StateAbstract *state) {
     }
     
     this->states.push_back(state);
-    this->states.back()->init();
 }
 
 
@@ -47,10 +46,16 @@ void Game::Engine::update(const Game::Event &event) {
 
 void Game::Engine::draw() {
     this->states.back()->draw();
+    MLV_actualise_window();
     MLV_delay_according_to_frame_rate();
 }
 
 
-bool Game::Engine::over() {
+bool Game::Engine::isRunning() {
     return !this->running;
+}
+
+
+void Game::Engine::stop() {
+    this->running = false;
 }

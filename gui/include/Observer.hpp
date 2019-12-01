@@ -8,6 +8,7 @@
 
 #include "Observable.hpp"
 
+
 namespace GUI {
     
     class Observer {
@@ -16,7 +17,9 @@ namespace GUI {
         
         public:
             void add(Observable *subject);
+            void add(const std::vector<Observable *> &subjects);
             void remove(Observable *subject);
+            void remove(const std::vector<Observable *> &subjects);
             void notify(const Game::Event &event, Game::Engine &engine) const;
     };
 }

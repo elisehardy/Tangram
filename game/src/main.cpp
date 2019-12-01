@@ -7,8 +7,7 @@ int main(int argc, char **argv) {
     
     game.init();
     game.pushState(State::Menu::getInstance());
-    
-    while (!game.over()) {
+    while (!game.isRunning()) {
         game.update(Game::Event::get());
         game.draw();
     }

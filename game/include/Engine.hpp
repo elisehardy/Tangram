@@ -31,7 +31,8 @@ namespace Game {
             void popState();
             void update(const Game::Event &even);
             void draw();
-            bool over();
+            bool isRunning();
+            void stop();
     };
 };
 

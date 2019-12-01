@@ -16,8 +16,8 @@ namespace State {
     class Play : public StateAbstract {
         private:
             static Play instance;
-            GUI::Observer observer;
             std::vector<GUI::Drawable *> drawables;
+            GUI::Observer observer;
             Shape::ShapeSet goal;
             Shape::ShapeSet player;
             bool initialized = false;

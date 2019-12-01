@@ -24,7 +24,6 @@ void Play::draw() {
     MLV_clear_window(MLV_COLOR_GREY80);
     std::for_each(this->drawables.begin(), this->drawables.end(), [](GUI::Drawable *d) { d->draw(); });
     this->player.draw();
-    MLV_actualise_window();
 }
 
 

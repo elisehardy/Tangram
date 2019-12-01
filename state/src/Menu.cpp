@@ -26,7 +26,7 @@ void Menu::init() {
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
             [](Game::Engine &e) { std::cout << "create" << std::endl; }
     );
-    
+
     auto edit = new GUI::Button(
             WIDTH/2-(BUTTON_WIDTH/2), 3*HEIGHT/NUMBER_BUTTON - (BUTTON_HEIGTH+SPACE_2_BUTTON), BUTTON_WIDTH, BUTTON_HEIGTH, 1,
             "Edit", "resources/fonts/helvetica.ttf",
@@ -43,12 +43,9 @@ void Menu::init() {
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](Game::Engine &e) { std::cout << "exit" << std::endl; }
+            [](Game::Engine &e) { e.stop(); }
     );
-    this->observer.add(new_game);
-    this->observer.add(create);
-    this->observer.add(edit);
-    this->observer.add(quit);
+    this->observer.add({new_game, create, edit, quit});
     this->drawables.push_back(new_game);
     this->drawables.push_back(create);
     this->drawables.push_back(edit);
@@ -67,7 +64,6 @@ Menu *Menu::getInstance() {
 void Menu::draw() {
     MLV_clear_window(MLV_COLOR_BLACK);
     std::for_each(this->drawables.begin(), this->drawables.end(), [](GUI::Drawable *d) { d->draw(); });
-    MLV_actualise_window();
 }
 
 
