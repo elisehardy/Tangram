@@ -7,8 +7,13 @@ Play Play::instance = Play();
 
 
 void Play::init() {
-    // TODO interface
+    this->player = Shape::ShapeSet(Shape::Point(100, 100));
+    this->goal = Shape::ShapeSet(Shape::Point(100, 100));
     this->initialized = true;
+    
+    for (Shape::Polygon *p: this->player) {
+        this->observer.add(p);
+    }
 }
 
 

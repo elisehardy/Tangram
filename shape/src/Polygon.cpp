@@ -4,8 +4,8 @@
 using namespace Shape;
 
 
-Polygon::Polygon(uint8_t t_angle, MLV_Color t_color) :
-        angle(t_angle), color(t_color), hovered(false), lpressed(false), rpressed(false) {
+Polygon::Polygon(MLV_Color t_color) :
+        color(t_color), hovered(false), lpressed(false), rpressed(false) {
 }
 
 
@@ -19,11 +19,6 @@ std::vector<Point> Polygon::getPoints() const {
 }
 
 
-void Polygon::translate(uint16_t x, uint16_t y) {
-    this->translate(Point(x, y));
-}
-
-
 void Polygon::translate(const Vector &p) {
     for (auto &point : this->points) {
         point = point.translate(p);
@@ -33,9 +28,9 @@ void Polygon::translate(const Vector &p) {
 
 
 void Polygon::rotate(int8_t n) {
-    this->angle = (this->angle + n % ANGLE_STEP_PER_CYCLE * ANGLE_STEP) % 360;
+    int8_t angle = n * ANGLE_STEP;
     for (auto &p : points) {
-        p = p.rotate(this->angle, this->center);
+        p = p.rotate(angle, this->center);
     }
 }
 
@@ -49,20 +44,20 @@ void Polygon::draw() const {
     uint8_t size = this->points.size(), i = 0;
     int32_t X[size], Y[size];
     uint8_t r, g, b, a;
-    MLV_Color color;
+    MLV_Color col;
     
     for (auto &p: this->points) {
         X[i] = p.first;
         Y[i++] = p.second;
     }
     
-    color = this->color;
+    col = this->color;
     if (this->hovered) {
         MLV_convert_color_to_rgba(this->color, &r, &g, &b, &a);
-        color = MLV_rgba(r * 0.5, g * 0.5, b * 0.5, a);
+        col = MLV_rgba(r * 0.5, g * 0.5, b * 0.5, a);
     }
     
-    MLV_draw_filled_polygon(X, Y, size, color);
+    MLV_draw_filled_polygon(X, Y, size, col);
 }
 
 

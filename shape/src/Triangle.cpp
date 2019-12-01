@@ -9,8 +9,8 @@ static int crossProduct(Vector v1, Vector v2) {
 }
 
 
-Triangle::Triangle(Shape::Point t_p1, Shape::Point t_p2, Shape::Point t_p3, uint8_t angle, MLV_Color color) :
-        Polygon(angle, color) {
+Triangle::Triangle(Shape::Point t_p1, Shape::Point t_p2, Shape::Point t_p3, MLV_Color color) :
+        Polygon(color) {
     this->points.push_back(t_p1);
     this->points.push_back(t_p2);
     this->points.push_back(t_p3);

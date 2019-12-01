@@ -4,3 +4,5 @@ cmake-build-debug/
 cmake_install.cmake
 CMakeFiles/
 tangram
+compile_commands.json
+

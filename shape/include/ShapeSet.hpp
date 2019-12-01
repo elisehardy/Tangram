@@ -5,15 +5,20 @@
 #include <algorithm>
 
 #include "Polygon.hpp"
+#include "Triangle.hpp"
+#include "Square.hpp"
 
 
 namespace Shape {
     
-    class ShapeSet : public GUI::Drawable, private std::vector<Polygon *> {
-        
+    class ShapeSet : public GUI::Drawable, public GUI::Observable, public std::vector<Polygon *> {
         public:
             
             using std::vector<Polygon *>::vector;
+            
+            ShapeSet(Point point);
+            
+            ShapeSet(std::string path);
             
             /**
             * Return whether two Sets are equal or not by checking if their
@@ -24,6 +29,7 @@ namespace Shape {
             */
             bool operator==(const ShapeSet &other) const;
             
+            
             /**
              * Draw this set on the screen.
              */
@@ -32,6 +38,7 @@ namespace Shape {
             /**
              *
              */
+            void update(const Game::Event &event, Game::Engine &engine) override;
     };
 };
 
