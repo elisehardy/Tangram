@@ -70,13 +70,12 @@ void Polygon::update(const Game::Event &event, Game::Engine &engine) {
     
     if (this->hovered && leftClick && event.state == MLV_PRESSED) {  // Pressed on left button
         this->lpressed = true;
-        this->startHeld = mousePos;
     }
     if (this->hovered && leftClick && event.state == MLV_RELEASED) {  // Left button released
         this->lpressed = false;
     }
     if (this->lpressed) { // Moving the Polygon
-        this->translate(mousePos - this->startHeld);
+        this->translate(mousePos - this->center);
     }
     
     if (this->hovered && rightClick && event.state == MLV_PRESSED) {  // Pressed on  right button
