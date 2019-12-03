@@ -1,43 +1,34 @@
-#ifndef MAIN_MENU_HPP
-#define MAIN_MENU_HPP
+#ifndef EDIT_HPP
+#define EDIT_HPP
 
 #include <vector>
-
-#include <MLV/MLV_window.h>
-#include <MLV/MLV_color.h>
 
 #include "../../gui/include/Drawable.hpp"
 #include "../../gui/include/Observer.hpp"
 #include "../../gui/include/Button.hpp"
-#include "../../game/include/Engine.hpp"
+#include "../../shape/include/ShapeSet.hpp"
 
 #include "StateAbstract.hpp"
-#include "Edit.hpp"
-#include "Play.hpp"
 
 
 namespace State {
-
-    const uint16_t BUTTON_WIDTH = 140;
-    const uint16_t BUTTON_HEIGTH = 50;
-    const uint16_t NUMBER_BUTTON = 5;
-    const uint16_t SPACE_2_BUTTON = 5;
-
-
-    class Menu : public StateAbstract {
+    
+    class Edit : public StateAbstract {
         private:
-            static Menu instance;
-            GUI::Observer observer;
+            static Edit instance;
             std::vector<GUI::Drawable *> drawables;
+            GUI::Observer observer;
+            Shape::ShapeSet goal;
+            Shape::ShapeSet player;
             bool initialized = false;
-            
+        
             void init() override;
         
         protected:
-            Menu() = default;
+            Edit() = default;
         
         public:
-            static Menu *getInstance();
+            static Edit *getInstance();
             void cleanup() override;
             void pause() override;
             void resume() override;
@@ -46,4 +37,4 @@ namespace State {
     };
 };
 
-#endif // MENU_HPP
+#endif // Edit_HPP

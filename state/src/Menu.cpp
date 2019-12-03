@@ -18,7 +18,7 @@ void Menu::init() {
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](Game::Engine &e) { std::cout << "new Game" << std::endl; }
+            [](Game::Engine &e) { e.pushState(State::Play::getInstance());  }
     );
     auto create = new GUI::Button(
             x, 2 * y, BUTTON_WIDTH, BUTTON_HEIGTH, 1,
@@ -36,7 +36,7 @@ void Menu::init() {
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](Game::Engine &e) { e.pushState(State::Play::getInstance()); }
+            [](Game::Engine &e) { e.pushState(State::Edit::getInstance()); }
     );
     auto quit = new GUI::Button(
             x, 4 * y, BUTTON_WIDTH, BUTTON_HEIGTH, 1,

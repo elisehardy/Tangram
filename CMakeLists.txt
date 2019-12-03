@@ -7,6 +7,7 @@ add_library(Tangram OBJECT
         gui/src/Button.cpp
         shape/src/Point.cpp
         state/src/Play.cpp
+        state/src/Edit.cpp
         state/src/Menu.cpp
         shape/src/Square.cpp
         game/src/Engine.cpp

@@ -9,11 +9,14 @@
 #include "../../shape/include/ShapeSet.hpp"
 
 #include "StateAbstract.hpp"
-
+#include "../../game/include/Engine.hpp"
 
 namespace State {
-    
+
     class Play : public StateAbstract {
+
+        const std::pair <uint16_t, uint16_t> image_goal = { 10, Game::WIDTH/2 };
+
         private:
             static Play instance;
             std::vector<GUI::Drawable *> drawables;
