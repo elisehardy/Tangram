@@ -1,37 +1,40 @@
 #ifndef POINT_HPP
 #define POINT_HPP
 
-#include <cmath>
-#include <utility>
 #include <cstdint>
 #include <iostream>
 #include <vector>
+#include <utility>
 
-#include "Vector.hpp"
 
-
-#define NEAR_THRESHOLD 10
-
-namespace Shape {
+namespace tangram::shape {
     
-    class Point : public std::pair<uint16_t, uint16_t> {
+    class Point : public std::pair<int16_t, int16_t> {
         public:
-            using std::pair<uint16_t, uint16_t>::pair;
+            static constexpr uint16_t NEAR_THRESHOLD = 10;
+            
+            using std::pair<int16_t, int16_t>::pair;
+        
+            bool operator==(const Point &other) const;
             
             Point operator+(const Point &other) const;
             
-            Vector operator-(const Point &other) const;
+            Point operator-(const Point &other) const;
             
-            bool operator==(const Point &other) const;
+            uint16_t operator^(const Point &other) const;
             
             friend std::ostream &operator<<(std::ostream &os, const Point &dt);
             
             [[nodiscard]] Point rotate(uint8_t angle, const Point &center) const;
             
-            [[nodiscard]] Point translate(const Vector &translation) const;
+            [[nodiscard]] Point translate(const Point &translation) const;
             
             [[nodiscard]] static Point center(const std::vector<Point> &points);
     };
+    
+    
+    
+    typedef Point Vector;
 };
 
 #endif //POINT_HPP

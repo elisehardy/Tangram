@@ -12,7 +12,7 @@
 #include "../../state/include/StateAbstract.hpp"
 
 
-namespace Game {
+namespace tangram::game {
     
     const uint16_t WIDTH = 1200;
     const uint16_t HEIGHT = 600;
@@ -21,15 +21,15 @@ namespace Game {
     
     class Engine {
         private:
-            std::vector<State::StateAbstract *> states;
+            std::vector<state::StateAbstract *> states;
             bool running;
         
         public:
             void init();
             void cleanup();
-            void pushState(State::StateAbstract *state);
+            void pushState(state::StateAbstract *state);
             void popState();
-            void update(const Game::Event &even);
+            void update(const game::Event &even);
             void draw();
             bool isRunning();
             void stop();

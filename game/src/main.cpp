@@ -1,14 +1,15 @@
 #include "../include/Engine.hpp"
 #include "../../state/include/Menu.hpp"
 
+using namespace tangram;
 
 int main(int argc, char **argv) {
-    Game::Engine game;
+    game::Engine game;
     
     game.init();
-    game.pushState(State::Menu::getInstance());
+    game.pushState(state::Menu::getInstance());
     while (!game.isRunning()) {
-        game.update(Game::Event::get());
+        game.update(game::Event::get());
         game.draw();
     }
     

@@ -1,14 +1,15 @@
 #include "../include/Engine.hpp"
 
+using namespace tangram;
 
-void Game::Engine::init() {
+void game::Engine::init() {
     MLV_create_window("Tangram", nullptr, WIDTH, HEIGHT);
     MLV_change_frame_rate(120);
     this->running = true;
 }
 
 
-void Game::Engine::cleanup() {
+void game::Engine::cleanup() {
     while (!this->states.empty()) {
         this->states.back()->cleanup();
         this->states.pop_back();
@@ -18,7 +19,7 @@ void Game::Engine::cleanup() {
 }
 
 
-void Game::Engine::pushState(State::StateAbstract *state) {
+void game::Engine::pushState(state::StateAbstract *state) {
     if (!this->states.empty()) {
         this->states.back()->pause();
     }
@@ -27,7 +28,7 @@ void Game::Engine::pushState(State::StateAbstract *state) {
 }
 
 
-void Game::Engine::popState() {
+void game::Engine::popState() {
     if (!this->states.empty()) {
         this->states.back()->cleanup();
         this->states.pop_back();
@@ -39,23 +40,23 @@ void Game::Engine::popState() {
 }
 
 
-void Game::Engine::update(const Game::Event &event) {
+void game::Engine::update(const game::Event &event) {
     this->states.back()->update(event, *this);
 }
 
 
-void Game::Engine::draw() {
+void game::Engine::draw() {
     this->states.back()->draw();
     MLV_actualise_window();
     MLV_delay_according_to_frame_rate();
 }
 
 
-bool Game::Engine::isRunning() {
+bool game::Engine::isRunning() {
     return !this->running;
 }
 
 
-void Game::Engine::stop() {
+void game::Engine::stop() {
     this->running = false;
 }

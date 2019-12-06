@@ -5,11 +5,11 @@
 //#include "../../game/include/Engine.hpp"
 
 
-namespace Game {
+namespace tangram::game {
     class Engine;
 }
 
-namespace State {
+namespace tangram::state {
     
     class StateAbstract {
         protected:
@@ -23,7 +23,7 @@ namespace State {
             virtual void cleanup() = 0;
             virtual void pause() = 0;
             virtual void resume() = 0;
-            virtual void update(const Game::Event &event, Game::Engine &engine) = 0;
+            virtual void update(const game::Event &event, game::Engine &engine) = 0;
             virtual void draw() = 0;
     };
 };

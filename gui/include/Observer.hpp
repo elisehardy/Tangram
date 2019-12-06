@@ -9,7 +9,7 @@
 #include "Observable.hpp"
 
 
-namespace GUI {
+namespace tangram::gui {
     
     class Observer {
         private:
@@ -20,7 +20,7 @@ namespace GUI {
             void add(const std::vector<Observable *> &subjects);
             void remove(Observable *subject);
             void remove(const std::vector<Observable *> &subjects);
-            void notify(const Game::Event &event, Game::Engine &engine) const;
+            void notify(const game::Event &event, game::Engine &engine) const;
     };
 }
 

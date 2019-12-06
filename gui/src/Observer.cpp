@@ -1,7 +1,7 @@
 #include "../include/Observer.hpp"
 
 
-using namespace GUI;
+using namespace tangram::gui;
 
 
 void Observer::add(Observable *const subject) {
@@ -24,7 +24,7 @@ void Observer::remove(const std::vector<Observable *> &subjects) {
 }
 
 
-void Observer::notify(const Game::Event &event, Game::Engine &engine) const {
+void Observer::notify(const game::Event &event, game::Engine &engine) const {
     std::for_each(this->observed.begin(), this->observed.end(),
                   [&event, &engine](Observable *s) { s->update(event, engine); }
     );

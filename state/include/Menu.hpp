@@ -15,7 +15,7 @@
 #include "Play.hpp"
 
 
-namespace State {
+namespace tangram::state {
 
     const uint16_t BUTTON_WIDTH = 140;
     const uint16_t BUTTON_HEIGTH = 50;
@@ -26,8 +26,8 @@ namespace State {
     class Menu : public StateAbstract {
         private:
             static Menu instance;
-            GUI::Observer observer;
-            std::vector<GUI::Drawable *> drawables;
+            gui::Observer observer;
+            std::vector<gui::Drawable *> drawables;
             bool initialized = false;
             
             void init() override;
@@ -40,7 +40,7 @@ namespace State {
             void cleanup() override;
             void pause() override;
             void resume() override;
-            void update(const Game::Event &event, Game::Engine &engine) override;
+            void update(const game::Event &event, game::Engine &engine) override;
             void draw() override;
     };
 };

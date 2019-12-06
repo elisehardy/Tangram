@@ -8,14 +8,11 @@ add_library(Tangram OBJECT
         shape/src/Point.cpp
         state/src/Play.cpp
         state/src/Menu.cpp
-        shape/src/Square.cpp
         game/src/Engine.cpp
-        shape/src/ShapeSet.cpp
-        shape/src/Polygon.cpp
+        shape/src/Shape.cpp
         game/src/Event.cpp
         game/src/main.cpp
-        shape/src/Vector.cpp
-        )
+        shape/src/Polygon.cpp)
 target_compile_options(Tangram PRIVATE
         -g
         -O2

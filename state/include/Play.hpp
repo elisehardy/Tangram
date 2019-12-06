@@ -6,20 +6,22 @@
 #include "../../gui/include/Drawable.hpp"
 #include "../../gui/include/Observer.hpp"
 #include "../../gui/include/Button.hpp"
-#include "../../shape/include/ShapeSet.hpp"
+
+#include "../../shape/include/Polygon.hpp"
 
 #include "StateAbstract.hpp"
 
 
-namespace State {
+namespace tangram::state {
     
     class Play : public StateAbstract {
         private:
             static Play instance;
-            std::vector<GUI::Drawable *> drawables;
-            GUI::Observer observer;
-            Shape::ShapeSet goal;
-            Shape::ShapeSet player;
+            
+            std::vector<gui::Drawable *> drawables;
+            gui::Observer observer;
+            shape::Polygon player;
+            shape::Polygon goal;
             bool initialized = false;
         
             void init() override;
@@ -32,7 +34,7 @@ namespace State {
             void cleanup() override;
             void pause() override;
             void resume() override;
-            void update(const Game::Event &event, Game::Engine &engine) override;
+            void update(const game::Event &event, game::Engine &engine) override;
             void draw() override;
     };
 };

@@ -5,11 +5,11 @@
 #include "../../game/include/Event.hpp"
 
 
-namespace GUI {
+namespace tangram::gui {
     
     class Observable {
         public:
-            virtual void update(const Game::Event &event, Game::Engine &engine) = 0;
+            virtual void update(const game::Event &event, game::Engine &engine) = 0;
     };
 }
 

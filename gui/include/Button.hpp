@@ -7,10 +7,10 @@
 #include "Observable.hpp"
 
 
-namespace GUI {
+namespace tangram::gui {
     
     /**
-     * Represents a clickable button on the GUI.
+     * Represents a clickable button on the gui.
      */
     class Button : public Drawable, public Observable {
         private:
@@ -36,7 +36,7 @@ namespace GUI {
             bool hovered; /**< True if the button is currently hovered by the mouse, false otherwise. */
             bool pressed; /**< True if the button is currently pressed, false otherwise. */
             
-            void (*execute)(Game::Engine &); /**< Function executed when the button is clicked */
+            void (*execute)(game::Engine &); /**< Function executed when the button is clicked */
         public:
             /**
              * Constructor.
@@ -46,14 +46,14 @@ namespace GUI {
                    MLV_Color hTextColor, MLV_Color hBackgroundColor, MLV_Color pBorderColor, MLV_Color pTextColor,
                    MLV_Color pBackgroundColor, MLV_Text_justification justification,
                    MLV_Horizontal_position horizontalPosition, MLV_Vertical_position verticalPosition,
-                   void (*execute)(Game::Engine &));
+                   void (*execute)(game::Engine &));
             
             /**
              * Update `hovered` / `pressed` fields. Execute the `execute` function if the button is clicked.
              *
              * @see Observable#update()
              */
-            void update(const Game::Event &event, Game::Engine &engine) override;
+            void update(const game::Event &event, game::Engine &engine) override;
             
             void draw() const override;
     };

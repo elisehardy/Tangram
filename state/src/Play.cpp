@@ -1,17 +1,17 @@
 #include "../include/Play.hpp"
 
 
-using namespace State;
+using namespace tangram::state;
 
 Play Play::instance = Play();
 
 
 void Play::init() {
-    this->player = Shape::ShapeSet(Shape::Point(100, 100));
-    this->goal = Shape::ShapeSet(Shape::Point(100, 100));
+    this->player = shape::ShapeSet(shape::Point(100, 100));
+    this->goal = shape::ShapeSet(shape::Point(100, 100));
     this->initialized = true;
     
-    for (Shape::Polygon *p: this->player) {
+    for (shape::Shape *p: this->player) {
         this->observer.add(p);
     }
 }
@@ -27,12 +27,12 @@ Play *Play::getInstance() {
 
 void Play::draw() {
     MLV_clear_window(MLV_COLOR_GREY80);
-    std::for_each(this->drawables.begin(), this->drawables.end(), [](GUI::Drawable *d) { d->draw(); });
+    std::for_each(this->drawables.begin(), this->drawables.end(), [](gui::Drawable *d) { d->draw(); });
     this->player.draw();
 }
 
 
-void Play::update(const Game::Event &event, Game::Engine &engine) {
+void Play::update(const game::Event &event, game::Engine &engine) {
     observer.notify(event, engine);
 }
 

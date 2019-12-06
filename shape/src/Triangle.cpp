@@ -1,39 +1,51 @@
+#include <vector>
+
 #include "../include/Triangle.hpp"
 
 
-using namespace Shape;
+using namespace tangram::shape;
 
 
-static int crossProduct(Vector v1, Vector v2) {
-    return (v1.first * v2.second) - (v1.second * v2.first);
+Triangle::Triangle(const Point &offset, MLV_Color color) :
+        Shape(color) {
+    this->p1 = offset;
+    this->p2 = offset + Vector(Shape::SIDE, 0);
+    this->p3 = offset + Vector(0, Shape::SIDE);
 }
 
 
-Triangle::Triangle(Shape::Point t_p1, Shape::Point t_p2, Shape::Point t_p3, MLV_Color color) :
-        Polygon(color) {
-    this->points.push_back(t_p1);
-    this->points.push_back(t_p2);
-    this->points.push_back(t_p3);
-    
-    this->updateCenter();
+Triangle::Triangle(const Point &t_p1, const Point &t_p2, const Point &t_p3, MLV_Color color) :
+        Shape(color) {
+    this->p1 = t_p1;
+    this->p2 = t_p2;
+    this->p3 = t_p3;
 }
 
 
-bool Triangle::contains(uint16_t x, uint16_t y) const {
-    std::vector<Point> points = this->getPoints();
-    Point p1 = points[0], p2 = points[1], p3 = points[2], pxy = Point(x, y);
+auto Triangle::contains(uint16_t x, uint16_t y) const -> bool {
+    Point p = {x, y};
     
-    Vector Vab = p1 - p2;
-    Vector Vbc = p2 - p3;
-    Vector Vca = p3 - p1;
+    Vector Vab = this->p1 - this->p2;
+    Vector Vbc = this->p2 - this->p3;
+    Vector Vca = this->p3 - this->p1;
     
-    Vector Vax = p1 - pxy;
-    Vector Vbx = p2 - pxy;
-    Vector Vcx = p3 - pxy;
+    Vector Vax = p1 - p;
+    Vector Vbx = p2 - p;
+    Vector Vcx = p3 - p;
     
-    int crossA = crossProduct(Vab, Vax);
-    int crossB = crossProduct(Vbc, Vbx);
-    int crossC = crossProduct(Vca, Vcx);
+    int crossA = Vab ^Vax;
+    int crossB = Vbc ^Vbx;
+    int crossC = Vca ^Vcx;
     
     return (crossA >= 0 && crossB >= 0 && crossC >= 0) || (crossA < 0 && crossB < 0 && crossC < 0);
+}
+
+
+std::vector<Point> Triangle::getPoints() const {
+    return {Point(p1), Point(p2), Point(p3)};
+}
+
+
+std::vector<Point> Triangle::getPoints() {
+    return {p1, p2, p3};
 }

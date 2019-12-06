@@ -10,7 +10,7 @@
 
 #include "Observable.hpp"
 
-namespace GUI {
+namespace tangram::gui {
     
     class Drawable {
         public:

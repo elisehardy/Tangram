@@ -1,15 +1,18 @@
+#include <cmath>
+
 #include "../include/Point.hpp"
 
 
-using namespace Shape;
+using namespace tangram::shape;
 
 
 static double radians(double deg) {
-    return (deg * M_PI) / 180.0;
+    constexpr double r = M_PI / 180.0;
+    return deg * r;
 }
 
 
-namespace Shape {
+namespace tangram::shape {
     std::ostream &operator<<(std::ostream &os, const Point &p) {
         os << "(" << p.first << ", " << p.second << ")";
         return os;
@@ -22,8 +25,13 @@ Point Point::operator+(const Point &other) const {
 }
 
 
-Vector Point::operator-(const Point &other) const {
+Point Point::operator-(const Point &other) const {
     return {this->first - other.first, this->second - other.second};
+}
+
+
+uint16_t Point::operator^(const Point &other) const {
+    return (this->first * other.second) - (this->second * other.first);
 }
 
 
