@@ -12,17 +12,12 @@
 #include "../../game/include/Engine.hpp"
 
 #include "StateAbstract.hpp"
+#include "Edit.hpp"
 #include "Play.hpp"
 
 
 namespace tangram::state {
-
-    const uint16_t BUTTON_WIDTH = 140;
-    const uint16_t BUTTON_HEIGTH = 50;
-    const uint16_t NUMBER_BUTTON = 5;
-    const uint16_t SPACE_2_BUTTON = 5;
-
-
+    
     class Menu : public StateAbstract {
         private:
             static Menu instance;
@@ -30,10 +25,9 @@ namespace tangram::state {
             std::vector<gui::Drawable *> drawables;
             bool initialized = false;
             
-            void init() override;
-        
-        protected:
             Menu() = default;
+            
+            void init() override;
         
         public:
             static Menu *getInstance();

@@ -2,7 +2,6 @@
 #define STATE_HPP
 
 #include "../../game/include/Event.hpp"
-//#include "../../game/include/Engine.hpp"
 
 
 namespace tangram::game {
@@ -11,11 +10,15 @@ namespace tangram::game {
 
 namespace tangram::state {
     
+    const uint16_t BUTTON_WIDTH = 140;
+    const uint16_t BUTTON_HEIGTH = 50;
+    const uint16_t NUMBER_BUTTON = 5;
+    const uint16_t SPACE_2_BUTTON = 5;
+    
+    
+    
     class StateAbstract {
         protected:
-            /**
-             * Making constructor protected since States will be singletons.
-             */
             StateAbstract() = default;
         
         public:

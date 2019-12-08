@@ -16,10 +16,16 @@ namespace tangram::gui {
             std::vector<Observable *> observed;
         
         public:
+            Observer() = default;
+            
             void add(Observable *subject);
+            
             void add(const std::vector<Observable *> &subjects);
+            
             void remove(Observable *subject);
+            
             void remove(const std::vector<Observable *> &subjects);
+            
             void notify(const game::Event &event, game::Engine &engine) const;
     };
 }

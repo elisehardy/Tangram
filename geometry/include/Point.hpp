@@ -7,7 +7,7 @@
 #include <utility>
 
 
-namespace tangram::shape {
+namespace tangram::geometry {
     
     class Point : public std::pair<int16_t, int16_t> {
         public:
@@ -28,6 +28,8 @@ namespace tangram::shape {
             [[nodiscard]] Point rotate(uint8_t angle, const Point &center) const;
             
             [[nodiscard]] Point translate(const Point &translation) const;
+            
+            [[nodiscard]] Point translate(int16_t x, int16_t y) const;
             
             [[nodiscard]] static Point center(const std::vector<Point> &points);
     };

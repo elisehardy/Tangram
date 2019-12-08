@@ -1,24 +1,24 @@
 #include "../include/Menu.hpp"
 
 
+using namespace tangram;
 using namespace tangram::state;
-using namespace tangram::game;
 
 Menu Menu::instance = Menu();
 
 
 void Menu::init() {
-    uint16_t x = WIDTH / 2 - (BUTTON_WIDTH / 2);
-    uint16_t y = HEIGHT / NUMBER_BUTTON - (BUTTON_HEIGTH + SPACE_2_BUTTON);
+    uint16_t x = game::WIDTH / 2 - (BUTTON_WIDTH / 2);
+    uint16_t y = game::HEIGHT / NUMBER_BUTTON - (BUTTON_HEIGTH + SPACE_2_BUTTON);
     
     auto new_game = new gui::Button(
             x, 1 * y, BUTTON_WIDTH, BUTTON_HEIGTH, 1,
-            "New Game", "resources/fonts/helvetica.ttf",
+            "New game", "resources/fonts/helvetica.ttf",
             MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) { std::cout << "new Game" << std::endl; }
+            [](game::Engine &e) { e.pushState(state::Play::getInstance()); }
     );
     auto create = new gui::Button(
             x, 2 * y, BUTTON_WIDTH, BUTTON_HEIGTH, 1,
@@ -36,7 +36,7 @@ void Menu::init() {
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) { e.pushState(state::Play::getInstance()); }
+            [](game::Engine &e) { e.pushState(state::Edit::getInstance()); }
     );
     auto quit = new gui::Button(
             x, 4 * y, BUTTON_WIDTH, BUTTON_HEIGTH, 1,

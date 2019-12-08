@@ -1,18 +1,19 @@
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 3.15)
 project(b'Tangram')
 
 add_library(Tangram OBJECT
-        shape/src/Triangle.cpp
+        geometry/src/Triangle.cpp
         gui/src/Observer.cpp
         gui/src/Button.cpp
-        shape/src/Point.cpp
+        geometry/src/Point.cpp
         state/src/Play.cpp
+        state/src/Edit.cpp
         state/src/Menu.cpp
         game/src/Engine.cpp
-        shape/src/Shape.cpp
+        geometry/src/Shape.cpp
         game/src/Event.cpp
         game/src/main.cpp
-        shape/src/Polygon.cpp)
+        geometry/src/Polygon.cpp geometry/src/Shape.cpp geometry/include/Shape.hpp)
 target_compile_options(Tangram PRIVATE
         -g
         -O2

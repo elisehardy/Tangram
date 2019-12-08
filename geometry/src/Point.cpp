@@ -3,7 +3,7 @@
 #include "../include/Point.hpp"
 
 
-using namespace tangram::shape;
+using namespace tangram::geometry;
 
 
 static double radians(double deg) {
@@ -12,7 +12,7 @@ static double radians(double deg) {
 }
 
 
-namespace tangram::shape {
+namespace tangram::geometry {
     std::ostream &operator<<(std::ostream &os, const Point &p) {
         os << "(" << p.first << ", " << p.second << ")";
         return os;
@@ -57,6 +57,13 @@ Point Point::translate(const Vector &translation) const {
     return {
             this->first + translation.first,
             this->second + translation.second
+    };
+}
+
+Point Point::translate(int16_t x, int16_t y) const {
+    return {
+            this->first + x,
+            this->second + y
     };
 }
 

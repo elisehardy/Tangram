@@ -1,5 +1,5 @@
-#ifndef MAIN_DRAWABLE_HPP
-#define MAIN_DRAWABLE_HPP
+#ifndef DRAWABLE_HPP
+#define DRAWABLE_HPP
 
 #include <cstdint>
 
@@ -22,4 +22,4 @@ namespace tangram::gui {
     };
 };
 
-#endif // MAIN_DRAWABLE_HPP
+#endif // DRAWABLE_HPP
