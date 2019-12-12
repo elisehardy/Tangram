@@ -29,6 +29,6 @@ namespace tangram::state {
             virtual void update(const game::Event &event, game::Engine &engine) = 0;
             virtual void draw() = 0;
     };
-};
+}
 
 #endif // STATE_HPP

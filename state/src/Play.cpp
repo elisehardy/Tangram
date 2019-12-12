@@ -38,7 +38,7 @@ Play *Play::getInstance() {
 
 void Play::draw() {
     MLV_clear_window(MLV_COLOR_BLACK);
-    MLV_draw_rectangle(image_goal.first, image_goal.second, game::WIDTH - (2 * 10), game::HEIGHT - (2 * 10),
+    MLV_draw_rectangle(goal_x, goal_y, game::WIDTH - (2 * 10), game::HEIGHT - (2 * 10),
                        MLV_COLOR_WHITE
     );
     std::for_each(this->drawables.begin(), this->drawables.end(), [](gui::Drawable *d) { d->draw(); });

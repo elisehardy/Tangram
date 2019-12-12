@@ -1,7 +1,34 @@
+#include <string>
+
 #include "../include/Event.hpp"
 
 
 using namespace tangram::game;
+
+namespace tangram::game {
+    std::ostream &operator<<(std::ostream &os, const Event &event) {
+        os << "Mouse position: " << event.mousePos << " | ";
+        switch (event.type) {
+            case MLV_NONE:
+            case MLV_MOUSE_MOTION:
+                os << "No event";
+                break;
+            case MLV_KEY:
+                os << "Keyboard's key " << (event.state == MLV_PRESSED ? "pressed" : "released")
+                   << ": " << MLV_convert_keyboard_button_to_string(event.symbol);
+                break;
+            case MLV_MOUSE_BUTTON:
+                os << "Mouse's button " << (event.state == MLV_PRESSED ? "pressed" : "released")
+                   << ": " << MLV_convert_mouse_button_to_string(event.mouseButton);
+                break;
+            case MLV_INPUT_BOX:
+                os << "Input box: " << event.text;
+                break;
+        }
+        
+        return os;
+    }
+}
 
 
 Event::Event(const MLV_Event t_type, const MLV_Keyboard_button t_symbol, const MLV_Keyboard_modifier t_modifier,
@@ -28,8 +55,7 @@ Event Event::get() {
     
     MLV_get_mouse_position(&x, &y);
     
-    return Event(type, symbol, modifier, text, geometry::Point({x, y}), mouseButton, state);
+    geometry::Point mousePos = geometry::Point({static_cast<int16_t >(x), static_cast<int16_t >(y)});
+    return Event(type, symbol, modifier, text, mousePos, mouseButton, state);
 }
-
-
 

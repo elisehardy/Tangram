@@ -14,67 +14,73 @@ static double radians(double deg) {
 
 namespace tangram::geometry {
     std::ostream &operator<<(std::ostream &os, const Point &p) {
-        os << "(" << p.first << ", " << p.second << ")";
+        os << "(" << p.x << ", " << p.y << ")";
         return os;
     }
 }
 
 
+Point::Point(int16_t t_x, int16_t t_y) :
+        x(t_x), y(t_y) {
+}
+
+
 Point Point::operator+(const Point &other) const {
-    return {this->first + other.first, this->second + other.second};
+    return Point(this->x + other.x, this->y + other.y);
 }
 
 
 Point Point::operator-(const Point &other) const {
-    return {this->first - other.first, this->second - other.second};
+    return Point(this->x - other.x, this->y - other.y);
 }
 
 
-uint16_t Point::operator^(const Point &other) const {
-    return (this->first * other.second) - (this->second * other.first);
+int32_t Point::operator^(const Point &other) const {
+    return (this->x * other.y) - (this->y * other.x);
 }
 
 
 bool Point::operator==(const Point &other) const {
-    return (std::abs(this->first - other.first) < NEAR_THRESHOLD
-            && std::abs(this->second - other.second) < NEAR_THRESHOLD);
+    return (std::abs(this->x - other.x) < NEAR_THRESHOLD
+            && std::abs(this->y - other.y) < NEAR_THRESHOLD);
 }
 
 
-Point Point::rotate(uint8_t angle, const Point &center) const {
+Point Point::rotate(int16_t angle, const Point &center) const {
     double rad = radians(angle);
-    uint16_t x = this->first, y = this->second;
-    Vector p = Vector(x - center.first, y - center.second);
+    double x = this->x - center.x;
+    double y = this->y - center.y;
     
-    return {
-            p.first * cos(rad) - p.second * sin(rad) + center.first,
-            p.first * sin(rad) + p.second * cos(rad) + center.second
-    };
+    return Point(
+            static_cast<int16_t>(x * cos(rad) - y * sin(rad) + center.x),
+            static_cast<int16_t>(x * sin(rad) + y * cos(rad) + center.y)
+    );
 }
 
 
 Point Point::translate(const Vector &translation) const {
-    return {
-            this->first + translation.first,
-            this->second + translation.second
-    };
+    return Point(
+            this->x + translation.x,
+            this->y + translation.y
+    );
 }
 
+
 Point Point::translate(int16_t x, int16_t y) const {
-    return {
-            this->first + x,
-            this->second + y
-    };
+    return Point(
+            this->x + x,
+            this->y + y
+    );
 }
 
 
 Point Point::center(const std::vector<Point> &points) {
-    int size = points.size();
-    double x = 0, y = 0;
+    int64_t size = points.size();
+    int16_t x = 0, y = 0;
     
     for (Point p: points) {
-        x += p.first;
-        y += p.second;
+        x += p.x;
+        y += p.y;
     }
     
     return Point(x / size, y / size);

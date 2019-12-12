@@ -19,7 +19,8 @@ namespace tangram::state {
     class Play : public StateAbstract {
         
         private:
-            static constexpr geometry::Point image_goal = {10, game::WIDTH / 2};
+            static constexpr int16_t goal_x = 10;
+            static constexpr int16_t goal_y = game::WIDTH / 2;
             static Play instance;
             
             std::vector<gui::Drawable *> drawables;
@@ -40,6 +41,6 @@ namespace tangram::state {
             void update(const game::Event &event, game::Engine &engine) override;
             void draw() override;
     };
-};
+}
 
 #endif // PLAY_HPP

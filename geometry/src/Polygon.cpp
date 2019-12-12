@@ -7,7 +7,7 @@ using namespace tangram::geometry;
 
 
 Polygon::Polygon(MLV_Color t_color) :
-        color(t_color) {
+        currentRotation(0), pressedPoint(0, 0), lpressed(false), rpressed(false), hovered(false), color(t_color) {
 }
 
 
@@ -19,8 +19,7 @@ Polygon Polygon::custom(const std::vector<Triangle> &triangles, MLV_Color color)
 
 
 Polygon Polygon::smallTriangle(const Point &offset, MLV_Color color) {
-    // TODO
-    return Polygon(color);
+    return custom({Triangle(offset)}, color);
 }
 
 
@@ -51,36 +50,34 @@ Polygon Polygon::square(const Point &offset, MLV_Color color) {
 }
 
 
-Polygon Polygon::translate(const Vector &v) const {
-    std::vector<Triangle> triangles;
-    
+Polygon &Polygon::translate(const Vector &v) {
     std::for_each(
             this->triangles.begin(), this->triangles.end(),
-            [&](const Triangle &t) { triangles.push_back(t.translate(v)); }
+            [&](Triangle &t) { t = t.translate(v); }
     );
     
-    return Polygon::custom(triangles, color);
+    this->pressedPoint = this->pressedPoint.translate(v);
+    
+    return *this;
 }
 
 
-Polygon Polygon::translate(int16_t x, int16_t y) const {
+Polygon &Polygon::translate(int16_t x, int16_t y) {
     return this->translate({x, y});
 }
 
 
-Polygon Polygon::rotate(int16_t n, const Point &center) const {
-    std::vector<Triangle> triangles;
-    
+Polygon &Polygon::rotate(int16_t n, const Point &center) {
     std::for_each(
             this->triangles.begin(), this->triangles.end(),
-            [&](const Triangle &t) { triangles.push_back(t.rotate(n, center)); }
+            [&](Triangle &t) { t = t.rotate(n, center); }
     );
     
-    return Polygon::custom(triangles, color);
+    return *this;
 }
 
 
-Polygon Polygon::rotate(int16_t n) const {
+Polygon &Polygon::rotate(int16_t n) {
     return this->rotate(n, Point::center(this->getPoints()));
 }
 
@@ -119,33 +116,37 @@ void Polygon::add(const std::vector<Triangle> &triangles) {
 
 
 void Polygon::update(const game::Event &event, game::Engine &engine) {
-    Point mousePos = Point(event.mousePos.first, event.mousePos.second);
+    Point mousePos = Point(event.mousePos.x, event.mousePos.y);
     bool leftClick = event.type == MLV_MOUSE_BUTTON && event.mouseButton == MLV_BUTTON_LEFT;
     bool rightClick = event.type == MLV_MOUSE_BUTTON && event.mouseButton == MLV_BUTTON_RIGHT;
     
     this->hovered = this->contains(mousePos);
     
-    if (this->hovered && leftClick && event.state == MLV_PRESSED) {  // Pressed on left button
+    if (this->hovered && leftClick && event.state == MLV_PRESSED) {  // Left button pressed
+        this->pressedPoint = Point(mousePos);
         this->lpressed = true;
     }
-    if (this->hovered && leftClick && event.state == MLV_RELEASED) {  // Left button released
+    else if (this->lpressed && leftClick && event.state == MLV_RELEASED) {  // Left button released
         this->lpressed = false;
     }
+    
     if (this->lpressed) { // Moving the Shape
-        *this = this->translate(mousePos - Point::center(this->getPoints()));
+        this->translate(mousePos - this->pressedPoint);
     }
     
-    if (this->hovered && rightClick && event.state == MLV_PRESSED) {  // Pressed on  right button
+    if (this->hovered && rightClick && event.state == MLV_PRESSED) {  // Right button pressed
+        this->pressedPoint = Point(mousePos);
+        this->currentRotation = 0;
         this->rpressed = true;
     }
     else if (this->rpressed && rightClick && event.state == MLV_RELEASED) { // Left click released
-        if (this->hovered) { // Released on button
-            this->rpressed = false;
-            *this = this->rotate(1);
-        }
-        else { // Released outside button
-            this->rpressed = false;
-        }
+        this->rpressed = false;
+    }
+    
+    if (this->rpressed) { // Rotating the shape
+        int16_t angle = (pressedPoint.x - mousePos.x) / 10;
+        this->rotate((angle - this->currentRotation) * Triangle::ANGLE_STEP);
+        this->currentRotation = angle;
     }
 }
 
@@ -157,11 +158,11 @@ void Polygon::draw() const {
     color = this->color;
     if (this->hovered) {
         MLV_convert_color_to_rgba(this->color, &r, &g, &b, &a);
-        color = MLV_rgba(r * 0.80, g * 0.80, b * 0.80, a);
+        color = MLV_rgba(uint8_t(r * 0.80), uint8_t(g * 0.80), uint8_t(b * 0.80), a);
     }
     else if (this->lpressed || this->rpressed) {
         MLV_convert_color_to_rgba(this->color, &r, &g, &b, &a);
-        color = MLV_rgba(r * 0.60, g * 0.60, b * 0.60, a);
+        color = MLV_rgba(uint8_t(r * 0.60), uint8_t(g * 0.60), uint8_t(b * 0.60), a);
     }
     
     std::for_each(this->triangles.begin(), this->triangles.end(), [color](const Triangle &t) { t.draw(color); });

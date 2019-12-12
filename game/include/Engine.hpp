@@ -34,6 +34,6 @@ namespace tangram::game {
             bool isRunning();
             void stop();
     };
-};
+}
 
 #endif // ENGINE_HPP

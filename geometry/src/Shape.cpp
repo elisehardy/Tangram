@@ -6,10 +6,6 @@
 using namespace tangram::geometry;
 
 
-tangram::geometry::Shape::Shape() {
-}
-
-
 tangram::geometry::Shape::Shape(std::string path) {
 }
 
@@ -21,6 +17,9 @@ Shape Shape::square(const Point &offset) {
             Polygon::square(offset, MLV_COLOR_WHITE)
                     .translate(Triangle::SIDE, Triangle::SIDE * 2)
                     .rotate(45)
+    );
+    shape.polygons.push_back(
+            Polygon::smallTriangle(offset, MLV_COLOR_WHITE)
     );
     
     return shape;

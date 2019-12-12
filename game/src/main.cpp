@@ -1,5 +1,7 @@
 #include "../include/Engine.hpp"
 #include "../../state/include/Menu.hpp"
+#include "../../geometry/include/Point.hpp"
+#include "../../geometry/include/Triangle.hpp"
 
 using namespace tangram;
 

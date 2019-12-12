@@ -37,6 +37,6 @@ namespace tangram::state {
             void update(const game::Event &event, game::Engine &engine) override;
             void draw() override;
     };
-};
+}
 
 #endif // MENU_HPP

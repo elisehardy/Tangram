@@ -22,7 +22,7 @@ Button::Button(uint16_t t_x, uint16_t t_y, uint16_t t_w, uint16_t t_h, uint8_t t
 
 void Button::update(const game::Event &event, game::Engine &engine) {
     int x1 = this->x, x2 = x1 + this->w, y1 = this->y, y2 = y1 + this->h;
-    int mx = event.mousePos.first, my = event.mousePos.second;
+    int mx = event.mousePos.x, my = event.mousePos.y;
     bool leftClick = event.type == MLV_MOUSE_BUTTON && event.mouseButton == MLV_BUTTON_LEFT;
     
     this->hovered = mx >= x1 && my >= y1 && mx <= x2 && my <= y2;

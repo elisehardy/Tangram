@@ -8,7 +8,7 @@
 
 using namespace tangram::geometry;
 
-const uint16_t Triangle::HYPOTENUSE = sqrt(SIDE * SIDE * 2);
+const uint16_t Triangle::HYPOTENUSE = static_cast<uint16_t>(sqrt(SIDE * SIDE * 2));
 
 
 Triangle::Triangle(const Point &offset) :
@@ -67,8 +67,8 @@ std::vector<Point> Triangle::getPoints() const {
 
 
 void Triangle::draw(MLV_Color color) const {
-    int X[3] = {this->p1.first, this->p2.first, this->p3.first};
-    int Y[3] = {this->p1.second, this->p2.second, this->p3.second};
+    int X[3] = {this->p1.x, this->p2.x, this->p3.x};
+    int Y[3] = {this->p1.y, this->p2.y, this->p3.y};
     MLV_draw_filled_polygon(X, Y, 3, color);
 }
 

@@ -9,10 +9,9 @@ Menu Menu::instance = Menu();
 
 void Menu::init() {
     uint16_t x = game::WIDTH / 2 - (BUTTON_WIDTH / 2);
-    uint16_t y = game::HEIGHT / NUMBER_BUTTON - (BUTTON_HEIGTH + SPACE_2_BUTTON);
     
     auto new_game = new gui::Button(
-            x, 1 * y, BUTTON_WIDTH, BUTTON_HEIGTH, 1,
+            x, 1 * game::HEIGHT / NUMBER_BUTTON - (BUTTON_HEIGTH + SPACE_2_BUTTON), BUTTON_WIDTH, BUTTON_HEIGTH, 1,
             "New game", "resources/fonts/helvetica.ttf",
             MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
@@ -21,7 +20,7 @@ void Menu::init() {
             [](game::Engine &e) { e.pushState(state::Play::getInstance()); }
     );
     auto create = new gui::Button(
-            x, 2 * y, BUTTON_WIDTH, BUTTON_HEIGTH, 1,
+            x, 2 * game::HEIGHT / NUMBER_BUTTON - (BUTTON_HEIGTH + SPACE_2_BUTTON), BUTTON_WIDTH, BUTTON_HEIGTH, 1,
             "Create", "resources/fonts/helvetica.ttf",
             MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
@@ -30,7 +29,7 @@ void Menu::init() {
             [](game::Engine &e) { std::cout << "create" << std::endl; }
     );
     auto edit = new gui::Button(
-            x, 3 * y, BUTTON_WIDTH, BUTTON_HEIGTH, 1,
+            x, 3 * game::HEIGHT / NUMBER_BUTTON - (BUTTON_HEIGTH + SPACE_2_BUTTON), BUTTON_WIDTH, BUTTON_HEIGTH, 1,
             "Edit", "resources/fonts/helvetica.ttf",
             MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
@@ -39,7 +38,7 @@ void Menu::init() {
             [](game::Engine &e) { e.pushState(state::Edit::getInstance()); }
     );
     auto quit = new gui::Button(
-            x, 4 * y, BUTTON_WIDTH, BUTTON_HEIGTH, 1,
+            x, 4 * game::HEIGHT / NUMBER_BUTTON - (BUTTON_HEIGTH + SPACE_2_BUTTON), BUTTON_WIDTH, BUTTON_HEIGTH, 1,
             "Exit", "resources/fonts/helvetica.ttf",
             MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,

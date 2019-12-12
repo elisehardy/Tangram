@@ -3,9 +3,11 @@ modules = geometry game state gui
 
 ################################################################################
 
-export CC = g++
-export FLAGS = -g -O2 -Wall -Wextra -Werror -Wfatal-errors -Weffc++ -Wpointer-arith -std=c++17
-export IGNORED = -Wno-unused-parameter -Wno-effc++ -Wno-shadow
+export CC = clang++
+export FLAGS = -g -O2 -Werror -Weverything -Wfatal-errors -std=c++17
+IGNORED = -Wno-unused-parameter -Wno-effc++ -Wno-shadow -Wno-c++98-compat -Wno-sign-conversion -Wno-padded
+IGNORED += -Wno-global-constructors -Wno-weak-vtables -Wno-delete-non-abstract-non-virtual-dtor -Wno-exit-time-destructors
+export IGNORED
 export LIB = -lm -lstdc++ `pkg-config --libs-only-other --libs-only-L MLV` `pkg-config --libs-only-l MLV`
 export CFLAGS = $(FLAGS) $(IGNORED)
 
@@ -28,7 +30,7 @@ subbins = $(addsuffix /bin/*, $(modules))
 all: $(modules) tangram
 
 tangram: $(modules)
-	gcc $(subbins) -o $@ $(LIB)
+	$(CC) $(subbins) -o $@ $(LIB)
 
 $(modules):
 	$(MAKE) -C $@

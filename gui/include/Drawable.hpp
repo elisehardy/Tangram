@@ -20,6 +20,6 @@ namespace tangram::gui {
              */
             virtual void draw() const = 0;
     };
-};
+}
 
 #endif // DRAWABLE_HPP

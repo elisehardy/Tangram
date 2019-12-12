@@ -18,7 +18,7 @@ namespace tangram::geometry {
         
         public:
             
-            Shape();
+            Shape() = default;
             
             Shape(std::string path);
         

@@ -16,6 +16,7 @@ namespace tangram::geometry {
             Point p3;
         
         public:
+            static constexpr uint16_t ANGLE_STEP = 15;
             static constexpr uint16_t SIDE = 100;
             static const uint16_t HYPOTENUSE;
             
@@ -35,6 +36,6 @@ namespace tangram::geometry {
             
             void draw(MLV_Color color) const;
     };
-};
+}
 
 #endif // TRIANGLE_HPP

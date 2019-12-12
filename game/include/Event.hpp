@@ -1,6 +1,8 @@
 #ifndef EVENT_HPP
 #define EVENT_HPP
 
+#include <iostream>
+
 #include <MLV/MLV_event.h>
 
 #include "../../geometry/include/Point.hpp"
@@ -23,7 +25,9 @@ namespace tangram::game {
             const MLV_Button_state state;
             
             static Event get();
+            
+            friend std::ostream &operator<<(std::ostream &os, const Event &event);
     };
-};
+}
 
 #endif // EVENT_HPP

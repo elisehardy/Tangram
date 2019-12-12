@@ -4,7 +4,7 @@ using namespace tangram;
 
 void game::Engine::init() {
     MLV_create_window("Tangram", nullptr, WIDTH, HEIGHT);
-    MLV_change_frame_rate(120);
+    MLV_change_frame_rate(240);
     this->running = true;
 }
 
