@@ -1,4 +1,4 @@
-targets = Point.o Triangle.o Polygon.o Shape.o
+targets = Triangle.o Polygon.o Shape.o
 
 ################################################################################
 

@@ -9,19 +9,23 @@
 using namespace tangram::geometry;
 
 const uint16_t Triangle::HYPOTENUSE = static_cast<uint16_t>(sqrt(SIDE * SIDE * 2));
+const uint16_t Triangle::HEIGHT = static_cast<uint16_t>(Triangle::HYPOTENUSE / 2);
 
 
-Triangle::Triangle(const Point &offset) :
-        p1(offset), p2(offset + Vector(SIDE, 0)), p3(offset + Vector(0, SIDE)) {
+Triangle::Triangle(const Point16 &offset) :
+        p1(offset), p2(offset), p3(offset) {
+    this->p1 = offset;
+    this->p2 = offset + Vector16(SIDE, 0);
+    this->p3 = offset + Vector16(0, SIDE);
 }
 
 
-Triangle::Triangle(Point t_p1, Point t_p2, Point t_p3) :
-        p1(std::move(t_p1)), p2(std::move(t_p2)), p3(std::move(t_p3)) {
+Triangle::Triangle(Point16 t_p1, Point16 t_p2, Point16 t_p3) :
+        p1(t_p1), p2(t_p2), p3(t_p3) {
 }
 
 
-Triangle Triangle::translate(const Vector &v) const {
+Triangle Triangle::translate(const Vector16 &v) const {
     return Triangle(
             this->p1.translate(v),
             this->p2.translate(v),
@@ -30,7 +34,12 @@ Triangle Triangle::translate(const Vector &v) const {
 }
 
 
-Triangle Triangle::rotate(int16_t angle, const Point &center) const {
+Triangle Triangle::translate(int16_t x, int16_t y) const {
+    return this->translate({x, y});
+}
+
+
+Triangle Triangle::rotate(int16_t angle, const PointD &center) const {
     return Triangle(
             this->p1.rotate(angle, center),
             this->p2.rotate(angle, center),
@@ -39,19 +48,14 @@ Triangle Triangle::rotate(int16_t angle, const Point &center) const {
 }
 
 
-Triangle Triangle::rotate(int16_t angle) const {
-    return this->rotate(angle, Point::center({this->p1, this->p2, this->p3}));
-}
-
-
-bool Triangle::contains(const Point &p) const {
-    Vector Vab = this->p1 - this->p2;
-    Vector Vbc = this->p2 - this->p3;
-    Vector Vca = this->p3 - this->p1;
+bool Triangle::contains(const Point16 &p) const {
+    Vector16 Vab = this->p1 - this->p2;
+    Vector16 Vbc = this->p2 - this->p3;
+    Vector16 Vca = this->p3 - this->p1;
     
-    Vector Vax = p1 - p;
-    Vector Vbx = p2 - p;
-    Vector Vcx = p3 - p;
+    Vector16 Vax = p1 - p;
+    Vector16 Vbx = p2 - p;
+    Vector16 Vcx = p3 - p;
     
     int crossA = Vab ^Vax;
     int crossB = Vbc ^Vbx;
@@ -61,8 +65,8 @@ bool Triangle::contains(const Point &p) const {
 }
 
 
-std::vector<Point> Triangle::getPoints() const {
-    return {Point(p1), Point(p2), Point(p3)};
+std::vector<Point16> Triangle::getPoints() const {
+    return {Point16(p1), Point16(p2), Point16(p3)};
 }
 
 

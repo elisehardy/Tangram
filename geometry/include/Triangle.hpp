@@ -11,28 +11,29 @@ namespace tangram::geometry {
     class Triangle {
         
         private:
-            Point p1;
-            Point p2;
-            Point p3;
+            Point16 p1;
+            Point16 p2;
+            Point16 p3;
         
         public:
-            static constexpr uint16_t ANGLE_STEP = 15;
+            static constexpr uint16_t ANGLE_STEP = 5;
             static constexpr uint16_t SIDE = 100;
             static const uint16_t HYPOTENUSE;
+            static const uint16_t HEIGHT;
             
-            explicit Triangle(const Point &offset);
+            explicit Triangle(const Point16 &offset);
             
-            Triangle(Point p1, Point p2, Point p3);
+            Triangle(Point16 p1, Point16 p2, Point16 p3);
             
-            [[nodiscard]] Triangle translate(const Vector &v) const;
+            [[nodiscard]] Triangle translate(const Vector<int16_t> &v) const;
             
-            [[nodiscard]] Triangle rotate(int16_t n, const Point &center) const;
+            [[nodiscard]] Triangle translate(int16_t x, int16_t y) const;
             
-            [[nodiscard]] Triangle rotate(int16_t n) const;
+            [[nodiscard]] Triangle rotate(int16_t n, const PointD &center) const;
             
-            [[nodiscard]] bool contains(const Point &p) const;
+            [[nodiscard]] bool contains(const Point16 &p) const;
             
-            [[nodiscard]] std::vector<Point> getPoints() const;
+            [[nodiscard]] std::vector<Point16> getPoints() const;
             
             void draw(MLV_Color color) const;
     };

@@ -1,4 +1,4 @@
-targets = Engine.o Event.o main.o
+targets =  Engine.o Event.o main.o
 
 ################################################################################
 

@@ -14,8 +14,8 @@
 
 namespace tangram::game {
     
-    const uint16_t WIDTH = 1200;
-    const uint16_t HEIGHT = 600;
+    const uint16_t WIDTH = 1600;
+    const uint16_t HEIGHT = 900;
     
     
     

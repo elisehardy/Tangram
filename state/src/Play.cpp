@@ -8,8 +8,8 @@ Play Play::instance = Play();
 
 
 void Play::init() {
-    this->player = geometry::Shape::square(geometry::Point(100, 100));
-    this->goal = geometry::Shape::square(geometry::Point(100, 100));
+    this->player = geometry::Shape::square(geometry::Point16(100, 100));
+    this->goal = geometry::Shape::square(geometry::Point16(100, 100));
     uint16_t x = 5 * game::WIDTH / 6;
     
     auto create = new gui::Button(

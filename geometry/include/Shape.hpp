@@ -22,11 +22,11 @@ namespace tangram::geometry {
             
             Shape(std::string path);
         
-            static Shape square(const Point &offset);
+            static Shape square(const Point16 &offset);
             
             bool operator==(const Shape &other) const;
         
-            [[nodiscard]] std::vector<Point> getPoints() const;
+            [[nodiscard]] std::vector<Point16> getPoints() const;
             
             void update(const game::Event &event, game::Engine &engine) override final;
             

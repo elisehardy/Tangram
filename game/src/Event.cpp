@@ -32,8 +32,8 @@ namespace tangram::game {
 
 
 Event::Event(const MLV_Event t_type, const MLV_Keyboard_button t_symbol, const MLV_Keyboard_modifier t_modifier,
-             const char *t_text,
-             const geometry::Point t_mousePos, const MLV_Mouse_button t_mouseButton, const MLV_Button_state t_state) :
+             const char *t_text, const geometry::Point16 t_mousePos, const MLV_Mouse_button t_mouseButton,
+             const MLV_Button_state t_state) :
         type(t_type), symbol(t_symbol), modifier(t_modifier), text(t_text), mousePos(t_mousePos),
         mouseButton(t_mouseButton), state(t_state) {
 }
@@ -55,7 +55,7 @@ Event Event::get() {
     
     MLV_get_mouse_position(&x, &y);
     
-    geometry::Point mousePos = geometry::Point({static_cast<int16_t >(x), static_cast<int16_t >(y)});
+    geometry::Point16 mousePos = geometry::Point16({static_cast<int16_t >(x), static_cast<int16_t >(y)});
     return Event(type, symbol, modifier, text, mousePos, mouseButton, state);
 }
 

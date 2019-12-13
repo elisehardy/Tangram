@@ -8,7 +8,7 @@ Edit Edit::instance = Edit();
 
 
 void Edit::init() {
-    this->player = geometry::Shape::square(geometry::Point(100, 100));
+    this->player = geometry::Shape::square(geometry::Point16(100, 100));
     this->initialized = true;
 }
 
