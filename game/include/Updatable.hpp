@@ -1,13 +1,13 @@
 #ifndef OBSERVABLE_HPP
 #define OBSERVABLE_HPP
 
-#include "../../game/include/Engine.hpp"
-#include "../../game/include/Event.hpp"
+#include "Engine.hpp"
+#include "Event.hpp"
 
 
-namespace tangram::gui {
+namespace tangram::game {
     
-    class Observable {
+    class Updatable {
         public:
             virtual void update(const game::Event &event, game::Engine &engine) = 0;
     };

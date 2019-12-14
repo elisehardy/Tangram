@@ -1,4 +1,4 @@
-targets = Triangle.o Polygon.o Shape.o
+targets = Triangle.o Polygon.o ParserException.o Parser.o Shape.o
 
 ################################################################################
 
@@ -21,7 +21,10 @@ bin/Triangle.o: src/Triangle.cpp include/Triangle.hpp include/Point.hpp
 bin/Polygon.o: src/Polygon.cpp include/Polygon.hpp include/Triangle.hpp
 	$(CC) -c $< -o $@  $(CFLAGS)
 
-bin/Shape.o: src/Shape.cpp include/Shape.hpp include/Polygon.hpp
+bin/Parser.o: src/Parser.cpp include/Parser.hpp include/ParserException.hpp
+	$(CC) -c $< -o $@  $(CFLAGS)
+
+bin/Shape.o: src/Shape.cpp include/Shape.hpp include/Polygon.hpp include/Parser.hpp
 	$(CC) -c $< -o $@  $(CFLAGS)
 
 bin/%.o: %.cpp %.hpp

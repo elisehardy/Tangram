@@ -5,23 +5,23 @@
 
 #include <MLV/MLV_color.h>
 
-#include "../../gui/include/Observable.hpp"
-#include "../../gui/include/Drawable.hpp"
-
 #include "Triangle.hpp"
+
+#include "../../game/include/Updatable.hpp"
+#include "../../gui/include/Drawable.hpp"
 
 
 namespace tangram::geometry {
     
-    class Polygon : public gui::Drawable, public gui::Observable {
+    class Polygon : public gui::Drawable, public game::Updatable {
         
         private:
             std::vector<Triangle> triangles = {};
-            Point16 center = {0, 0};
+            Point16 center = { 0, 0 };
             int16_t angle = 0;
             MLV_Color color;
             
-            Point16 pressedPoint = {0, 0};
+            Point16 pressedPoint = { 0, 0 };
             int16_t currentRotation = 0;
             bool lpressed = false;
             bool rpressed = false;
@@ -60,13 +60,13 @@ namespace tangram::geometry {
             [[nodiscard]] bool contains(const Point16 &p) const;
             
             void save(const Polygon &p, MLV_Color color, bool shadow) const;
-        
+            
             void add(const std::vector<Triangle> &triangles);
-        
+            
             void add(const Triangle &t);
             
             void update(const game::Event &event, game::Engine &engine) override final;
-        
+            
             void draw() const override final;
             
             void shadow(MLV_Color color) const;

@@ -1,6 +1,10 @@
 #include "../include/Engine.hpp"
 
+#include "../../state/include/StateAbstract.hpp"
+
+
 using namespace tangram;
+
 
 void game::Engine::init() {
     MLV_create_window("Tangram", nullptr, WIDTH, HEIGHT);

@@ -28,7 +28,7 @@ Shape Shape::square(const Point16 &offset) {
     auto striangle2 = Polygon::smallTriangle(offset, MLV_COLOR_YELLOW).rotate(315);
     striangle2.translate(Triangle::SIDE * 1.54, Triangle::SIDE * 1.1);
     
-    auto square = Polygon::square(offset, MLV_COLOR_BLUE).rotate(45);
+    auto square = Polygon::square(offset, MLV_COLOR_WHITE).rotate(45);
     square.translate(Triangle::SIDE * 0.9, Triangle::SIDE * 1.64);
     
     auto parallelogram = Polygon::parallelogram(offset, MLV_COLOR_CYAN).rotate(90);

@@ -4,14 +4,14 @@
 #include <vector>
 #include <string>
 
-#include "../../gui/include/Observable.hpp"
+#include "../../game/include/Updatable.hpp"
 #include "../../gui/include/Drawable.hpp"
 
 #include "Polygon.hpp"
 
 
 namespace tangram::geometry {
-    class Shape : public gui::Drawable, public gui::Observable {
+    class Shape : public gui::Drawable, public game::Updatable {
         
         private:
             std::vector<Polygon> polygons = {};

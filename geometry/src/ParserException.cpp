@@ -1,10 +1,13 @@
 #include "../include/ParserException.hpp"
 
+#include <sstream>
+#include <utility>
 
-using namespace tangram::game;
+
+using namespace tangram::geometry;
 
 
-ParserException::ParserException(const std::string &t_path, uint16_t t_lin, uint16_t t_col, const std::string &t_msg) :
+ParserException::ParserException(std::string t_path, uint16_t t_lin, uint16_t t_col, std::string t_msg) :
         path(std::move(t_path)), lin(t_lin), col(t_col), msg(std::move(t_msg)) {
 }
 
@@ -28,7 +31,9 @@ std::string ParserException::getMessage() const {
     return this->msg;
 }
 
-//
-//const char *ParserException::what() const noexcept {
-//    return this->path + ":" + this->lin + ":" + this->col + ": error: " + this->msg;
-//}
+
+const char *ParserException::what() const noexcept {
+    std::stringstream ss;
+    ss << this->path << ":" << this->lin << ":" << this->col << ": error: " << this->msg;
+    return ss.str().c_str();
+}

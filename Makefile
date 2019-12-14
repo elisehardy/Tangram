@@ -1,5 +1,5 @@
 exec = tangram
-modules = geometry game state gui
+modules = geometry gui state game
 
 ################################################################################
 

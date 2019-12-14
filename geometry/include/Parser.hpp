@@ -4,11 +4,13 @@
 #include <cstdint>
 #include <string>
 
-#include "../../geometry/include/Shape.hpp"
-#include "../../geometry/include/Point.hpp"
+#include "Point.hpp"
 
 
-namespace tangram::game {
+namespace tangram::geometry {
+    
+    class Shape;
+    class Polygon;
     
     class Parser {
         private:
@@ -27,6 +29,7 @@ namespace tangram::game {
             geometry::Polygon parsePolygon(const std::string &s);
         
         public:
+            
             Parser() = default;
         
             geometry::Shape operator()(std::string);

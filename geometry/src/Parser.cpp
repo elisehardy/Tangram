@@ -3,10 +3,11 @@
 #include <regex>
 
 #include "../include/ParserException.hpp"
+#include "../include/Shape.hpp"
 
 
 using namespace tangram;
-using namespace tangram::game;
+using namespace tangram::geometry;
 
 
 void Parser::error(const std::string &what) const {

@@ -7,9 +7,9 @@
 #include <MLV/MLV_color.h>
 
 #include "../../gui/include/Drawable.hpp"
-#include "../../gui/include/Observer.hpp"
 #include "../../gui/include/Button.hpp"
 #include "../../game/include/Engine.hpp"
+#include "../../game/include/Updatable.hpp"
 
 #include "StateAbstract.hpp"
 #include "Edit.hpp"
@@ -21,8 +21,8 @@ namespace tangram::state {
     class Menu : public StateAbstract {
         private:
             static Menu instance;
-            gui::Observer observer;
             std::vector<gui::Drawable *> drawables;
+            std::vector<game::Updatable *> updatables;
             bool initialized = false;
             
             Menu() = default;
@@ -35,7 +35,7 @@ namespace tangram::state {
             void pause() override;
             void resume() override;
             void update(const game::Event &event, game::Engine &engine) override;
-            void draw() override;
+            void draw() const override;
     };
 }
 

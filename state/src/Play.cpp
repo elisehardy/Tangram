@@ -1,5 +1,6 @@
 #include "../include/Play.hpp"
 
+#include <algorithm>
 
 using namespace tangram;
 using namespace tangram::state;
@@ -23,8 +24,10 @@ void Play::init() {
     );
     this->initialized = true;
     
-    this->observer.add(create);
+    this->updatables.push_back(create);
+    this->updatables.push_back(&this->player);
     this->drawables.push_back(create);
+    this->drawables.push_back(&this->player);
 }
 
 
@@ -36,7 +39,7 @@ Play *Play::getInstance() {
 }
 
 
-void Play::draw() {
+void Play::draw() const {
     MLV_clear_window(MLV_COLOR_BLACK);
     MLV_draw_rectangle(goal_x, goal_y, game::WIDTH - (2 * 10), game::HEIGHT - (2 * 10),
                        MLV_COLOR_WHITE
@@ -47,8 +50,10 @@ void Play::draw() {
 
 
 void Play::update(const game::Event &event, game::Engine &engine) {
-    observer.notify(event, engine);
-    this->player.update(event, engine);
+    std::for_each(
+            this->updatables.begin(), this->updatables.end(),
+            [&](game::Updatable *u) { u->update(event, engine); }
+    );
     
     if (this->player == this->goal) {
         // TODO Partie terminée

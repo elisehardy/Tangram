@@ -5,10 +5,6 @@
 
 #include <MLV/MLV_all.h>
 
-#include "../../game/include/Event.hpp"
-#include "../../game/include/Engine.hpp"
-
-#include "Observable.hpp"
 
 namespace tangram::gui {
     

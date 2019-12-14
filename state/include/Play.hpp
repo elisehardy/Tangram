@@ -4,12 +4,12 @@
 #include <vector>
 
 #include "../../gui/include/Drawable.hpp"
-#include "../../gui/include/Observer.hpp"
 #include "../../gui/include/Button.hpp"
 
 #include "../../geometry/include/Shape.hpp"
 
 #include "../../game/include/Engine.hpp"
+#include "../../game/include/Updatable.hpp"
 
 #include "StateAbstract.hpp"
 
@@ -24,7 +24,7 @@ namespace tangram::state {
             static Play instance;
             
             std::vector<gui::Drawable *> drawables;
-            gui::Observer observer = gui::Observer();
+            std::vector<game::Updatable *> updatables;
             geometry::Shape player = geometry::Shape();
             geometry::Shape goal = geometry::Shape();
             bool initialized = false;
@@ -39,7 +39,7 @@ namespace tangram::state {
             void pause() override;
             void resume() override;
             void update(const game::Event &event, game::Engine &engine) override;
-            void draw() override;
+            void draw() const override;
     };
 }
 

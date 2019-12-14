@@ -1,5 +1,7 @@
 #include "../include/Menu.hpp"
 
+#include <algorithm>
+
 
 using namespace tangram;
 using namespace tangram::state;
@@ -47,11 +49,14 @@ void Menu::init() {
             [](game::Engine &e) { e.stop(); }
     );
     
-    this->observer.add({new_game, create, edit, quit});
     this->drawables.push_back(new_game);
     this->drawables.push_back(create);
     this->drawables.push_back(edit);
     this->drawables.push_back(quit);
+    this->updatables.push_back(new_game);
+    this->updatables.push_back(create);
+    this->updatables.push_back(edit);
+    this->updatables.push_back(quit);
 }
 
 
@@ -63,14 +68,17 @@ Menu *Menu::getInstance() {
 }
 
 
-void Menu::draw() {
+void Menu::draw() const {
     MLV_clear_window(MLV_COLOR_BLACK);
     std::for_each(this->drawables.begin(), this->drawables.end(), [](gui::Drawable *d) { d->draw(); });
 }
 
 
 void Menu::update(const game::Event &event, game::Engine &engine) {
-    observer.notify(event, engine);
+    std::for_each(
+            this->updatables.begin(), this->updatables.end(),
+            [&](game::Updatable *u) { u->update(event, engine); }
+    );
 }
 
 
