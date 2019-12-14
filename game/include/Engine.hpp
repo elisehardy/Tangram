@@ -9,8 +9,10 @@
 #include <MLV/MLV_time.h>
 
 #include "../../game/include/Event.hpp"
-#include "../../state/include/StateAbstract.hpp"
 
+namespace tangram::state {
+    class StateAbstract;
+}
 
 namespace tangram::game {
     

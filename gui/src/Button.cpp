@@ -15,54 +15,9 @@ Button::Button(uint16_t t_x, uint16_t t_y, uint16_t t_w, uint16_t t_h, uint8_t t
         hTextColor(t_hTextColor), hBackgroundColor(t_hBackgroundColor), pBorderColor(t_pBorderColor),
         pTextColor(t_pTextColor), pBackgroundColor(t_pBackgroundColor), justification(t_justification),
         horizontalPosition(t_horizontalPosition), verticalPosition(t_verticalPosition), hovered(false), pressed(false),
-        execute(t_execute) {
-    this->font = MLV_load_font(t_font, 20);
-}
+        execute(t_execute) {}
+
+void Button::update(const game::Event &event, game::Engine &engine) {}
 
 
-void Button::update(const game::Event &event, game::Engine &engine) {
-    int x1 = this->x, x2 = x1 + this->w, y1 = this->y, y2 = y1 + this->h;
-    int mx = event.mousePos.x, my = event.mousePos.y;
-    bool leftClick = event.type == MLV_MOUSE_BUTTON && event.mouseButton == MLV_BUTTON_LEFT;
-    
-    this->hovered = mx >= x1 && my >= y1 && mx <= x2 && my <= y2;
-    
-    if (this->pressed && leftClick && event.state == MLV_RELEASED) { // Left click released
-        if (this->hovered) { // Released on button
-            this->pressed = false;
-            this->execute(engine);
-        }
-        else { // Released outside button
-            this->pressed = false;
-        }
-    }
-    else if (this->hovered && leftClick && event.state == MLV_PRESSED) {  // Pressed on button
-        this->pressed = true;
-    }
-}
-
-
-void Button::draw() const {
-    MLV_Color borderColor, textColor, backgroundColor;
-    
-    if (this->pressed) {
-        textColor = this->pTextColor;
-        borderColor = this->pBorderColor;
-        backgroundColor = this->pBackgroundColor;
-    }
-    else if (this->hovered) {
-        textColor = this->hTextColor;
-        borderColor = this->hBorderColor;
-        backgroundColor = this->hBackgroundColor;
-    }
-    else {
-        textColor = this->textColor;
-        borderColor = this->borderColor;
-        backgroundColor = this->backgroundColor;
-    }
-    
-    MLV_draw_text_box_with_font(
-            this->x, this->y, this->w, this->h, this->text, this->font, this->i, borderColor, textColor,
-            backgroundColor, this->justification, this->horizontalPosition, this->verticalPosition
-    );
-}
+void Button::draw() const {}

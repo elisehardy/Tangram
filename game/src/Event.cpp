@@ -7,25 +7,6 @@ using namespace tangram::game;
 
 namespace tangram::game {
     std::ostream &operator<<(std::ostream &os, const Event &event) {
-        os << "Mouse position: " << event.mousePos << " | ";
-        switch (event.type) {
-            case MLV_NONE:
-            case MLV_MOUSE_MOTION:
-                os << "No event";
-                break;
-            case MLV_KEY:
-                os << "Keyboard's key " << (event.state == MLV_PRESSED ? "pressed" : "released")
-                   << ": " << MLV_convert_keyboard_button_to_string(event.symbol);
-                break;
-            case MLV_MOUSE_BUTTON:
-                os << "Mouse's button " << (event.state == MLV_PRESSED ? "pressed" : "released")
-                   << ": " << MLV_convert_mouse_button_to_string(event.mouseButton);
-                break;
-            case MLV_INPUT_BOX:
-                os << "Input box: " << event.text;
-                break;
-        }
-        
         return os;
     }
 }
@@ -40,22 +21,15 @@ Event::Event(const MLV_Event t_type, const MLV_Keyboard_button t_symbol, const M
 
 
 Event Event::get() {
-    MLV_Event type;
-    MLV_Keyboard_button symbol;
-    MLV_Keyboard_modifier modifier;
-    char *text;
-    int x, y;
-    MLV_Mouse_button mouseButton;
-    MLV_Button_state state;
-    
-    type = MLV_get_event(&symbol, &modifier, nullptr, &text, nullptr, nullptr, nullptr, &mouseButton, &state);
-    if (type == MLV_MOUSE_MOTION) {
-        type = MLV_NONE;
-    }
-    
-    MLV_get_mouse_position(&x, &y);
-    
+    MLV_Event type=MLV_NONE;
+    MLV_Keyboard_button symbol=MLV_KEYBOARD_NONE;
+    MLV_Keyboard_modifier modifier=MLV_KEYBOARD_KMOD_NONE;
+    char *text=new char;
+    int x=0, y=0;
+    MLV_Mouse_button mouseButton=MLV_BUTTON_LEFT;
+    MLV_Button_state state=MLV_PRESSED;
     geometry::Point16 mousePos = geometry::Point16({static_cast<int16_t >(x), static_cast<int16_t >(y)});
+
     return Event(type, symbol, modifier, text, mousePos, mouseButton, state);
 }
 

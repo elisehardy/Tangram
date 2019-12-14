@@ -4,16 +4,15 @@
 #include <vector>
 
 #include <MLV/MLV_color.h>
-
-#include "../../gui/include/Observable.hpp"
-#include "../../gui/include/Drawable.hpp"
-
 #include "Triangle.hpp"
+
+#include "../../game/include/Updatable.hpp"
+#include "../../gui/include/Drawable.hpp"
 
 
 namespace tangram::geometry {
     
-    class Polygon : public gui::Drawable, public gui::Observable {
+    class Polygon : public gui::Drawable, public game::Updatable {
         
         private:
             std::vector<Triangle> triangles = {};

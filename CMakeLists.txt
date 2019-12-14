@@ -2,24 +2,21 @@ cmake_minimum_required(VERSION 3.15)
 project(b'Tangram')
 
 add_library(Tangram OBJECT
+        geometry/src/ParserException.cpp
         geometry/src/Triangle.cpp
-        gui/src/Observer.cpp
+        geometry/src/Parser.cpp
+        geometry/src/Polygon.cpp
+        geometry/src/Shape.cpp
         gui/src/Button.cpp
         state/src/Play.cpp
         state/src/Edit.cpp
         state/src/Menu.cpp
+        state/src/Save.cpp
+        state/src/Load.cpp
         game/src/Engine.cpp
-        geometry/src/Shape.cpp
         game/src/Event.cpp
         game/src/main.cpp
-        geometry/src/Polygon.cpp
-        geometry/src/Shape.cpp
-        geometry/include/Shape.hpp
-        geometry/include/geometry.hpp
-        game/src/Parser.cpp
-        game/include/Parser.hpp
-        game/src/ParserException.cpp
-        game/include/ParserException.hpp
+
         )
 target_compile_options(Tangram PRIVATE
         -g

@@ -1,4 +1,4 @@
-targets = Menu.o Play.o Edit.o
+targets = Menu.o Play.o Edit.o Save.o Load.o
 
 ################################################################################
 

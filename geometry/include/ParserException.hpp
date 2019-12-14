@@ -5,7 +5,7 @@
 #include <string>
 
 
-namespace tangram::game {
+namespace tangram::geometry {
     
     class ParserException : public std::exception {
         
@@ -16,7 +16,7 @@ namespace tangram::game {
             const std::string msg;
         
         public:
-            ParserException(const std::string &t_path, uint16_t t_lin, uint16_t t_col, const std::string &t_msg);
+            ParserException(std::string t_path, uint16_t t_lin, uint16_t t_col, std::string t_msg);
             
             std::string getPath() const;
             

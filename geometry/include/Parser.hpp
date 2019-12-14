@@ -4,12 +4,14 @@
 #include <cstdint>
 #include <string>
 
-#include "../../geometry/include/Shape.hpp"
-#include "../../geometry/include/Point.hpp"
+#include "Point.hpp"
 
 
-namespace tangram::game {
-    
+namespace tangram::geometry {
+
+    class Shape;
+    class Polygon;
+
     class Parser {
         private:
             std::string path ={};

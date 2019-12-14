@@ -2,9 +2,9 @@
 #define BUTTON_HPP
 
 #include "../../game/include/Engine.hpp"
+#include "../../game/include/Updatable.hpp"
 
 #include "Drawable.hpp"
-#include "Observable.hpp"
 
 
 namespace tangram::gui {
@@ -12,7 +12,7 @@ namespace tangram::gui {
     /**
      * Represents a clickable button on the gui.
      */
-    class Button : public Drawable, public Observable {
+class Button : public Drawable, public game::Updatable {
         private:
             const uint16_t x; /**< X coordinate of the north-west corner. */
             const uint16_t y; /**< Y coordinate of the north-west corner. */
@@ -51,7 +51,7 @@ namespace tangram::gui {
             /**
              * Update `hovered` / `pressed` fields. Execute the `execute` function if the button is clicked.
              *
-             * @see Observable#update()
+             * @see Updatable#update()
              */
             void update(const game::Event &event, game::Engine &engine) override;
             
