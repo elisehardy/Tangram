@@ -8,8 +8,8 @@
 
 using namespace tangram::geometry;
 
-const uint16_t Triangle::HYPOTENUSE = static_cast<uint16_t>(sqrt(SIDE * SIDE * 2));
-const uint16_t Triangle::HEIGHT = static_cast<uint16_t>(Triangle::HYPOTENUSE / 2);
+const int16_t Triangle::HYPOTENUSE = static_cast<int16_t>(sqrt(SIDE * SIDE * 2));
+const int16_t Triangle::HEIGHT = static_cast<int16_t>(Triangle::HYPOTENUSE / 2);
 
 
 Triangle::Triangle(const Point16 &offset) :

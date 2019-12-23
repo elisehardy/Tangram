@@ -191,8 +191,7 @@ void Polygon::draw() const {
 
 void Polygon::shadow(MLV_Color color) const {
     std::vector<Point16> hull = Point16::convexHull(this->getPoints());
-    long size = hull.size();
-    long i;
+    uint64_t i, size = hull.size();
     
     for (i = 0; i < size - 1; i++) {
         MLV_draw_line(hull[i].x, hull[i].y, hull[i + 1].x, hull[i + 1].y, color);

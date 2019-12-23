@@ -16,7 +16,7 @@ namespace tangram::geometry {
     class Polygon : public gui::Drawable, public game::Updatable {
         
         private:
-            std::vector<Triangle> triangles = {};
+            std::vector <Triangle> triangles = {};
             Point16 center = { 0, 0 };
             int16_t angle = 0;
             MLV_Color color;
@@ -26,14 +26,26 @@ namespace tangram::geometry {
             bool lpressed = false;
             bool rpressed = false;
             bool hovered = false;
-            
-            explicit Polygon(MLV_Color color);
         
         public:
             
+            ///////////////////// CONSTRUCTOR & DESTRUCTOR /////////////////////
+            
+            explicit Polygon(MLV_Color color);
+            
+            Polygon(const Polygon &) = default;
+            
+            Polygon(Polygon &&) = default;
+            
+            Polygon &operator=(const Polygon &) = default;
+            
+            Polygon &operator=(Polygon &&) = default;
+            
+            virtual ~Polygon() = default;
+            
             //////////////////////////// FACTORIES /////////////////////////////
             
-            [[nodiscard]] static Polygon custom(const std::vector<Triangle> &triangles, MLV_Color color);
+            [[nodiscard]] static Polygon custom(const std::vector <Triangle> &triangles, MLV_Color color);
             
             [[nodiscard]] static Polygon smallTriangle(const Point16 &offset, MLV_Color color);
             
@@ -47,7 +59,7 @@ namespace tangram::geometry {
             
             ///////////////////////// TRANSFORMATIONS //////////////////////////
             
-            Polygon &translate(const Vector<int16_t> &v);
+            Polygon &translate(const Vector16 &v);
             
             Polygon &translate(int16_t x, int16_t y);
             
@@ -55,13 +67,13 @@ namespace tangram::geometry {
             
             ////////////////////////////// OTHERS //////////////////////////////
             
-            [[nodiscard]] std::vector<Point16> getPoints() const;
+            [[nodiscard]] std::vector <Point16> getPoints() const;
             
             [[nodiscard]] bool contains(const Point16 &p) const;
             
             void save(const Polygon &p, MLV_Color color, bool shadow) const;
             
-            void add(const std::vector<Triangle> &triangles);
+            void add(const std::vector <Triangle> &triangles);
             
             void add(const Triangle &t);
             

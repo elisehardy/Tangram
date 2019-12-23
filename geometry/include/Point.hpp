@@ -106,8 +106,8 @@ namespace tangram::geometry {
     template<typename T>
     template<typename U>
     Point<T>::Point(const Point<U> &p) {
-        this->x = p.x;
-        this->y = p.y;
+        this->x = static_cast<T>(p.x);
+        this->y = static_cast<T>(p.y);
     }
     
     
@@ -162,7 +162,7 @@ namespace tangram::geometry {
     
     template<typename T>
     Point<double> Point<T>::center(const std::vector<Point<T>> &points) {
-        int64_t size = points.size();
+        uint64_t size = points.size();
         double x = 0, y = 0;
         
         for (Point<T> p: points) {
@@ -176,26 +176,27 @@ namespace tangram::geometry {
     
     template<typename T>
     std::vector<Point<T>> Point<T>::convexHull(const std::vector<Point<T>> &points) {
-        long size = points.size();
+        uint64_t size = points.size();
+        
         if (size < 3) {
             return points;
         }
         
         std::vector<Point<T>> hull;
-        
-        int l = 0;
-        for (int i = 1; i < size; i++) {
+    
+        uint64_t l = 0;
+        for (uint64_t i = 1; i < size; i++) {
             if (points[i].x < points[l].x) {
                 l = i;
             }
         }
-        
-        int p = l, q;
+    
+        uint64_t p = l, q;
         do {
             hull.push_back(points[p]);
             
             q = (p + 1) % size;
-            for (int i = 0; i < size; i++) {
+            for (uint64_t i = 0; i < size; i++) {
                 if (orientation(points[p], points[i], points[q]) == 2) {
                     q = i;
                 }

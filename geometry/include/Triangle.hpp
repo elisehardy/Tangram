@@ -16,16 +16,16 @@ namespace tangram::geometry {
             Point16 p3;
         
         public:
-            static constexpr uint16_t ANGLE_STEP = 5;
-            static constexpr uint16_t SIDE = 100;
-            static const uint16_t HYPOTENUSE;
-            static const uint16_t HEIGHT;
+            static constexpr int16_t ANGLE_STEP = 5;
+            static constexpr int16_t SIDE = 100;
+            static const int16_t HYPOTENUSE;
+            static const int16_t HEIGHT;
             
             explicit Triangle(const Point16 &offset);
             
             Triangle(Point16 p1, Point16 p2, Point16 p3);
             
-            [[nodiscard]] Triangle translate(const Vector<int16_t> &v) const;
+            [[nodiscard]] Triangle translate(const Vector16 &v) const;
             
             [[nodiscard]] Triangle translate(int16_t x, int16_t y) const;
             

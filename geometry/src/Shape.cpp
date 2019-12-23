@@ -14,25 +14,25 @@ Shape Shape::square(const Point16 &offset) {
     Shape shape;
     
     auto ltriangle1 = Polygon::largeTriangle(offset, MLV_COLOR_PURPLE).rotate(135);
-    ltriangle1.translate(-Triangle::SIDE * 0.17, Triangle::SIDE * 0.75);
+    ltriangle1.translate(int16_t(-Triangle::SIDE * 0.17), int16_t(Triangle::SIDE * 0.75));
     
     auto ltriangle2 = Polygon::largeTriangle(offset, MLV_COLOR_RED).rotate(225);
-    ltriangle2.translate(Triangle::SIDE * 0.75, -Triangle::SIDE * 0.17);
+    ltriangle2.translate(int16_t(Triangle::SIDE * 0.75), int16_t(-Triangle::SIDE * 0.17));
     
     auto mtriangle = Polygon::mediumTriangle(offset, MLV_COLOR_GREEN).rotate(180);
-    mtriangle.translate(Triangle::SIDE * 1.89, Triangle::SIDE * 1.91);
+    mtriangle.translate(int16_t(Triangle::SIDE * 1.89), int16_t(Triangle::SIDE * 1.91));
     
     auto striangle1 = Polygon::smallTriangle(offset, MLV_COLOR_ORANGE2).rotate(45);
-    striangle1.translate(Triangle::SIDE * 0.36, Triangle::SIDE * 2.27);
+    striangle1.translate(int16_t(Triangle::SIDE * 0.36), int16_t(Triangle::SIDE * 2.27));
     
     auto striangle2 = Polygon::smallTriangle(offset, MLV_COLOR_YELLOW).rotate(315);
-    striangle2.translate(Triangle::SIDE * 1.54, Triangle::SIDE * 1.1);
+    striangle2.translate(int16_t(Triangle::SIDE * 1.54), int16_t(Triangle::SIDE * 1.1));
     
     auto square = Polygon::square(offset, MLV_COLOR_WHITE).rotate(45);
-    square.translate(Triangle::SIDE * 0.9, Triangle::SIDE * 1.64);
+    square.translate(int16_t(Triangle::SIDE * 0.9), int16_t(Triangle::SIDE * 1.64));
     
     auto parallelogram = Polygon::parallelogram(offset, MLV_COLOR_CYAN).rotate(90);
-    parallelogram.translate(Triangle::SIDE * 1.42, Triangle::SIDE * 0.71);
+    parallelogram.translate(int16_t(Triangle::SIDE * 1.42), int16_t(Triangle::SIDE * 0.71));
     
     shape.polygons.push_back(ltriangle1);
     shape.polygons.push_back(ltriangle2);
