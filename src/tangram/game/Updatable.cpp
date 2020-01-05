@@ -4,109 +4,69 @@
 namespace tangram::game {
     
     Updatable::Updatable() {
-        MLV_Keyboard_button b;
+        MLV_Keyboard_button k;
         
         for (uint64_t i = MLV_KEYBOARD_FIRST; i < MLV_KEYBOARD_LAST; i++) {
-            b = MLV_Keyboard_button(i);
-            this->keyPressed[b] = false;
-            this->keyHeld[b] = false;
-            this->keyReleased[b] = false;
-            this->keyClicked[b] = false;
-            this->keyPressedPoint[b] = { 0, 0 };
+            k = MLV_Keyboard_button(i);
+            this->keys[k] = InputState();
         }
+        
+        this->buttons[MLV_BUTTON_LEFT] = InputState();
+        this->buttons[MLV_BUTTON_RIGHT] = InputState();
+        this->buttons[MLV_BUTTON_MIDDLE] = InputState();
     }
     
     
     void Updatable::reset() {
-        MLV_Keyboard_button b;
-        
-        for (uint64_t i = MLV_KEYBOARD_FIRST; i < MLV_KEYBOARD_LAST; i++) {
-            b = MLV_Keyboard_button(i);
-            this->keyPressed[b] = false;
-            this->keyReleased[b] = false;
-            this->keyClicked[b] = false;
+        for (auto &[_, v]: this->buttons) {
+            v.reset();
         }
-        
-        this->leftPressed = false;
-        this->leftReleased = false;
-        this->leftClicked = false;
-        
-        this->rightPressed = false;
-        this->rightReleased = false;
-        this->rightClicked = false;
-        
-        this->middlePressed = false;
-        this->middleReleased = false;
-        this->middleClicked = false;
+        for (auto &[_, v]: this->keys) {
+            v.reset();
+        }
     }
     
     
     void Updatable::update(const game::Event &event, game::Engine &engine) {
-        bool leftButton = event.type == MLV_MOUSE_BUTTON && event.mouseButton == MLV_BUTTON_LEFT;
-        bool rightButton = event.type == MLV_MOUSE_BUTTON && event.mouseButton == MLV_BUTTON_RIGHT;
-        bool middleButton = event.type == MLV_MOUSE_BUTTON && event.mouseButton == MLV_BUTTON_MIDDLE;
+        if (!this->enabled) {
+            return;
+        }
+        
+        bool mouse = event.type == MLV_MOUSE_BUTTON;
         bool key = event.type == MLV_KEY;
         
         this->reset();
         
-        if (this->hovered && leftButton && event.state == MLV_PRESSED) {
-            this->leftPressedPoint = geometry::Point16(event.mousePos);
-            this->leftPressed = true;
-            this->leftHeld = true;
+        // Moused
+        if (mouse && this->hovered && event.state == MLV_PRESSED) { // Pressed
+            this->buttons[event.mouseButton].pressedPoint = geometry::Point16(event.mousePos);
+            this->buttons[event.mouseButton].pressed = true;
+            this->buttons[event.mouseButton].held = true;
         }
-        else if (this->leftHeld && leftButton && event.state == MLV_RELEASED) {
+        else if (mouse && this->buttons[event.mouseButton].held && event.state == MLV_RELEASED) { // Released
             if (this->hovered) {
-                this->leftReleased = true;
-                if (this->leftHeld) {
-                    this->leftClicked = true;
+                this->buttons[event.mouseButton].released = true;
+                if (this->buttons[event.mouseButton].held) {
+                    this->buttons[event.mouseButton].clicked = true;
                 }
             }
-            this->leftHeld = false;
+            this->buttons[event.mouseButton].held = false;
         }
         
-        if (this->hovered && rightButton && event.state == MLV_PRESSED) {
-            this->rightPressedPoint = geometry::Point16(event.mousePos);
-            this->rightPressed = true;
-            this->rightHeld = true;
+        // Keyboard
+        if (key && this->hovered && event.state == MLV_PRESSED) { // Pressed
+            this->keys[event.symbol].pressedPoint = geometry::Point16(event.mousePos);
+            this->keys[event.symbol].pressed = true;
+            this->keys[event.symbol].held = true;
         }
-        else if (this->rightHeld && rightButton && event.state == MLV_RELEASED) {
+        else if (key && this->keys[event.symbol].held && event.state == MLV_RELEASED) { // Released
             if (this->hovered) {
-                this->rightReleased = true;
-                if (this->rightHeld) {
-                    this->rightClicked = true;
+                this->keys[event.symbol].released = true;
+                if (this->keys[event.symbol].held) {
+                    this->keys[event.symbol].clicked = true;
                 }
             }
-            this->rightHeld = false;
-        }
-        
-        if (this->hovered && middleButton && event.state == MLV_PRESSED) {
-            this->middlePressedPoint = geometry::Point16(event.mousePos);
-            this->middlePressed = true;
-            this->middleHeld = true;
-        }
-        else if (this->middleHeld && middleButton && event.state == MLV_RELEASED) {
-            if (this->hovered) {
-                this->middleReleased = true;
-                if (this->middleHeld) {
-                    this->middleClicked = true;
-                }
-            }
-            this->middleHeld = false;
-        }
-        
-        if (this->hovered && key && event.state == MLV_PRESSED) {
-            this->keyPressedPoint[event.symbol] = geometry::Point16(event.mousePos);
-            this->keyPressed[event.symbol] = true;
-            this->keyHeld[event.symbol] = true;
-        }
-        else if (this->keyHeld[event.symbol] && key && event.state == MLV_RELEASED) {
-            if (this->hovered) {
-                this->keyReleased[event.symbol] = true;
-                if (this->keyHeld[event.symbol]) {
-                    this->keyClicked[event.symbol] = true;
-                }
-            }
-            this->keyHeld[event.symbol] = false;
+            this->keys[event.symbol].held = false;
         }
     }
     
@@ -115,103 +75,135 @@ namespace tangram::game {
         return hovered;
     }
     
+    ////////////////////////////// KEYBOARD'S KEY //////////////////////////////
     
-    bool Updatable::isLeftPressed() const {
-        return leftPressed;
-    }
-    
-    
-    bool Updatable::isLeftHeld() const {
-        return leftHeld;
-    }
-    
-    
-    bool Updatable::isLeftReleased() const {
-        return leftReleased;
-    }
-    
-    
-    bool Updatable::isLeftClicked() const {
-        return leftClicked;
-    }
-    
-    
-    geometry::Point16 Updatable::getLeftPressedPoint() const {
-        return leftPressedPoint;
-    }
-    
-    
-    bool Updatable::isRightPressed() const {
-        return rightPressed;
-    }
-    
-    
-    bool Updatable::isRightHeld() const {
-        return rightHeld;
-    }
-    
-    
-    bool Updatable::isRightReleased() const {
-        return rightReleased;
-    }
-    
-    
-    bool Updatable::isRightClicked() const {
-        return rightClicked;
-    }
-    
-    
-    geometry::Point16 Updatable::getRightPressedPoint() const {
-        return rightPressedPoint;
-    }
-    
-    
-    bool Updatable::isMiddlePressed() const {
-        return middlePressed;
-    }
-    
-    
-    bool Updatable::isMiddleHeld() const {
-        return middleHeld;
-    }
-    
-    
-    bool Updatable::isMiddleReleased() const {
-        return middleReleased;
-    }
-    
-    
-    bool Updatable::isMiddleClicked() const {
-        return middleClicked;
-    }
-    
-    
-    geometry::Point16 Updatable::getMiddlePressedPoint() const {
-        return middlePressedPoint;
+    InputState Updatable::getKeyInputState(MLV_Keyboard_button key) const {
+        return InputState(this->keys.at(key));
     }
     
     
     bool Updatable::isKeyPressed(MLV_Keyboard_button key) const {
-        return this->keyPressed.at(key);
+        return this->keys.at(key).pressed;
     }
     
     
     bool Updatable::isKeyHeld(MLV_Keyboard_button key) const {
-        return this->keyHeld.at(key);
+        return this->keys.at(key).held;
     }
     
     
     bool Updatable::isKeyReleased(MLV_Keyboard_button key) const {
-        return this->keyReleased.at(key);
+        return this->keys.at(key).released;
     }
     
     
     bool Updatable::isKeyClicked(MLV_Keyboard_button key) const {
-        return this->keyClicked.at(key);
+        return this->keys.at(key).clicked;
     }
     
     
     geometry::Point16 Updatable::getKeyPressedPoint(MLV_Keyboard_button key) const {
-        return this->keyPressedPoint.at(key);
+        return this->keys.at(key).pressedPoint;
+    }
+    
+    ////////////////////////////// MOUSE'S BUTTON //////////////////////////////
+    
+    
+    InputState Updatable::getButtonInputState(MLV_Mouse_button button) const {
+        return InputState(this->buttons.at(button));
+    }
+    
+    
+    bool Updatable::isButtonPressed(MLV_Mouse_button button) const {
+        return this->buttons.at(button).pressed;
+    }
+    
+    
+    bool Updatable::isButtonHeld(MLV_Mouse_button button) const {
+        return this->buttons.at(button).held;
+    }
+    
+    
+    bool Updatable::isButtonReleased(MLV_Mouse_button button) const {
+        return this->buttons.at(button).released;
+    }
+    
+    
+    bool Updatable::isButtonClicked(MLV_Mouse_button button) const {
+        return this->buttons.at(button).clicked;
+    }
+    
+    
+    geometry::Point16 Updatable::getButtonPressedPoint(MLV_Mouse_button button) const {
+        return this->buttons.at(button).pressedPoint;
+    }
+    
+    //////////////////////////// RIGHT BUTTON'S SHORTCUTS //////////////////////
+    
+    
+    bool Updatable::isRightPressed() const {
+        return this->buttons.at(MLV_BUTTON_RIGHT).pressed;
+    }
+    
+    
+    bool Updatable::isRightHeld() const {
+        return this->buttons.at(MLV_BUTTON_RIGHT).held;
+    }
+    
+    
+    bool Updatable::isRightReleased() const {
+        return this->buttons.at(MLV_BUTTON_RIGHT).released;
+    }
+    
+    
+    bool Updatable::isRightClicked() const {
+        return this->buttons.at(MLV_BUTTON_RIGHT).clicked;
+    }
+    
+    
+    geometry::Point16 Updatable::getRightPressedPoint() const {
+        return this->buttons.at(MLV_BUTTON_RIGHT).pressedPoint;
+    }
+    
+    //////////////////////////// LEFT BUTTON'S SHORTCUTS ///////////////////////
+    
+    
+    bool Updatable::isLeftPressed() const {
+        return this->buttons.at(MLV_BUTTON_LEFT).pressed;
+    }
+    
+    
+    bool Updatable::isLeftHeld() const {
+        return this->buttons.at(MLV_BUTTON_LEFT).held;
+    }
+    
+    
+    bool Updatable::isLeftReleased() const {
+        return this->buttons.at(MLV_BUTTON_LEFT).released;
+    }
+    
+    
+    bool Updatable::isLeftClicked() const {
+        return this->buttons.at(MLV_BUTTON_LEFT).clicked;
+    }
+    
+    
+    geometry::Point16 Updatable::getLeftPressedPoint() const {
+        return this->buttons.at(MLV_BUTTON_LEFT).pressedPoint;
+    }
+    
+    
+    bool Updatable::isEnable() const {
+        return this->enabled;
+    }
+    
+    
+    void Updatable::enable() {
+        this->enabled = true;
+    }
+    
+    
+    void Updatable::disable() {
+        this->enabled = false;
     }
 }

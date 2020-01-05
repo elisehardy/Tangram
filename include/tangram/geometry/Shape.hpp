@@ -39,6 +39,8 @@ namespace tangram::geometry {
             
             Shape &scale(double factor);
             
+            Shape &setColor(MLV_Color color);
+            
             ///////////////////////////// OTHERS ///////////////////////////////
             
             bool operator==(const Shape &other) const;
@@ -49,7 +51,6 @@ namespace tangram::geometry {
             
             void addPolygon(const Polygon &polygon);
             
-            void setColor(MLV_Color color);
             
             void ensureInbounds(Point16 lowerBound, Point16 upperBound);
             

@@ -14,6 +14,8 @@ namespace tangram::gui {
             /**
              * Draw this drawable on the screen.
              */
+            virtual ~Drawable() = default;
+            
             virtual void draw() const = 0;
     };
 }

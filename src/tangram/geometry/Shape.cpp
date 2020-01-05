@@ -132,6 +132,16 @@ namespace tangram::geometry {
     }
     
     
+    Shape &Shape::setColor(MLV_Color color) {
+        std::for_each(
+            this->polygons.begin(), this->polygons.end(),
+            [&](Polygon &p) { p.setColor(color); }
+        );
+    
+        return *this;
+    }
+    
+    
     bool tangram::geometry::Shape::operator==(const tangram::geometry::Shape &other) const {
         std::vector<Point16> aPoints = this->getPoints(), bPoints = other.getPoints();
         return aPoints.size() == bPoints.size() && std::is_permutation(aPoints.begin(), aPoints.end(), bPoints.begin());
@@ -166,14 +176,6 @@ namespace tangram::geometry {
     }
     
     
-    void Shape::setColor(MLV_Color color) {
-        std::for_each(
-            this->polygons.begin(), this->polygons.end(),
-            [&](Polygon &p) { p.setColor(color); }
-        );
-    }
-    
-    
     void Shape::ensureInbounds(Point16 lowerBound, Point16 upperBound) {
         uint64_t i, size = this->polygons.size();
         
@@ -204,7 +206,7 @@ namespace tangram::geometry {
             Polygon &p = *it;
             
             p.update(event, engine);
-    
+            
             // Moving the Shape
             if (p.isLeftHeld() && !first) {
                 flag = true;
@@ -218,15 +220,15 @@ namespace tangram::geometry {
                 flag = true;
                 p.translate(geometry::Point16(1, 0));
             }
-            if (p.isKeyClicked(MLV_KEYBOARD_s) || p.isKeyClicked(MLV_KEYBOARD_LEFT)) {
+            if (p.isKeyClicked(MLV_KEYBOARD_s) || p.isKeyClicked(MLV_KEYBOARD_DOWN)) {
                 flag = true;
                 p.translate(geometry::Point16(0, 1));
             }
-            if (p.isKeyClicked(MLV_KEYBOARD_q) || p.isKeyClicked(MLV_KEYBOARD_DOWN)) {
+            if (p.isKeyClicked(MLV_KEYBOARD_q) || p.isKeyClicked(MLV_KEYBOARD_LEFT)) {
                 flag = true;
                 p.translate(geometry::Point16(-1, 0));
             }
-    
+            
             // Rotating the shape
             if (p.isRightHeld() && !first) {
                 flag = true;

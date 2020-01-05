@@ -5,7 +5,8 @@
 
 #include <tangram/game/Engine.hpp>
 #include <tangram/game/Event.hpp>
-#include <tangram/geometry/Point.hpp>
+#include <tangram/game/InputState.hpp>
+
 
 /**
  * Interface for updatable elements.
@@ -28,57 +29,61 @@
 namespace tangram::game {
     
     class Updatable {
+        
         private:
             void reset();
-            
+        
         protected:
             bool hovered = false;
-            
-            // Left button
-            bool leftPressed = false;
-            bool leftHeld = false;
-            bool leftReleased = false;
-            bool leftClicked = false;
-            geometry::Point16 leftPressedPoint = { 0, 0 };
-            
-            // Right button
-            bool rightPressed = false;
-            bool rightHeld = false;
-            bool rightReleased = false;
-            bool rightClicked = false;
-            geometry::Point16 rightPressedPoint = { 0, 0 };
-            
-            // Middle button
-            bool middlePressed = false;
-            bool middleHeld = false;
-            bool middleReleased = false;
-            bool middleClicked = false;
-            geometry::Point16 middlePressedPoint = { 0, 0 };
-            
-            // Keyboard
-            std::unordered_map<MLV_Keyboard_button, bool> keyPressed;
-            std::unordered_map<MLV_Keyboard_button, bool> keyHeld;
-            std::unordered_map<MLV_Keyboard_button, bool> keyReleased;
-            std::unordered_map<MLV_Keyboard_button, bool> keyClicked;
-            std::unordered_map<MLV_Keyboard_button, geometry::Point16> keyPressedPoint;
+            bool enabled = true;
+            std::unordered_map<MLV_Mouse_button, InputState> buttons;
+            std::unordered_map<MLV_Keyboard_button, InputState> keys;
         
         public:
             
             Updatable();
             
-            virtual void update(const game::Event &event, game::Engine &engine) = 0;
+            virtual ~Updatable() = default;
+            
+            virtual void update(const game::Event &event, game::Engine &engine);
             
             [[nodiscard]] bool isHovered() const;
             
-            [[nodiscard]] bool isLeftPressed() const;
+            [[nodiscard]] bool isEnable() const;
             
-            [[nodiscard]] bool isLeftHeld() const;
+            void enable();
             
-            [[nodiscard]] bool isLeftReleased() const;
+            void disable();
             
-            [[nodiscard]] bool isLeftClicked() const;
+            ////////////////////////// KEYBOARD'S KEY //////////////////////////
             
-            [[nodiscard]] geometry::Point16 getLeftPressedPoint() const;
+            [[nodiscard]] InputState getKeyInputState(MLV_Keyboard_button key) const;
+            
+            [[nodiscard]] bool isKeyPressed(MLV_Keyboard_button key) const;
+            
+            [[nodiscard]] bool isKeyHeld(MLV_Keyboard_button key) const;
+            
+            [[nodiscard]] bool isKeyReleased(MLV_Keyboard_button key) const;
+            
+            [[nodiscard]] bool isKeyClicked(MLV_Keyboard_button key) const;
+            
+            [[nodiscard]] geometry::Point16 getKeyPressedPoint(MLV_Keyboard_button key) const;
+            
+            ////////////////////////// MOUSE'S BUTTON //////////////////////////
+            
+            [[nodiscard]] InputState getButtonInputState(MLV_Mouse_button button) const;
+            
+            [[nodiscard]] bool isButtonPressed(MLV_Mouse_button button) const;
+            
+            [[nodiscard]] bool isButtonHeld(MLV_Mouse_button button) const;
+            
+            [[nodiscard]] bool isButtonReleased(MLV_Mouse_button button) const;
+            
+            [[nodiscard]] bool isButtonClicked(MLV_Mouse_button button) const;
+            
+            [[nodiscard]] geometry::Point16 getButtonPressedPoint(MLV_Mouse_button button) const;
+            
+            //////////////////////// RIGHT BUTTON'S SHORTCUTS //////////////////
             
             [[nodiscard]] bool isRightPressed() const;
             
@@ -90,25 +95,17 @@ namespace tangram::game {
             
             [[nodiscard]] geometry::Point16 getRightPressedPoint() const;
             
-            [[nodiscard]] bool isMiddlePressed() const;
+            //////////////////////// LEFT BUTTON'S SHORTCUTS ///////////////////
             
-            [[nodiscard]] bool isMiddleHeld() const;
+            [[nodiscard]] bool isLeftPressed() const;
             
-            [[nodiscard]] bool isMiddleReleased() const;
+            [[nodiscard]] bool isLeftHeld() const;
             
-            [[nodiscard]] bool isMiddleClicked() const;
+            [[nodiscard]] bool isLeftReleased() const;
             
-            [[nodiscard]] geometry::Point16 getMiddlePressedPoint() const;
+            [[nodiscard]] bool isLeftClicked() const;
             
-            [[nodiscard]] bool isKeyPressed(MLV_Keyboard_button key) const;
-            
-            [[nodiscard]] bool isKeyHeld(MLV_Keyboard_button key) const;
-            
-            [[nodiscard]] bool isKeyReleased(MLV_Keyboard_button key) const;
-            
-            [[nodiscard]] bool isKeyClicked(MLV_Keyboard_button key) const;
-            
-            [[nodiscard]] geometry::Point16 getKeyPressedPoint(MLV_Keyboard_button key) const;
+            [[nodiscard]] geometry::Point16 getLeftPressedPoint() const;
     };
 }
 

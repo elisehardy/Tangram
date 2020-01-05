@@ -12,12 +12,13 @@ namespace tangram::geometry {
     
     template<typename T>
     class Point {
+            static_assert(std::is_arithmetic<T>::value, "Arithmetic type is required");
+        
         public:
             static constexpr uint16_t NEAR_THRESHOLD = 10;
             
             T x = static_cast<T>(0);
             T y = static_cast<T>(0);
-            
             
             ///////////////////// CONSTRUCTOR & DESTRUCTOR /////////////////////
             
@@ -29,6 +30,11 @@ namespace tangram::geometry {
             Point<T>(const Point<U> &p);
             
             ///////////////////////////// OPERATORS ////////////////////////////
+            
+            /**
+             * Allows array-like access
+             */
+            T &operator[](int i);
             
             bool operator==(const Point<T> &other) const;
             
@@ -48,14 +54,17 @@ namespace tangram::geometry {
             friend std::ostream &operator<<(std::ostream &os, const Point<U> &dt);
             
             ///////////////////////////// OTHERS ///////////////////////////////
-        
+            
             [[nodiscard]] Point<T> rotate(int16_t angle, const Point<double> &center) const;
-        
+            
             [[nodiscard]] Point<T> translate(const Point<T> &translation) const;
-        
+            
             [[nodiscard]] static Point<double> center(const std::vector<Point<T>> &points);
-        
-            [[nodiscard]] static std::vector<Point<T>> convexHull(const std::vector<Point<T>> &points);
+            
+            [[nodiscard]] static Point<double> center(Point<T> first);
+            
+            template<typename... Args>
+            [[nodiscard]] static Point<double> center(Point<T> first, Args... args);
     };
     
     
@@ -106,13 +115,6 @@ namespace tangram::geometry {
     
     
     template<typename T>
-    std::ostream &operator<<(std::ostream &os, const Point<T> &p) {
-        os << "(" << p.x << ", " << p.y << ")";
-        return os;
-    }
-    
-    
-    template<typename T>
     Point<T>::Point(T t_x, T t_y) :
         x(t_x), y(t_y) {
     }
@@ -121,27 +123,42 @@ namespace tangram::geometry {
     template<typename T>
     template<typename U>
     Point<T>::Point(const Point<U> &p) {
+        static_assert(std::is_arithmetic<U>::value, "Arithmetic type is required");
         this->x = static_cast<T>(p.x);
         this->y = static_cast<T>(p.y);
     }
     
     
     template<typename T>
+    T &Point<T>::operator[](int i) {
+        return *(&x + i);
+    }
+    
+    
+    template<typename T>
+    bool Point<T>::operator==(const Point<T> &other) const {
+        return (std::abs(this->x - other.x) < NEAR_THRESHOLD
+                && std::abs(this->y - other.y) < NEAR_THRESHOLD);
+    }
+    
+    
+    template<typename T>
     Point<T> Point<T>::operator+(const Point<T> &other) const {
-        return Point(this->x + other.x, this->y + other.y);
+        return Point<T>(this->x + other.x, this->y + other.y);
     }
     
     
     template<typename T>
     Point<T> Point<T>::operator-(const Point<T> &other) const {
-        return Point(this->x - other.x, this->y - other.y);
+        return Point<T>(this->x - other.x, this->y - other.y);
     }
     
     
     template<typename T>
     template<typename U>
     Point<T> Point<T>::operator*(const Point<U> &other) const {
-        return Point(
+        static_assert(std::is_arithmetic<U>::value, "Arithmetic type is required");
+        return Point<T>(
             static_cast<T>(this->x * other.x),
             static_cast<T>(this->y * other.y)
         );
@@ -149,9 +166,17 @@ namespace tangram::geometry {
     
     
     template<typename T>
+    std::ostream &operator<<(std::ostream &os, const Point<T> &p) {
+        os << "(" << p.x << ", " << p.y << ")";
+        return os;
+    }
+    
+    
+    template<typename T>
     template<typename U>
     Point<T> Point<T>::operator*(U factor) const {
-        return Point(
+        static_assert(std::is_arithmetic<U>::value, "Arithmetic type is required");
+        return Point<T>(
             static_cast<T>(this->x * factor),
             static_cast<T>(this->y * factor)
         );
@@ -165,13 +190,6 @@ namespace tangram::geometry {
     
     
     template<typename T>
-    bool Point<T>::operator==(const Point<T> &other) const {
-        return (std::abs(this->x - other.x) < NEAR_THRESHOLD
-                && std::abs(this->y - other.y) < NEAR_THRESHOLD);
-    }
-    
-    
-    template<typename T>
     Point<T> Point<T>::rotate(int16_t angle, const Point<double> &center) const {
         double x = this->x - center.x;
         double y = this->y - center.y;
@@ -179,7 +197,7 @@ namespace tangram::geometry {
         double c = cos(rad);
         double s = sin(rad);
         
-        return Point(
+        return Point<T>(
             static_cast<T>(x * c - y * s + center.x),
             static_cast<T>(x * s + y * c + center.y)
         );
@@ -188,7 +206,7 @@ namespace tangram::geometry {
     
     template<typename T>
     Point<T> Point<T>::translate(const Point<T> &translation) const {
-        return Point(
+        return Point<T>(
             this->x + translation.x,
             this->y + translation.y
         );
@@ -205,46 +223,25 @@ namespace tangram::geometry {
             y += p.y;
         }
         
-        return Point(
-            static_cast<T>(x / size),
-            static_cast<T>(y / size)
+        return Point<double>(
+            x / size,
+            y / size
         );
     }
     
     
     template<typename T>
-    std::vector<Point<T>> Point<T>::convexHull(const std::vector<Point<T>> &points) {
-        uint64_t size = points.size();
-        
-        if (size < 3) {
-            return points;
-        }
-        
-        std::vector<Point<T>> hull;
-        
-        uint64_t l = 0;
-        for (uint64_t i = 1; i < size; i++) {
-            if (points[i].x < points[l].x) {
-                l = i;
-            }
-        }
-        
-        uint64_t p = l, q;
-        do {
-            hull.push_back(points[p]);
-            
-            q = (p + 1) % size;
-            for (uint64_t i = 0; i < size; i++) {
-                if (orientation(points[p], points[i], points[q]) == 2) {
-                    q = i;
-                }
-            }
-            
-            p = q;
-        } while (p != l);
-        
-        return hull;
+    Point<double> Point<T>::center(Point<T> first) {
+        return first;
+    }
+    
+
+    template<typename T>
+    template<typename... Args>
+    Point<double> Point<T>::center(Point<T> first, Args... args) {
+        return center(std::vector{args...});
     }
 }
 
 #endif //POINT_HPP
+

@@ -49,19 +49,25 @@ namespace tangram::game {
     
     
     void Engine::update(const Event &event) {
+        
         this->states.back()->update(event, *this);
+        if (this->states.empty()) {
+            this->stop();
+        }
     }
     
     
     void Engine::draw() {
-        this->states.back()->draw();
+        if (!this->states.empty()) {
+            this->states.back()->draw();
+        }
         MLV_actualise_window();
         MLV_delay_according_to_frame_rate();
     }
     
     
     bool Engine::isRunning() {
-        return !this->running;
+        return this->running;
     }
     
     

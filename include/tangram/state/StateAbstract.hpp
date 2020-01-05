@@ -14,14 +14,21 @@ namespace tangram::game {
 namespace tangram::state {
     
     class StateAbstract : public gui::Drawable, public game::Updatable {
+        
         protected:
+            bool initialized = false;
+            
             StateAbstract() = default;
         
         public:
+            
             virtual void init() = 0;
-            virtual void cleanup() = 0;
+            
             virtual void pause() = 0;
+            
             virtual void resume() = 0;
+            
+            virtual void cleanup() = 0;
     };
 }
 

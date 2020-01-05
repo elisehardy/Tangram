@@ -1,16 +1,23 @@
 # Consignes
 
+
 ## Rendu 1 (Début février)
 
 - [ ] Les fonctionnalités du C++ étudiées dans les 4 premiers CM (octobre à décembre)
 
-- [ ] Utiliser des classes STL (au moins 3 : list, map, set ....)
+- [X] Utiliser 1 classe STL (std::vector)
+
+- [X] Utiliser 2 classe STL (std::unordered_map)
+
+- [X] Utiliser 3+ classe STL (std::map, std::stack)
 
 - [X] Créer au moins une classe template
 
 - [X] Inférence de type, lambda, constexpr
 
+
 ### Résumé CM
+
 * CM1:
 - [X] const, pointeurs, références, fonction, surcharge de fonction
 - [X] surcharge d'opérateur, fonction inline, allocation et libération dynamiques

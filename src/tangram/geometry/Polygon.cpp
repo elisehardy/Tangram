@@ -77,7 +77,7 @@ namespace tangram::geometry {
             [&](Triangle &t) { t = t.translate(v); }
         );
         
-        this->leftPressedPoint = this->leftPressedPoint.translate(v);
+        this->buttons[MLV_BUTTON_LEFT].pressedPoint = this->buttons[MLV_BUTTON_LEFT].pressedPoint.translate(v);
         this->center = this->center.translate(v);
         return *this;
     }
@@ -94,7 +94,7 @@ namespace tangram::geometry {
             [&](Triangle &t) { t = t.scale(v); }
         );
         
-        this->leftPressedPoint = Point(this->leftPressedPoint * v);
+        this->buttons[MLV_BUTTON_LEFT].pressedPoint = Point(this->buttons[MLV_BUTTON_LEFT].pressedPoint * v);
         this->center = this->center * v;
         return *this;
     }
@@ -157,7 +157,7 @@ namespace tangram::geometry {
     std::ostream &operator<<(std::ostream &os, const Polygon &p) {
         os << "{" << std::endl;
         for (const Triangle &t: p.triangles) {
-            os << "    " <<  t << std::endl;
+            os << "    " << t << std::endl;
         }
         os << "}" << std::endl;
         return os;
@@ -166,7 +166,7 @@ namespace tangram::geometry {
     
     void Polygon::add(const Triangle &t) {
         this->triangles.push_back(t);
-        this->center = center = Point16::center(this->getPoints());
+        this->center = Point16::center(this->getPoints());
     }
     
     
@@ -180,7 +180,7 @@ namespace tangram::geometry {
         
         game::Updatable::update(event, engine);
         
-        if (this->rightPressed) {
+        if (this->isRightPressed()) {
             this->currentRotation = 0;
         }
     }
@@ -192,7 +192,7 @@ namespace tangram::geometry {
         
         color = this->color;
         
-        if (this->leftHeld || this->rightHeld) {
+        if (this->isLeftHeld() || this->isRightHeld()) {
             MLV_convert_color_to_rgba(this->color, &r, &g, &b, &a);
             color = MLV_rgba(uint8_t(r * 0.60), uint8_t(g * 0.60), uint8_t(b * 0.60), a);
         }

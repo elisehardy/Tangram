@@ -5,7 +5,7 @@
 #include <MLV/MLV_shape.h>
 
 #include <tangram/state/Edit.hpp>
-
+#include <tangram/gui/Button.hpp>
 
 using namespace tangram;
 
@@ -53,6 +53,7 @@ namespace tangram::state {
         this->initialized = true;
     }
     
+    
     void Edit::save(game::Engine &engine) {
         std::string title = dynamic_cast<Edit *>(engine.current())->title;
         std::ofstream file = std::ofstream(game::SHAPE_DIR + title + ".shp");
@@ -60,18 +61,19 @@ namespace tangram::state {
         file.close();
     }
     
-    Edit * Edit::load(std::string path) {
+    
+    Edit *Edit::load(std::string path) {
         return Edit::getInstance();
     }
     
     
     Edit *Edit::getInstance() {
-        static Edit create;
+        static Edit edit;
         
-        if (!create.initialized) {
-            create.init();
+        if (!edit.initialized) {
+            edit.init();
         }
-        return &create;
+        return &edit;
     }
     
     
@@ -110,10 +112,9 @@ namespace tangram::state {
         this->goal.scale(PREVIEW_SCALE_FACTOR).translate(PREVIEW_X, PREVIEW_Y).setColor(MLV_COLOR_GREY50);
     }
     
-    
     void Edit::cleanup() {
-    }
     
+    }
     
     void Edit::pause() {
     }

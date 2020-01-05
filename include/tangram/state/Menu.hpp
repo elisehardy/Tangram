@@ -1,6 +1,7 @@
 #ifndef MAIN_MENU_HPP
 #define MAIN_MENU_HPP
 
+#include <memory>
 #include <vector>
 
 #include <MLV/MLV_window.h>
@@ -19,11 +20,10 @@
 namespace tangram::state {
     
     class Menu : public StateAbstract {
+        
         private:
-            static Menu instance;
-            std::vector<gui::Drawable *> drawables;
-            std::vector<game::Updatable *> updatables;
-            bool initialized = false;
+            std::vector<std::shared_ptr<game::Updatable>> updatables;
+            std::vector<std::shared_ptr<gui::Drawable>> drawables;
             
             Menu() = default;
             
@@ -31,10 +31,15 @@ namespace tangram::state {
         
         public:
             static Menu *getInstance();
+            
             void cleanup() override;
+            
             void pause() override;
+            
             void resume() override;
+            
             void update(const game::Event &event, game::Engine &engine) override;
+            
             void draw() const override;
     };
 }

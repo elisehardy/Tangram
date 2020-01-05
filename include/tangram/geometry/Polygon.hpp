@@ -36,8 +36,6 @@ namespace tangram::geometry {
             
             Polygon &operator=(Polygon &&) = default;
             
-            virtual ~Polygon() = default;
-            
             //////////////////////////// FACTORIES /////////////////////////////
             
             [[nodiscard]] static Polygon custom(const std::vector<Triangle> &triangles, MLV_Color color);
