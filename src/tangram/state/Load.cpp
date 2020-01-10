@@ -2,6 +2,7 @@
 #include <algorithm>
 
 #include <tangram/state/Load.hpp>
+#include <tangram/state/Edit.hpp>
 #include <tangram/geometry/Parser.hpp>
 
 
@@ -33,7 +34,7 @@ namespace tangram::state {
                 gui::ShapePreview(parser(entry.path()), PREVIEW_SCALE_FACTOR, game::HEIGHT, x, y)
             );
             
-            std::cout << "Before empalce" << std::endl;
+            std::cout << "Before emplace" << std::endl;
             this->prevButtons.emplace(
                 entry.path(),
                 gui::Button(
@@ -43,10 +44,15 @@ namespace tangram::state {
                     MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
                     MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
                     MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-                    [](game::Engine &e) { e.stop(); }
+                    std::bind([](game::Engine &e, const std::string &s) {
+                        e.popState(); e.pushState(Edit::getInstance()->loadShape(s));
+                    }, std::placeholders::_1, entry.path())
                 )
             );
             std::cout << "After emplace" << std::endl;
+            
+            this->prevOrder.push_back(entry.path());
+            
             i = (i + 1) % 3;
             if (i == 0) {
                 j = (j + 1) % 2;
@@ -112,11 +118,11 @@ namespace tangram::state {
         }
         
         std::for_each(
-            std::next(this->prevButtons.begin(), page * 6),
-            std::next(this->prevButtons.begin(), std::max(static_cast<int>(this->prevButtons.size()), page * 6 + 6)),
-            [&](auto &b) { b.second.update(event, engine); }
+            std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6)),
+            std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6 + 6)),
+            [&](const auto &s) { this->prevButtons.at(s).update(event, engine); }
         );
-    
+        
         bool lastPage = (page + 1) * 6 >= this->previews.size();
         bool firstPage = page == 0;
         this->next->enable();
@@ -130,7 +136,6 @@ namespace tangram::state {
         
         this->next->update(event, engine);
         this->prev->update(event, engine);
-    
         
         if (!firstPage && (isKeyClicked(MLV_KEYBOARD_q) || isKeyClicked(MLV_KEYBOARD_LEFT))) {
             this->page--;
@@ -143,28 +148,24 @@ namespace tangram::state {
     
     
     void Load::draw() const {
-        int32_t boffset = std::min(static_cast<int>(this->previews.size()), page * 6);
-        int32_t eoffset = std::min(static_cast<int>(this->previews.size()), page * 6 + 6);
-        
         MLV_clear_window(MLV_COLOR_BLACK);
         
         std::for_each(
-            std::next(this->previews.begin(), boffset),
-            std::next(this->previews.begin(), eoffset),
-            [](const auto &p) { p.second.draw(); }
-        );
-        
-        std::for_each(
-            std::next(this->prevButtons.begin(), boffset),
-            std::next(this->prevButtons.begin(), eoffset),
-            [](const auto &b) { b.second.draw(); }
+            std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6)),
+            std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6 + 6)),
+            [this](const auto &s) {
+                this->prevButtons.at(s).draw();
+                this->previews.at(s).draw();
+            }
         );
         
         this->next->draw();
         this->prev->draw();
         
         MLV_Font *font = MLV_load_font((game::FONT_DIR + "helvetica.ttf").c_str(), 24);
-        MLV_draw_text_with_font(game::WIDTH / 2 - 3, game::HEIGHT - 47, std::to_string(this->page).c_str(), font, MLV_COLOR_WHITE);
+        MLV_draw_text_with_font(
+            game::WIDTH / 2 - 3, game::HEIGHT - 47, std::to_string(this->page).c_str(), font, MLV_COLOR_WHITE
+        );
         MLV_free_font(font);
     }
 }

@@ -1,10 +1,10 @@
 #ifndef MAIN_LOAD_HPP
 #define MAIN_LOAD_HPP
 
-#include <vector>
 #include <memory>
 #include <string>
-#include <map>
+#include <unordered_map>
+#include <vector>
 
 #include <tangram/gui/Drawable.hpp>
 #include <tangram/game/Updatable.hpp>
@@ -19,8 +19,9 @@ namespace tangram::state {
     class Load : public StateAbstract {
         
         private:
-            std::map<std::string, gui::ShapePreview> previews;
-            std::map<std::string, gui::Button> prevButtons;
+            std::unordered_map<std::string, gui::ShapePreview> previews;
+            std::unordered_map<std::string, gui::Button> prevButtons;
+            std::vector<std::string> prevOrder;
             std::unique_ptr<gui::Button> next;
             std::unique_ptr<gui::Button> prev;
             uint16_t page = 0;

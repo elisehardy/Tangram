@@ -21,7 +21,6 @@ namespace tangram::state {
             std::vector<std::shared_ptr<game::Updatable>> updatables;
             std::vector<std::shared_ptr<gui::Drawable>> drawables;
             geometry::Shape player = geometry::Shape();
-            geometry::Shape goal = geometry::Shape();
             
             Create() = default;
             

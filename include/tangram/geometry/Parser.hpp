@@ -15,10 +15,6 @@ namespace tangram::geometry {
     
     
     class Parser {
-        private:
-            const std::string PATTERN_POINT = R"(\s*\((.|\n)+\)\s*)";
-            const std::string PATTERN_TRIANGLE = R"((\s|\n)*\[(.|\n)+\])";
-            const std::string PATTERN_POLYGON = R"((\s|\n)*\{(.|\n)+\})";
         
         private:
             std::ifstream file = {};

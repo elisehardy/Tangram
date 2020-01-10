@@ -10,13 +10,14 @@ namespace tangram::gui {
                    MLV_Color t_hBorderColor, MLV_Color t_hTextColor, MLV_Color t_hBackgroundColor,
                    MLV_Color t_pBorderColor, MLV_Color t_pTextColor, MLV_Color t_pBackgroundColor,
                    MLV_Text_justification t_justification, MLV_Horizontal_position t_horizontalPosition,
-                   MLV_Vertical_position t_verticalPosition, void (*t_execute)(game::Engine &)) :
+                   MLV_Vertical_position t_verticalPosition,
+                   const std::function<void(game::Engine &)>& t_execute) :
         x(t_x), y(t_y), w(t_w), h(t_h), i(t_i), text(std::move(t_text)), borderColor(t_borderColor),
         textColor(t_textColor), backgroundColor(t_backgroundColor), hBorderColor(t_hBorderColor),
         hTextColor(t_hTextColor), hBackgroundColor(t_hBackgroundColor), pBorderColor(t_pBorderColor),
         pTextColor(t_pTextColor), pBackgroundColor(t_pBackgroundColor), justification(t_justification),
         horizontalPosition(t_horizontalPosition), verticalPosition(t_verticalPosition),
-        execute(t_execute) {
+        execute(std::move(t_execute)) {
         std::cout << "Create button " << this->text << std::endl;
         this->font = MLV_load_font(t_font.c_str(), 20);
     }
@@ -24,7 +25,7 @@ namespace tangram::gui {
     
     Button::~Button() {
         std::cout << "Free button " << this->text << std::endl;
-//        MLV_free_font(this->font);
+        //        MLV_free_font(this->font);
     }
     
     
@@ -33,7 +34,7 @@ namespace tangram::gui {
         int mx = event.mousePos.x, my = event.mousePos.y;
         
         this->hovered = mx >= x1 && my >= y1 && mx <= x2 && my <= y2;
-    
+        
         game::Updatable::update(event, engine);
         
         if (this->enabled && this->isLeftClicked()) {

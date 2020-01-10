@@ -94,7 +94,7 @@ namespace tangram::geometry {
             [&](Triangle &t) { t = t.scale(v); }
         );
         
-        this->buttons[MLV_BUTTON_LEFT].pressedPoint = Point(this->buttons[MLV_BUTTON_LEFT].pressedPoint * v);
+        this->buttons[MLV_BUTTON_LEFT].pressedPoint = Point16 (this->buttons[MLV_BUTTON_LEFT].pressedPoint * v);
         this->center = this->center * v;
         return *this;
     }
