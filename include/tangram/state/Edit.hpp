@@ -27,7 +27,7 @@ namespace tangram::state {
             
             void init() override;
             
-            static void save(game::Engine &engine);
+            static bool save(game::Engine &engine);
         
         public:
             static Edit *getInstance();
@@ -40,7 +40,7 @@ namespace tangram::state {
         
             void resume() override;
         
-            void update(const game::Event &event, game::Engine &engine) override;
+            bool update(const game::Event &event, game::Engine &engine) override;
             
             void draw() const override;
     };

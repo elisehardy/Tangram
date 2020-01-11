@@ -1,6 +1,8 @@
 #include <filesystem>
 #include <algorithm>
 
+#include <MLV/MLV_shape.h>
+
 #include <tangram/state/Load.hpp>
 #include <tangram/state/Edit.hpp>
 #include <tangram/geometry/Parser.hpp>
@@ -10,9 +12,48 @@ namespace fs = std::filesystem;
 
 namespace tangram::state {
     
+    void Load::drawDelButton(int16_t x, int16_t y, int16_t w, int16_t h) {
+        MLV_draw_filled_rectangle(x, y, w, h, MLV_COLOR_RED);
+        MLV_draw_line(x, y, x + w, y + h, MLV_COLOR_BLACK);
+        MLV_draw_line(x + w, y, x, y + h, MLV_COLOR_BLACK);
+    }
+    
+    
+    void Load::drawHDelButton(int16_t x, int16_t y, int16_t w, int16_t h) {
+        MLV_draw_filled_rectangle(x, y, w, h, MLV_rgba(178, 0, 0, 255));
+        MLV_draw_line(x, y, x + w, y + h, MLV_rgba(77, 77, 77, 255));
+        MLV_draw_line(x + w, y, x, y + h, MLV_rgba(77, 77, 77, 255));
+    }
+    
+    
+    void Load::drawCDelButton(int16_t x, int16_t y, int16_t w, int16_t h) {
+        MLV_draw_filled_rectangle(x, y, w, h, MLV_rgba(102, 0, 0, 255));
+        MLV_draw_line(x, y, x + w, y + h, MLV_rgba(153, 153, 153, 255));
+        MLV_draw_line(x + w, y, x, y + h, MLV_rgba(153, 153, 153, 255));
+    }
+    
+    
+    bool Load::deleteShape(game::Engine &engine, const std::string &path) {
+        Load *load = Load::getInstance();
+        uint16_t page = load->page;
+        
+        fs::remove(path);
+        load->cleanup();
+        load->init();
+        load->page = page;
+        
+        if (load->previews.size() <= page * 6 && page != 0) {
+            load->page--;
+        }
+        
+        return true;
+    }
+    
+    
     void Load::init() {
         static constexpr double PREVIEW_SCALE_FACTOR = 0.35;
         static constexpr int16_t PREVIEW_SIDE = static_cast<int16_t>(game::HEIGHT * PREVIEW_SCALE_FACTOR);
+        static constexpr int16_t DEL_BUTTON_SIDE = static_cast<int16_t>(PREVIEW_SIDE * 0.1);
         static constexpr int16_t OFFSET_X = (game::WIDTH - PREVIEW_SIDE * 3) / 4;
         static constexpr int16_t OFFSET_Y = (game::HEIGHT - PREVIEW_SIDE * 2) / 4;
         static constexpr int16_t BUTTON_WIDTH = PREVIEW_SIDE / 2;
@@ -37,7 +78,7 @@ namespace tangram::state {
             std::cout << "Before emplace" << std::endl;
             this->prevButtons.emplace(
                 entry.path(),
-                gui::Button(
+                gui::ButtonText(
                     x + PREVIEW_SIDE / 4, y + PREVIEW_SIDE + 5, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
                     fs::path(entry).stem(), game::FONT_DIR + "helvetica.ttf",
                     MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
@@ -45,11 +86,21 @@ namespace tangram::state {
                     MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
                     MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
                     std::bind([](game::Engine &e, const std::string &s) {
-                        e.popState(); e.pushState(Edit::getInstance()->loadShape(s));
+                        e.popState();
+                        return e.pushState(Edit::getInstance()->loadShape(s));
                     }, std::placeholders::_1, entry.path())
                 )
             );
             std::cout << "After emplace" << std::endl;
+            
+            this->delButtons.emplace(
+                entry.path(),
+                gui::ButtonDraw(
+                    x + PREVIEW_SIDE - DEL_BUTTON_SIDE - 1, y + 2, DEL_BUTTON_SIDE, DEL_BUTTON_SIDE,
+                    drawDelButton, drawHDelButton, drawCDelButton,
+                    std::bind(&deleteShape, std::placeholders::_1, entry.path())
+                )
+            );
             
             this->prevOrder.push_back(entry.path());
             
@@ -62,23 +113,29 @@ namespace tangram::state {
         y = game::HEIGHT - BUTTON_HEIGHT - 20;
         x = game::WIDTH / 2;
         
-        this->next = std::make_unique<gui::Button>(
+        this->next = std::make_unique<gui::ButtonText>(
             x + BUTTON_WIDTH * 0.5, y, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
             "-->", game::FONT_DIR + "helvetica.ttf",
             MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) { dynamic_cast<Load *>(e.current())->page++; }
+            [](game::Engine &e) {
+                Load::getInstance()->page++;
+                return false;
+            }
         );
-        this->prev = std::make_unique<gui::Button>(
+        this->prev = std::make_unique<gui::ButtonText>(
             x - BUTTON_WIDTH * 1.5, y, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
             "<--", game::FONT_DIR + "helvetica.ttf",
             MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) { dynamic_cast<Load *>(e.current())->page--; }
+            [](game::Engine &e) {
+                Load::getInstance()->page--;
+                return false;
+            }
         );
     }
     
@@ -106,22 +163,17 @@ namespace tangram::state {
         this->initialized = false;
         this->prevButtons.clear();
         this->previews.clear();
+        this->delButtons.clear();
+        this->prevOrder.clear();
     }
     
     
-    void Load::update(const game::Event &event, game::Engine &engine) {
+    bool Load::update(const game::Event &event, game::Engine &engine) {
         game::Updatable::update(event, engine);
         
         if (isKeyClicked(MLV_KEYBOARD_ESCAPE)) {
-            engine.popState();
-            return;
+            return engine.popState();
         }
-        
-        std::for_each(
-            std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6)),
-            std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6 + 6)),
-            [&](const auto &s) { this->prevButtons.at(s).update(event, engine); }
-        );
         
         bool lastPage = (page + 1) * 6 >= this->previews.size();
         bool firstPage = page == 0;
@@ -144,6 +196,18 @@ namespace tangram::state {
         if (!lastPage && (isKeyClicked(MLV_KEYBOARD_d) || isKeyClicked(MLV_KEYBOARD_RIGHT))) {
             this->page++;
         }
+        
+        auto begin = std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6));
+        auto end = std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6 + 6));
+        if (std::find_if(begin, end, [&](const auto &s) { return this->delButtons.at(s).update(event, engine); })
+            != end) {
+            return false;
+        }
+        
+        return (std::find_if(
+            begin, end,
+            [&](const auto &s) { return this->prevButtons.at(s).update(event, engine); }
+        ) != end);
     }
     
     
@@ -156,6 +220,7 @@ namespace tangram::state {
             [this](const auto &s) {
                 this->prevButtons.at(s).draw();
                 this->previews.at(s).draw();
+                this->delButtons.at(s).draw();
             }
         );
         

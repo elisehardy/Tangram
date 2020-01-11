@@ -45,7 +45,7 @@ namespace tangram::game {
             
             virtual ~Updatable() = default;
             
-            virtual void update(const game::Event &event, game::Engine &engine);
+            virtual bool update(const game::Event &event, game::Engine &engine);
             
             [[nodiscard]] bool isHovered() const;
             

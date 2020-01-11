@@ -36,9 +36,9 @@ namespace tangram::game {
             
             void cleanup();
             
-            void pushState(state::StateAbstract *state);
+            bool pushState(state::StateAbstract *state);
             
-            void popState();
+            bool popState();
             
             state::StateAbstract *current();
             
@@ -48,7 +48,7 @@ namespace tangram::game {
             
             bool isRunning();
             
-            void stop();
+            bool stop();
     };
 }
 

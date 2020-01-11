@@ -9,7 +9,7 @@
 
 - [X] Utiliser 2 classe STL (std::unordered_map)
 
-- [X] Utiliser 3+ classe STL (std::map, std::stack)
+- [X] Utiliser 3+ classe STL (std::map, std::stack, std::set, std::shared_ptr, std::unique_ptr, std::string)
 
 - [X] Créer au moins une classe template
 

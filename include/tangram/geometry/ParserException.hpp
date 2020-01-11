@@ -18,17 +18,17 @@ namespace tangram::geometry {
         public:
             ParserException(std::string t_path, uint16_t t_lin, uint16_t t_col, std::string t_msg);
             
-            ~ParserException() = default;
+            ~ParserException() override = default;
             
-            std::string getPath() const;
+            [[nodiscard]] std::string getPath() const;
             
-            uint16_t getLine() const;
+            [[nodiscard]] uint16_t getLine() const;
             
-            uint16_t getColumn() const;
+            [[nodiscard]] uint16_t getColumn() const;
             
-            std::string getMessage() const;
+            [[nodiscard]] std::string getMessage() const;
             
-            const char *what() const noexcept;
+            [[nodiscard]] const char *what() const noexcept override;
     };
 }
 

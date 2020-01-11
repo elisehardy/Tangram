@@ -41,7 +41,8 @@ namespace tangram::geometry {
     }
     
     
-    int16_t Parser::parseShort(uint8_t radix) {
+    template<class I>
+    I Parser::parseIntegral(uint8_t radix) {
         std::string s = this->read("\\d");
         size_t idx;
         long l;
@@ -54,7 +55,7 @@ namespace tangram::geometry {
             this->error(e.what());
         }
         
-        return int16_t(l);
+        return static_cast<I>(l);
     }
     
     
@@ -65,11 +66,11 @@ namespace tangram::geometry {
         this->read("\\(");
         
         this->read("(\\s|\n)", true);
-        x = parseShort();
+        x = parseIntegral<short>();
         this->read("(\\s|\n)", true);
         this->read(",");
         this->read("(\\s|\n)", true);
-        y = parseShort();
+        y = parseIntegral<short>();
         
         this->read("(\\s|\n)", true);
         this->read("\\)");
@@ -99,11 +100,14 @@ namespace tangram::geometry {
     
     
     geometry::Polygon Parser::parsePolygon() {
-        geometry::Polygon polygon = geometry::Polygon(MLV_COLOR_GREY50);
-        
         this->read("(\\s|\n)", true);
         this->read("\\{");
+        this->read("(\\s|\n)", true);
         
+        MLV_Color color = parseIntegral<MLV_Color>();
+        this->read("(\\s|\n)", true);
+    
+        geometry::Polygon polygon = geometry::Polygon(color);
         polygon.add(this->parseTriangle());
         this->read("(\\s|\n)", true);
         while (this->file.peek() == '[') {

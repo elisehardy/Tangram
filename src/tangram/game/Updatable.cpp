@@ -27,10 +27,10 @@ namespace tangram::game {
     }
     
     
-    void Updatable::update(const game::Event &event, game::Engine &engine) {
+    bool Updatable::update(const game::Event &event, game::Engine &engine) {
         if (!this->enabled) {
-            return;
-        }
+            return false;
+    }
         
         bool mouse = event.type == MLV_MOUSE_BUTTON;
         bool key = event.type == MLV_KEY;
@@ -68,6 +68,8 @@ namespace tangram::game {
             }
             this->keys[event.symbol].held = false;
         }
+        
+        return false;
     }
     
     

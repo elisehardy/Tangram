@@ -156,6 +156,7 @@ namespace tangram::geometry {
     
     std::ostream &operator<<(std::ostream &os, const Polygon &p) {
         os << "{" << std::endl;
+        os << "    " <<  p.color << std::endl;
         for (const Triangle &t: p.triangles) {
             os << "    " << t << std::endl;
         }
@@ -175,7 +176,7 @@ namespace tangram::geometry {
     }
     
     
-    void Polygon::update(const game::Event &event, game::Engine &engine) {
+    bool Polygon::update(const game::Event &event, game::Engine &engine) {
         this->hovered = this->contains(event.mousePos);
         
         game::Updatable::update(event, engine);
@@ -183,6 +184,8 @@ namespace tangram::geometry {
         if (this->isRightPressed()) {
             this->currentRotation = 0;
         }
+        
+        return false;
     }
     
     

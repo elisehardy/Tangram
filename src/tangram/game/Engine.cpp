@@ -22,16 +22,17 @@ namespace tangram::game {
     }
     
     
-    void Engine::pushState(state::StateAbstract *state) {
+    bool Engine::pushState(state::StateAbstract *state) {
         if (!this->states.empty()) {
             this->states.back()->pause();
         }
         
         this->states.push_back(state);
+        return true;
     }
     
     
-    void Engine::popState() {
+    bool Engine::popState() {
         if (!this->states.empty()) {
             this->states.back()->cleanup();
             this->states.pop_back();
@@ -40,6 +41,8 @@ namespace tangram::game {
         if (!this->states.empty()) {
             this->states.back()->resume();
         }
+        
+        return true;
     }
     
     
@@ -71,7 +74,8 @@ namespace tangram::game {
     }
     
     
-    void Engine::stop() {
+    bool Engine::stop() {
         this->running = false;
+        return true;
     }
 }

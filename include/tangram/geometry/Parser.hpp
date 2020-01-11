@@ -25,8 +25,9 @@ namespace tangram::geometry {
             [[noreturn]] void error(const std::string &what) const;
             
             std::string read(const std::string &pattern, bool allowEmpty = false);
-        
-            int16_t parseShort(uint8_t radix = 10);
+            
+            template<class I>
+            I parseIntegral(uint8_t radix = 10);
             
             geometry::Point16 parsePoint();
             

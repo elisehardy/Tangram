@@ -3,7 +3,7 @@
 #include <MLV/MLV_shape.h>
 
 #include <tangram/state/Play.hpp>
-#include <tangram/gui/Button.hpp>
+#include <tangram/gui/ButtonText.hpp>
 
 namespace tangram::state {
     
@@ -12,14 +12,14 @@ namespace tangram::state {
         static constexpr uint16_t BUTTON_HEIGHT = 50;
         int16_t x = 5 * game::WIDTH / 6;
         
-        auto create = new gui::Button(
+        auto create = new gui::ButtonText(
             x, 0, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
             "Create", "../resources/fonts/helvetica.ttf",
             MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) { std::cout << "create" << std::endl; }
+            [](game::Engine &e) { return true; }
         );
         
         this->player = geometry::Shape::square(geometry::Point16(100, 100));
@@ -55,15 +55,15 @@ namespace tangram::state {
     }
     
     
-    void Play::update(const game::Event &event, game::Engine &engine) {
-        std::for_each(
-            this->updatables.begin(), this->updatables.end(),
-            [&](game::Updatable *u) { u->update(event, engine); }
-        );
-        
+    bool Play::update(const game::Event &event, game::Engine &engine) {
         if (this->player == this->goal) {
             // TODO Partie terminée
         }
+
+        return (std::find_if(
+            this->updatables.begin(), this->updatables.end(),
+            [&](auto u) { return u->update(event, engine); }
+        ) != this->updatables.end());
     }
     
     

@@ -1,13 +1,14 @@
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
-#include <any>
 #include <functional>
 
 #include <tangram/game/Engine.hpp>
 #include <tangram/game/Updatable.hpp>
 
 #include <tangram/gui/Drawable.hpp>
+#include <tangram/gui/ButtonAbstract.hpp>
+
 
 
 namespace tangram::gui {
@@ -15,15 +16,11 @@ namespace tangram::gui {
     /**
      * Represents a clickable button on the gui.
      */
-    class Button final : public Drawable, public game::Updatable {
+    class ButtonText final : public ButtonAbstract {
         private:
-            const int16_t x;                                  /**< X coordinate of the north-west corner. */
-            const int16_t y;                                  /**< Y coordinate of the north-west corner. */
-            const int16_t w;                                  /**< Width of the button. */
-            const int16_t h;                                  /**< Height of the button. */
             const int16_t i;                                  /**< Size of the line spacing. */
             const std::string text;                           /**< Text to be displayed. */
-            const MLV_Font *font;                                   /**< Font of the text. */
+            MLV_Font *font;                                   /**< Font of the text. */
             const MLV_Color borderColor;                      /**< Default color of the border. */
             const MLV_Color textColor;                        /**< Default color of the text. */
             const MLV_Color backgroundColor;                  /**< Default color of the background. */
@@ -36,24 +33,18 @@ namespace tangram::gui {
             const MLV_Text_justification justification;       /**< Justification of the text. */
             const MLV_Horizontal_position horizontalPosition; /**< Horizontal position of the text. */
             const MLV_Vertical_position verticalPosition;     /**< Vertical position of the text. */
-            
-            /** Function executed when the button is clicked */
-            const std::function<void(game::Engine &)> execute;
-        
+    
         public:
             
-            Button(int16_t x, int16_t y, int16_t w, int16_t h, int8_t i, std::string text, const std::string &font,
-                   MLV_Color borderColor, MLV_Color textColor, MLV_Color backgroundColor, MLV_Color hBorderColor,
-                   MLV_Color hTextColor, MLV_Color hBackgroundColor, MLV_Color pBorderColor, MLV_Color pTextColor,
-                   MLV_Color pBackgroundColor, MLV_Text_justification justification,
-                   MLV_Horizontal_position horizontalPosition, MLV_Vertical_position verticalPosition,
-                   const std::function<void(game::Engine &)> & execute);
+            ButtonText(int16_t x, int16_t y, int16_t w, int16_t h, int8_t i, std::string  text, const std::string &font,
+                       MLV_Color borderColor, MLV_Color textColor, MLV_Color backgroundColor, MLV_Color hBorderColor,
+                       MLV_Color hTextColor, MLV_Color hBackgroundColor, MLV_Color pBorderColor, MLV_Color pTextColor,
+                       MLV_Color pBackgroundColor, MLV_Text_justification justification,
+                       MLV_Horizontal_position horizontalPosition, MLV_Vertical_position verticalPosition,
+                       const std::function<bool(game::Engine &)>& execute);
             
-            ~Button() override;
-            
-            
-            void update(const game::Event &event, game::Engine &engine) override;
-            
+            ~ButtonText() override;
+        
             void draw() const override;
     };
 }

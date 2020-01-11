@@ -8,7 +8,7 @@
 #include <MLV/MLV_color.h>
 
 #include <tangram/gui/Drawable.hpp>
-#include <tangram/gui/Button.hpp>
+#include <tangram/gui/ButtonText.hpp>
 #include <tangram/game/Engine.hpp>
 #include <tangram/game/Updatable.hpp>
 
@@ -38,7 +38,7 @@ namespace tangram::state {
             
             void resume() override;
             
-            void update(const game::Event &event, game::Engine &engine) override;
+            bool update(const game::Event &event, game::Engine &engine) override;
             
             void draw() const override;
     };

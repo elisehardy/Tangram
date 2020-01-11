@@ -37,7 +37,7 @@ namespace tangram::state {
             
             void cleanup() override;
             
-            void update(const game::Event &event, game::Engine &engine) override;
+            bool update(const game::Event &event, game::Engine &engine) override;
             
             void draw() const override;
     };
