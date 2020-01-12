@@ -18,8 +18,8 @@ namespace tangram::state {
             static constexpr int16_t MENU_SEPARATOR = game::HEIGHT;
         
         private:
-            std::vector<std::shared_ptr<game::Updatable>> updatables;
-            std::vector<std::shared_ptr<gui::Drawable>> drawables;
+            std::vector<std::shared_ptr<game::Updatable>> updatables = {};
+            std::vector<std::shared_ptr<gui::Drawable>> drawables = {};
             geometry::Shape player = geometry::Shape();
             
             Create() = default;

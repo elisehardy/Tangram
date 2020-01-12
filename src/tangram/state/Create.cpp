@@ -14,6 +14,36 @@ using namespace tangram;
 
 namespace tangram::state {
     
+    bool Create::save(game::Engine &engine) {
+        static constexpr int16_t INBOX_WIDTH = 300;
+        static constexpr int16_t INBOX_HEIGHT = 60;
+        static constexpr int16_t INBOX_X = game::WIDTH / 2 - INBOX_WIDTH / 2;
+        static constexpr int16_t INBOX_Y = game::HEIGHT / 2 - INBOX_HEIGHT / 2;
+        
+        MLV_Font *font = MLV_load_font((game::FONT_DIR + "helvetica.ttf").c_str(), 20);
+        char *tmp;
+        
+        MLV_wait_input_box_with_font(
+            INBOX_X, INBOX_Y, INBOX_WIDTH, INBOX_HEIGHT,
+            MLV_COLOR_BLACK, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
+            " Title :", &tmp, font
+        );
+        
+        std::string path = std::string(game::SHAPE_DIR + tmp + ".shp");
+        MLV_free_font(font);
+        free(tmp);
+        
+        std::ofstream file = std::ofstream(path);
+        file << Create::getInstance()->player;
+        file.close();
+        
+        engine.popState();
+        engine.pushState(Edit::getInstance()->loadShape(path));
+        
+        return true;
+    }
+    
+    
     void Create::init() {
         static constexpr int16_t BUTTON_WIDTH = 140;
         static constexpr int16_t BUTTON_HEIGHT = 50;
@@ -49,7 +79,7 @@ namespace tangram::state {
             [](game::Engine &e) { return e.stop(); }
         );
         
-        this->player = geometry::Shape::square(geometry::Point16(0, 0));
+        this->player = geometry::Shape::square();
         
         this->updatables.push_back(saveButton);
         this->updatables.push_back(menuButton);
@@ -60,36 +90,6 @@ namespace tangram::state {
         this->drawables.push_back(quitButton);
 
         this->initialized = true;
-    }
-    
-    
-    bool Create::save(game::Engine &engine) {
-        static constexpr int16_t INBOX_WIDTH = 300;
-        static constexpr int16_t INBOX_HEIGHT = 60;
-        static constexpr int16_t INBOX_X = game::WIDTH / 2 - INBOX_WIDTH / 2;
-        static constexpr int16_t INBOX_Y = game::HEIGHT / 2 - INBOX_HEIGHT / 2;
-        
-        MLV_Font *font = MLV_load_font((game::FONT_DIR + "helvetica.ttf").c_str(), 20);
-        char *tmp;
-        
-        MLV_wait_input_box_with_font(
-            INBOX_X, INBOX_Y, INBOX_WIDTH, INBOX_HEIGHT,
-            MLV_COLOR_BLACK, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
-            " Title :", &tmp, font
-        );
-        
-        std::string path = std::string(game::SHAPE_DIR + tmp + ".shp");
-        MLV_free_font(font);
-        free(tmp);
-        
-        std::ofstream file = std::ofstream(path);
-        file << Create::getInstance()->player;
-        file.close();
-        
-        engine.popState();
-        engine.pushState(Edit::getInstance()->loadShape(path));
-        
-        return true;
     }
     
     
@@ -115,7 +115,7 @@ namespace tangram::state {
         
         std::for_each(
             this->drawables.begin(), this->drawables.end(),
-            [](auto d) { d.get()->draw(); }
+            [](auto d) { d->draw(); }
         );
         
         this->player.draw();
@@ -136,7 +136,7 @@ namespace tangram::state {
         
         this->player.update(event, engine);
         this->player.ensureInbounds({ 0, 0 }, { MENU_SEPARATOR, game::HEIGHT });
-    
+        
         return (std::find_if(
             this->updatables.begin(), this->updatables.end(),
             [&](auto u) { return u->update(event, engine); }

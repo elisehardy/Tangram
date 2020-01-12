@@ -2,27 +2,31 @@
 #define PLAY_HPP
 
 #include <vector>
+#include <memory>
 
 #include <tangram/gui/Drawable.hpp>
 #include <tangram/geometry/Shape.hpp>
 #include <tangram/game/Engine.hpp>
 #include <tangram/game/Updatable.hpp>
-
 #include <tangram/state/StateAbstract.hpp>
+#include <tangram/state/ShapeLoaderState.hpp>
+#include <tangram/gui/ShapePreview.hpp>
 
 
 namespace tangram::state {
     
-    class Play : public StateAbstract {
+    class Play : public ShapeLoaderState {
         
         private:
-            static constexpr int16_t goal_x = 10;
-            static constexpr int16_t goal_y = game::WIDTH / 2;
+            static constexpr int16_t MENU_SEPARATOR = game::HEIGHT;
             
-            std::vector<gui::Drawable *> drawables;
-            std::vector<game::Updatable *> updatables;
+            std::vector<std::shared_ptr<game::Updatable>> updatables = {};
+            std::vector<std::shared_ptr<gui::Drawable>> drawables = {};
             geometry::Shape player = geometry::Shape();
             geometry::Shape goal = geometry::Shape();
+            geometry::Polygon shadow;
+            bool success = false;
+            std::string title;
             
             Play() = default;
             
@@ -30,6 +34,8 @@ namespace tangram::state {
         
         public:
             static Play *getInstance();
+            
+            Play *loadShape(const std::string &path) override;
             
             void pause() override;
             

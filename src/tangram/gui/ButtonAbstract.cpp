@@ -1,6 +1,4 @@
 #include <tangram/gui/ButtonAbstract.hpp>
-#include <utility>
-
 
 namespace tangram::gui {
     

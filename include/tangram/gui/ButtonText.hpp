@@ -10,7 +10,6 @@
 #include <tangram/gui/ButtonAbstract.hpp>
 
 
-
 namespace tangram::gui {
     
     /**
@@ -33,18 +32,18 @@ namespace tangram::gui {
             const MLV_Text_justification justification;       /**< Justification of the text. */
             const MLV_Horizontal_position horizontalPosition; /**< Horizontal position of the text. */
             const MLV_Vertical_position verticalPosition;     /**< Vertical position of the text. */
-    
+        
         public:
             
-            ButtonText(int16_t x, int16_t y, int16_t w, int16_t h, int8_t i, std::string  text, const std::string &font,
+            ButtonText(int16_t x, int16_t y, int16_t w, int16_t h, int8_t i, std::string text, const std::string &font,
                        MLV_Color borderColor, MLV_Color textColor, MLV_Color backgroundColor, MLV_Color hBorderColor,
                        MLV_Color hTextColor, MLV_Color hBackgroundColor, MLV_Color pBorderColor, MLV_Color pTextColor,
                        MLV_Color pBackgroundColor, MLV_Text_justification justification,
                        MLV_Horizontal_position horizontalPosition, MLV_Vertical_position verticalPosition,
-                       const std::function<bool(game::Engine &)>& execute);
+                       const std::function<bool(game::Engine &)> &execute);
             
             ~ButtonText() override;
-        
+            
             void draw() const override;
     };
 }

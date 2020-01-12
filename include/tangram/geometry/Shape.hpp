@@ -21,11 +21,9 @@ namespace tangram::geometry {
             
             Shape() = default;
             
-            explicit Shape(std::string path);
+            static Shape load(const std::string &path);
             
-            static Shape square(const Point16 &offset);
-            
-            static Shape random(Point16 lowerBound, Point16 upperBound);
+            static Shape square();
             
             ///////////////////////// TRANSFORMATIONS //////////////////////////
             
@@ -49,8 +47,9 @@ namespace tangram::geometry {
             
             [[nodiscard]] std::vector<Point16> getPoints() const;
             
-            void addPolygon(const Polygon &polygon);
+            [[nodiscard]] Polygon getRandomPolygon() const;
             
+            void addPolygon(const Polygon &polygon);
             
             void ensureInbounds(Point16 lowerBound, Point16 upperBound);
             

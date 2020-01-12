@@ -17,12 +17,12 @@ namespace tangram::state {
         
         auto new_game = std::make_shared<gui::ButtonText>(
             x, 1 * game::HEIGHT / NUMBER_BUTTON - (BUTTON_HEIGHT + SPACE_2_BUTTON), BUTTON_WIDTH, BUTTON_HEIGHT, 1,
-            "New game", game::FONT_DIR + "helvetica.ttf",
+            "Play", game::FONT_DIR + "helvetica.ttf",
             MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) { return e.pushState(Play::getInstance()); }
+            [](game::Engine &e) { return e.pushState(Load::getInstance()->setNextState(Play::getInstance())); }
         );
         auto create = std::make_shared<gui::ButtonText>(
             x, 2 * game::HEIGHT / NUMBER_BUTTON - (BUTTON_HEIGHT + SPACE_2_BUTTON), BUTTON_WIDTH, BUTTON_HEIGHT, 1,
@@ -40,12 +40,12 @@ namespace tangram::state {
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) { return e.pushState(Load::getInstance()); }
+            [](game::Engine &e) { return e.pushState(Load::getInstance()->setNextState(Edit::getInstance())); }
         );
         auto quit = std::make_shared<gui::ButtonText>(
             x, 4 * game::HEIGHT / NUMBER_BUTTON - (BUTTON_HEIGHT + SPACE_2_BUTTON), BUTTON_WIDTH, BUTTON_HEIGHT, 1,
             "Exit", game::FONT_DIR + "helvetica.ttf",
-            MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
+            MLV_rgba(0, 255, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
             MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
             MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
             MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,

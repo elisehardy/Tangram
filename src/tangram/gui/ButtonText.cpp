@@ -14,18 +14,18 @@ namespace tangram::gui {
                            MLV_Vertical_position t_verticalPosition,
                            const std::function<bool(game::Engine &)> &t_execute) :
         ButtonAbstract(t_x, t_y, t_w, t_h, t_execute), i(t_i), text(std::move(t_text)),
-        borderColor(t_borderColor), textColor(t_textColor), backgroundColor(t_backgroundColor),
-        hBorderColor(t_hBorderColor), hTextColor(t_hTextColor), hBackgroundColor(t_hBackgroundColor),
-        pBorderColor(t_pBorderColor), pTextColor(t_pTextColor), pBackgroundColor(t_pBackgroundColor),
-        justification(t_justification), horizontalPosition(t_horizontalPosition), verticalPosition(t_verticalPosition) {
-//        std::cout << "Create button " << this->text << std::endl;
-        this->font = MLV_load_font(t_font.c_str(), 20);
+        font(MLV_load_font(t_font.c_str(), 20)), borderColor(t_borderColor), textColor(t_textColor),
+        backgroundColor(t_backgroundColor), hBorderColor(t_hBorderColor), hTextColor(t_hTextColor),
+        hBackgroundColor(t_hBackgroundColor), pBorderColor(t_pBorderColor), pTextColor(t_pTextColor),
+        pBackgroundColor(t_pBackgroundColor), justification(t_justification), horizontalPosition(t_horizontalPosition),
+        verticalPosition(t_verticalPosition) {
+        //        std::cout << "Create button " << this->text << std::endl;
     }
     
     
     ButtonText::~ButtonText() {
-//        std::cout << "Free button " << this->text << std::endl;
-//                MLV_free_font(this->font);
+        //        std::cout << "Free button " << this->text << std::endl;
+        //                MLV_free_font(this->font);
     }
     
     

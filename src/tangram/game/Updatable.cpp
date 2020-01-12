@@ -30,7 +30,7 @@ namespace tangram::game {
     bool Updatable::update(const game::Event &event, game::Engine &engine) {
         if (!this->enabled) {
             return false;
-    }
+        }
         
         bool mouse = event.type == MLV_MOUSE_BUTTON;
         bool key = event.type == MLV_KEY;

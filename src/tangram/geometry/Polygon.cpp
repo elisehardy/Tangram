@@ -158,7 +158,7 @@ namespace tangram::geometry {
         os << "{" << std::endl;
         os << "    " <<  p.color << std::endl;
         for (const Triangle &t: p.triangles) {
-            os << "    " << t << std::endl;
+            os << "    " << t.rotate(p.angle, p.center) << std::endl;
         }
         os << "}" << std::endl;
         return os;

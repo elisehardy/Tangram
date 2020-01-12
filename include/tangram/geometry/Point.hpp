@@ -15,7 +15,7 @@ namespace tangram::geometry {
             static_assert(std::is_arithmetic<T>::value, "Arithmetic type is required");
         
         public:
-            static constexpr uint16_t NEAR_THRESHOLD = 10;
+            static constexpr uint16_t NEAR_THRESHOLD = 5;
             
             T x = static_cast<T>(0);
             T y = static_cast<T>(0);
@@ -48,10 +48,11 @@ namespace tangram::geometry {
             Point<T> operator*(const Point<U> &other) const;
             
             template<typename U>
-            Point<T> operator*(U factor) const;
             
+            Point<T> operator*(U factor) const;
+        
             template<typename U>
-            friend std::ostream &operator<<(std::ostream &os, const Point<U> &dt);
+            friend std::ostream &operator<<(std::ostream &os, const Point<U> &p);
             
             ///////////////////////////// OTHERS ///////////////////////////////
             
@@ -165,8 +166,8 @@ namespace tangram::geometry {
     }
     
     
-    template<typename T>
-    std::ostream &operator<<(std::ostream &os, const Point<T> &p) {
+    template<typename U>
+    std::ostream &operator<<(std::ostream &os, const Point<U> &p) {
         os << "(" << p.x << ", " << p.y << ")";
         return os;
     }
@@ -232,14 +233,14 @@ namespace tangram::geometry {
     
     template<typename T>
     Point<double> Point<T>::center(Point<T> first) {
-        return first;
+        return Point<double>(first);
     }
     
-
+    
     template<typename T>
     template<typename... Args>
     Point<double> Point<T>::center(Point<T> first, Args... args) {
-        return center(std::vector{args...});
+        return Point<T>::center({ args... });
     }
 }
 

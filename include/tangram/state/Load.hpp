@@ -13,6 +13,7 @@
 #include <tangram/gui/Drawable.hpp>
 #include <tangram/gui/ShapePreview.hpp>
 #include <tangram/state/StateAbstract.hpp>
+#include <tangram/state/ShapeLoaderState.hpp>
 
 
 namespace tangram::state {
@@ -25,23 +26,21 @@ namespace tangram::state {
             std::unordered_map<std::string, gui::ButtonDraw> delButtons;
             std::unique_ptr<gui::ButtonText> next;
             std::unique_ptr<gui::ButtonText> prev;
+            std::unique_ptr<gui::ButtonText> menu;
+            ShapeLoaderState *nextState = nullptr;
             std::vector<std::string> prevOrder;
             uint16_t page = 0;
             
             Load() = default;
             
-            static void drawDelButton(int16_t x, int16_t y, int16_t w, int16_t h);
-        
-            static void drawHDelButton(int16_t x, int16_t y, int16_t w, int16_t h);
-        
-            static void drawCDelButton(int16_t x, int16_t y, int16_t w, int16_t h);
-        
             static bool deleteShape(game::Engine &engine, const std::string &s);
-        
+            
             void init() override;
         
         public:
             static Load *getInstance();
+            
+            Load *setNextState(ShapeLoaderState *nextState);
             
             void pause() override;
             
@@ -52,8 +51,6 @@ namespace tangram::state {
             bool update(const game::Event &event, game::Engine &engine) override;
             
             void draw() const override;
-            
-            void erase(const std::string& path);
     };
 }
 

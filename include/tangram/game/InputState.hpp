@@ -14,7 +14,7 @@ namespace tangram::game {
         bool held = false;
         
         InputState() = default;
-    
+        
         friend std::ostream &operator<<(std::ostream &os, const InputState &inputState);
         
         void reset();

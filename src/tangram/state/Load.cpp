@@ -4,7 +4,6 @@
 #include <MLV/MLV_shape.h>
 
 #include <tangram/state/Load.hpp>
-#include <tangram/state/Edit.hpp>
 #include <tangram/geometry/Parser.hpp>
 
 
@@ -12,21 +11,21 @@ namespace fs = std::filesystem;
 
 namespace tangram::state {
     
-    void Load::drawDelButton(int16_t x, int16_t y, int16_t w, int16_t h) {
+    static void drawDelButton(int16_t x, int16_t y, int16_t w, int16_t h) {
         MLV_draw_filled_rectangle(x, y, w, h, MLV_COLOR_RED);
         MLV_draw_line(x, y, x + w, y + h, MLV_COLOR_BLACK);
         MLV_draw_line(x + w, y, x, y + h, MLV_COLOR_BLACK);
     }
     
     
-    void Load::drawHDelButton(int16_t x, int16_t y, int16_t w, int16_t h) {
+    static void drawHDelButton(int16_t x, int16_t y, int16_t w, int16_t h) {
         MLV_draw_filled_rectangle(x, y, w, h, MLV_rgba(178, 0, 0, 255));
         MLV_draw_line(x, y, x + w, y + h, MLV_rgba(77, 77, 77, 255));
         MLV_draw_line(x + w, y, x, y + h, MLV_rgba(77, 77, 77, 255));
     }
     
     
-    void Load::drawCDelButton(int16_t x, int16_t y, int16_t w, int16_t h) {
+    static void drawCDelButton(int16_t x, int16_t y, int16_t w, int16_t h) {
         MLV_draw_filled_rectangle(x, y, w, h, MLV_rgba(102, 0, 0, 255));
         MLV_draw_line(x, y, x + w, y + h, MLV_rgba(153, 153, 153, 255));
         MLV_draw_line(x + w, y, x, y + h, MLV_rgba(153, 153, 153, 255));
@@ -75,7 +74,7 @@ namespace tangram::state {
                 gui::ShapePreview(parser(entry.path()), PREVIEW_SCALE_FACTOR, game::HEIGHT, x, y)
             );
             
-            std::cout << "Before emplace" << std::endl;
+//            std::cout << "Before emplace" << std::endl;
             this->prevButtons.emplace(
                 entry.path(),
                 gui::ButtonText(
@@ -87,11 +86,13 @@ namespace tangram::state {
                     MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
                     std::bind([](game::Engine &e, const std::string &s) {
                         e.popState();
-                        return e.pushState(Edit::getInstance()->loadShape(s));
+                        return e.pushState(
+                            static_cast<state::StateAbstract *>(Load::getInstance()->nextState->loadShape(s))
+                        );
                     }, std::placeholders::_1, entry.path())
                 )
             );
-            std::cout << "After emplace" << std::endl;
+//            std::cout << "After emplace" << std::endl;
             
             this->delButtons.emplace(
                 entry.path(),
@@ -137,6 +138,15 @@ namespace tangram::state {
                 return false;
             }
         );
+        this->menu = std::make_unique<gui::ButtonText>(
+            x - BUTTON_WIDTH / 2, 0, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
+            "Menu", game::FONT_DIR + "helvetica.ttf",
+            MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
+            MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
+            MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
+            MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
+            [](game::Engine &e) { return e.popState(); }
+        );
     }
     
     
@@ -148,6 +158,12 @@ namespace tangram::state {
         }
         
         return &menu;
+    }
+    
+    
+    Load *Load::setNextState(ShapeLoaderState *nextState) {
+        this->nextState = nextState;
+        return this;
     }
     
     
@@ -188,6 +204,9 @@ namespace tangram::state {
         
         this->next->update(event, engine);
         this->prev->update(event, engine);
+        if (this->menu->update(event, engine)) {
+            return true;
+        }
         
         if (!firstPage && (isKeyClicked(MLV_KEYBOARD_q) || isKeyClicked(MLV_KEYBOARD_LEFT))) {
             this->page--;
@@ -226,6 +245,7 @@ namespace tangram::state {
         
         this->next->draw();
         this->prev->draw();
+        this->menu->draw();
         
         MLV_Font *font = MLV_load_font((game::FONT_DIR + "helvetica.ttf").c_str(), 24);
         MLV_draw_text_with_font(

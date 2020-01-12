@@ -39,7 +39,7 @@ namespace tangram::geometry {
             
             Parser() = default;
             
-            geometry::Shape operator()(const std::string& path);
+            geometry::Shape operator()(const std::string &path);
     };
 }
 

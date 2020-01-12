@@ -6,7 +6,6 @@
 #include <MLV/MLV_shape.h>
 
 #include <tangram/state/Edit.hpp>
-#include <tangram/geometry/Parser.hpp>
 #include <tangram/gui/ButtonText.hpp>
 #include <tangram/gui/ShapePreview.hpp>
 
@@ -15,12 +14,34 @@ namespace fs = std::filesystem;
 
 namespace tangram::state {
     
+    bool Edit::save(game::Engine &engine) {
+        Edit *edit = Edit::getInstance();
+        
+        std::ofstream file = std::ofstream(game::SHAPE_DIR + edit->title + ".shp");
+        file << edit->player;
+        file.close();
+        
+        edit->savedText->rewind();
+        
+        return false;
+    }
+    
+    
     void Edit::init() {
         static constexpr int16_t BUTTON_WIDTH = 140;
         static constexpr int16_t BUTTON_HEIGHT = 50;
         static constexpr int16_t BUTTON_X = MENU_SEPARATOR + ((game::WIDTH - MENU_SEPARATOR) / 2) - (BUTTON_WIDTH / 2);
         
         this->hovered = true;
+        
+        int32_t width, height;
+        MLV_Font *font = MLV_load_font("../resources/fonts/helvetica.ttf", 40);
+        MLV_get_size_of_text_with_font("Saved !", &width, &height, font);
+        MLV_free_font(font);
+        this->savedText =
+            std::make_shared<gui::FadingText>(
+                game::WIDTH / 2 - width / 2, game::HEIGHT / 2 - height / 2, "Saved !", MLV_COLOR_WHITE
+            );
         
         auto saveButton = std::make_shared<gui::ButtonText>(
             BUTTON_X, game::HEIGHT / 2 + 50, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
@@ -62,17 +83,6 @@ namespace tangram::state {
     }
     
     
-    bool Edit::save(game::Engine &engine) {
-        Edit *edit = Edit::getInstance();
-        
-        std::ofstream file = std::ofstream(game::SHAPE_DIR + edit->title + ".shp");
-        file << edit->player;
-        file.close();
-        
-        return false;
-    }
-    
-    
     Edit *Edit::getInstance() {
         static Edit Edit;
         
@@ -84,9 +94,8 @@ namespace tangram::state {
     
     
     Edit *Edit::loadShape(const std::string &path) {
-        geometry::Parser parser;
         this->title = fs::path(path).stem();
-        this->player = parser(path);
+        this->player = geometry::Shape::load(path);
         this->cleanup();
         this->init();
         
@@ -99,9 +108,9 @@ namespace tangram::state {
         static constexpr int16_t PREVIEW_SIDE = static_cast<int16_t>(MENU_SEPARATOR * PREVIEW_SCALE_FACTOR);
         static constexpr int16_t PREVIEW_X = MENU_SEPARATOR + ((game::WIDTH - MENU_SEPARATOR) / 2) - (PREVIEW_SIDE / 2);
         static constexpr int16_t PREVIEW_Y = 100;
-    
+        
         MLV_clear_window(MLV_COLOR_BLACK);
-    
+        
         int32_t titleWidth, titleHeight, titleX, titleY;
         MLV_Font *font = MLV_load_font((game::FONT_DIR + "helvetica.ttf").c_str(), 40);
         MLV_get_size_of_text_with_font(this->title.c_str(), &titleWidth, &titleHeight, font);
@@ -114,7 +123,7 @@ namespace tangram::state {
         
         std::for_each(
             this->drawables.begin(), this->drawables.end(),
-            [](auto d) { d.get()->draw(); }
+            [](auto d) { d->draw(); }
         );
         
         this->player.draw();
@@ -122,6 +131,8 @@ namespace tangram::state {
         gui::ShapePreview(
             this->player, PREVIEW_SCALE_FACTOR, MENU_SEPARATOR, PREVIEW_X, PREVIEW_Y, MLV_COLOR_GREY50
         ).draw();
+        
+        this->savedText->draw();
     }
     
     
@@ -134,6 +145,7 @@ namespace tangram::state {
         
         this->player.update(event, engine);
         this->player.ensureInbounds({ 0, 0 }, { MENU_SEPARATOR, game::HEIGHT });
+        this->savedText->update(event, engine);
         
         return (std::find_if(
             this->updatables.begin(), this->updatables.end(),

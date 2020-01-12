@@ -82,7 +82,7 @@
 
 - [ ] assertions assert et static_assert
 
-- [ ] prédicats is_base_of<T1, T2>, is_default_constructible<T>, is_constructible<T1, T2, ....>
+- [ ] prédicats is_base_of<T1, T2>, is_default_constructible<U>, is_constructible<T1, T2, ....>
 
 - [X] méthode non définie : mot-clé delete
 

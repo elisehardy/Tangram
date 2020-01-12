@@ -1,101 +1,22 @@
-#include <tangram/geometry/Shape.hpp>
-
 #include <algorithm>
+#include <random>
+
+#include <tangram/game/Engine.hpp>
+#include <tangram/geometry/Shape.hpp>
+#include <tangram/geometry/Parser.hpp>
 
 
 namespace tangram::geometry {
     
-    tangram::geometry::Shape::Shape(std::string path) {
+    Shape Shape::load(const std::string& path) {
+        return Parser()(path);
     }
     
     
-    Shape Shape::square(const Point16 &offset) {
-        static int16_t HYPOTENUSE2 = Triangle::HYPOTENUSE * 2;
-        Shape shape;
-        
-        shape.polygons.push_back(Polygon::custom(
-            { Triangle({ 0, 0 }, { Triangle::HYPOTENUSE, Triangle::HYPOTENUSE }, { 0, HYPOTENUSE2 }), },
-            MLV_COLOR_PURPLE
-        ));
-        shape.polygons.push_back(Polygon::custom(
-            { Triangle({ 0, 0 }, { Triangle::HYPOTENUSE, Triangle::HYPOTENUSE }, { HYPOTENUSE2, 0 }), },
-            MLV_COLOR_RED
-        ));
-        shape.polygons.push_back(Polygon::custom(
-            {
-                Triangle(
-                    { HYPOTENUSE2, Triangle::HYPOTENUSE },
-                    { HYPOTENUSE2, HYPOTENUSE2 },
-                    { Triangle::HYPOTENUSE + Triangle::HEIGHT, Triangle::HYPOTENUSE + Triangle::HEIGHT }
-                ),
-                Triangle(
-                    { Triangle::HYPOTENUSE, HYPOTENUSE2 },
-                    { HYPOTENUSE2, HYPOTENUSE2 },
-                    { Triangle::HYPOTENUSE + Triangle::HEIGHT, Triangle::HYPOTENUSE + Triangle::HEIGHT }
-                ),
-            },
-            MLV_COLOR_GREEN
-        ));
-        shape.polygons.push_back(Polygon::custom(
-            {
-                Triangle(
-                    { 0, HYPOTENUSE2 },
-                    { Triangle::HYPOTENUSE, HYPOTENUSE2 },
-                    { Triangle::HEIGHT, Triangle::HYPOTENUSE + Triangle::HEIGHT }
-                ),
-            },
-            MLV_COLOR_ORANGE2
-        ));
-        shape.polygons.push_back(Polygon::custom(
-            {
-                Triangle(
-                    { Triangle::HYPOTENUSE, Triangle::HYPOTENUSE },
-                    { Triangle::HYPOTENUSE + Triangle::HEIGHT, Triangle::HEIGHT },
-                    { Triangle::HYPOTENUSE + Triangle::HEIGHT, Triangle::HYPOTENUSE + Triangle::HEIGHT }
-                ),
-            },
-            MLV_COLOR_YELLOW
-        ));
-        
-        shape.polygons.push_back(Polygon::custom(
-            {
-                Triangle(
-                    { Triangle::HYPOTENUSE, Triangle::HYPOTENUSE },
-                    { Triangle::HYPOTENUSE + Triangle::HEIGHT, Triangle::HYPOTENUSE + Triangle::HEIGHT },
-                    { Triangle::HYPOTENUSE, HYPOTENUSE2 }
-                ),
-                Triangle(
-                    { Triangle::HYPOTENUSE, Triangle::HYPOTENUSE },
-                    { Triangle::HEIGHT, Triangle::HYPOTENUSE + Triangle::HEIGHT },
-                    { Triangle::HYPOTENUSE, HYPOTENUSE2 }
-                )
-            },
-            MLV_COLOR_WHITE
-        ));
-        shape.polygons.push_back(Polygon::custom(
-            {
-                Triangle(
-                    { HYPOTENUSE2, 0 },
-                    { HYPOTENUSE2, Triangle::HYPOTENUSE },
-                    { Triangle::HYPOTENUSE + Triangle::HEIGHT, Triangle::HEIGHT }
-                ),
-                Triangle(
-                    { Triangle::HYPOTENUSE + Triangle::HEIGHT, Triangle::HEIGHT },
-                    { Triangle::HYPOTENUSE + Triangle::HEIGHT, Triangle::HYPOTENUSE + Triangle::HEIGHT },
-                    { HYPOTENUSE2, Triangle::HYPOTENUSE }
-                )
-            },
-            MLV_COLOR_CYAN
-        ));
-        
-        return shape;
+    Shape Shape::square() {
+        return load(game::DEFAULT_SHAPE_PATH);
     }
-    
-    
-    Shape Shape::random(Point16 lowerBound, Point16 upperBound) {
-        return Shape();
-    }
-    
+
     
     Shape &Shape::translate(const Vector16 &v) {
         std::for_each(
@@ -171,6 +92,15 @@ namespace tangram::geometry {
     }
     
     
+    Polygon Shape::getRandomPolygon() const {
+        static std::random_device device;
+        static auto generator = std::mt19937(device());
+        auto distribution = std::uniform_int_distribution<uint64_t>(0, this->polygons.size());
+        
+        return Polygon(this->polygons[distribution(generator)]);
+    }
+    
+    
     void Shape::addPolygon(const Polygon &polygon) {
         this->polygons.push_back(polygon);
     }
@@ -204,48 +134,49 @@ namespace tangram::geometry {
         
         for (auto it = this->polygons.rbegin(); it != this->polygons.rend(); ++it) {
             Polygon &p = *it;
-            
+    
             p.update(event, engine);
-            
-            // Moving the Shape
-            if (p.isLeftHeld() && !first) {
-                flag = true;
-                p.translate(event.mousePos - p.getLeftPressedPoint());
+            if (!first) {
+                // Moving the Shape
+                if (p.isLeftHeld()) {
+                    flag = true;
+                    p.translate(event.mousePos - p.getLeftPressedPoint());
+                }
+                if (p.isKeyClicked(MLV_KEYBOARD_z) || p.isKeyClicked(MLV_KEYBOARD_UP)) {
+                    flag = true;
+                    p.translate(geometry::Point16(0, -1));
+                }
+                if (p.isKeyClicked(MLV_KEYBOARD_d) || p.isKeyClicked(MLV_KEYBOARD_RIGHT)) {
+                    flag = true;
+                    p.translate(geometry::Point16(1, 0));
+                }
+                if (p.isKeyClicked(MLV_KEYBOARD_s) || p.isKeyClicked(MLV_KEYBOARD_DOWN)) {
+                    flag = true;
+                    p.translate(geometry::Point16(0, 1));
+                }
+                if (p.isKeyClicked(MLV_KEYBOARD_q) || p.isKeyClicked(MLV_KEYBOARD_LEFT)) {
+                    flag = true;
+                    p.translate(geometry::Point16(-1, 0));
+                }
+        
+                // Rotating the shape
+                if (p.isRightHeld()) {
+                    flag = true;
+                    int16_t angle = (p.getRightPressedPoint().x - event.mousePos.x) / 5;
+                    p.rotate((angle - p.getCurrentRotation()) * Triangle::ANGLE_STEP);
+                    p.setCurrentRotation(angle);
+                }
+                if (p.isKeyClicked(MLV_KEYBOARD_a)) {
+                    flag = true;
+                    p.rotate(-Triangle::ANGLE_STEP);
+                }
+                if (p.isKeyClicked(MLV_KEYBOARD_e)) {
+                    flag = true;
+                    p.rotate(Triangle::ANGLE_STEP);
+                }
             }
-            if (p.isKeyClicked(MLV_KEYBOARD_z) || p.isKeyClicked(MLV_KEYBOARD_UP)) {
-                flag = true;
-                p.translate(geometry::Point16(0, -1));
-            }
-            if (p.isKeyClicked(MLV_KEYBOARD_d) || p.isKeyClicked(MLV_KEYBOARD_RIGHT)) {
-                flag = true;
-                p.translate(geometry::Point16(1, 0));
-            }
-            if (p.isKeyClicked(MLV_KEYBOARD_s) || p.isKeyClicked(MLV_KEYBOARD_DOWN)) {
-                flag = true;
-                p.translate(geometry::Point16(0, 1));
-            }
-            if (p.isKeyClicked(MLV_KEYBOARD_q) || p.isKeyClicked(MLV_KEYBOARD_LEFT)) {
-                flag = true;
-                p.translate(geometry::Point16(-1, 0));
-            }
-            
-            // Rotating the shape
-            if (p.isRightHeld() && !first) {
-                flag = true;
-                int16_t angle = (p.getRightPressedPoint().x - event.mousePos.x) / 5;
-                p.rotate((angle - p.getCurrentRotation()) * Triangle::ANGLE_STEP);
-                p.setCurrentRotation(angle);
-            }
-            if (p.isKeyClicked(MLV_KEYBOARD_a)) {
-                flag = true;
-                p.rotate(-Triangle::ANGLE_STEP);
-            }
-            if (p.isKeyClicked(MLV_KEYBOARD_e)) {
-                flag = true;
-                p.rotate(Triangle::ANGLE_STEP);
-            }
-            
-            if (flag) { // Ensure only the shape above is modified
+        
+            if (flag) { // In case of overlapping polygons, update only the one above
                 first = true;
             }
         }

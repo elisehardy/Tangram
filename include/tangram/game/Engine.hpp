@@ -17,6 +17,7 @@ namespace tangram::state {
 
 namespace tangram::game {
     
+    static const std::string DEFAULT_SHAPE_PATH = "../resources/default.shp";
     static const std::string SHAPE_DIR = "../resources/shapes/";
     static const std::string FONT_DIR = "../resources/fonts/";
     

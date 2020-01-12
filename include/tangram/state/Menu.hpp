@@ -22,8 +22,8 @@ namespace tangram::state {
     class Menu : public StateAbstract {
         
         private:
-            std::vector<std::shared_ptr<game::Updatable>> updatables;
-            std::vector<std::shared_ptr<gui::Drawable>> drawables;
+            std::vector<std::shared_ptr<game::Updatable>> updatables = {};
+            std::vector<std::shared_ptr<gui::Drawable>> drawables = {};
             
             Menu() = default;
             
