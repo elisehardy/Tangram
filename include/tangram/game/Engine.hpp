@@ -10,6 +10,7 @@
 #include <tangram/game/Event.hpp>
 
 
+// Here to avoid circular inclusion.
 namespace tangram::state {
     class State;
 }
