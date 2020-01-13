@@ -15,7 +15,7 @@ namespace tangram::geometry {
             static_assert(std::is_arithmetic<T>::value, "Arithmetic type is required");
         
         public:
-            static constexpr uint16_t NEAR_THRESHOLD = 20;
+            static constexpr uint16_t NEAR_THRESHOLD = 10;
             
             T x = static_cast<T>(0);
             T y = static_cast<T>(0);
