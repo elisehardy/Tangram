@@ -103,6 +103,13 @@ namespace tangram::state {
         gui::ShapePreview(
             this->goal, PREVIEW_SCALE_FACTOR, MENU_SEPARATOR, PREVIEW_X, PREVIEW_Y, MLV_COLOR_GREY50
         ).draw();
+
+        if(this->success){
+            font = MLV_load_font((game::FONT_DIR + "helvetica.ttf").c_str(), 40);
+            MLV_get_size_of_text_with_font("Win !", &titleWidth, &titleHeight, font);
+            MLV_draw_text_with_font(game::HEIGHT / 2 - titleWidth / 2, game::HEIGHT / 2 - titleHeight / 2, "Win !", font, MLV_COLOR_WHITE);
+            MLV_free_font(font);
+        }
     }
     
     

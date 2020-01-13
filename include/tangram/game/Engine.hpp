@@ -18,12 +18,13 @@ namespace tangram::state {
 namespace tangram::game {
     
     static const std::string DEFAULT_SHAPE_PATH = "../resources/default.shp"; /**< Path to the default shape. */
+    static const std::string BACKGROUND_DIR = "../resources/background/"; /**< Path to the directory containing background used. */
     static const std::string SHAPE_DIR = "../resources/shapes/"; /**< Path to the directory containing saved shapes. */
     static const std::string FONT_DIR = "../resources/fonts/"; /**< Path to the directory containing fonts used. */
-    
-    static constexpr uint16_t FRAME_RATE = 800; /**< Frame rate of the game. */
+
+    static constexpr uint16_t FRAME_RATE = 240; /**< Frame rate of the game. */
     static constexpr uint16_t WIDTH = 1200;     /**< Width of the window. */
-    static constexpr uint16_t HEIGHT = 800;     /**< Height of the window. */
+    static constexpr uint16_t HEIGHT = 700;     /**< Height of the window. */
     
     
     /**
