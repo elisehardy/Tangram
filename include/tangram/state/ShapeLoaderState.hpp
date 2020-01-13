@@ -6,7 +6,7 @@
 
 namespace tangram::state {
     
-    class ShapeLoaderState : public StateAbstract {
+    class ShapeLoaderState : public State {
         
         public:
             virtual ShapeLoaderState *loadShape(const std::string &path) = 0;

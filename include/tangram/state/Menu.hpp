@@ -12,14 +12,14 @@
 #include <tangram/game/Engine.hpp>
 #include <tangram/game/Updatable.hpp>
 
-#include <tangram/state/StateAbstract.hpp>
+#include <tangram/state/State.hpp>
 #include <tangram/state/Edit.hpp>
 #include <tangram/state/Play.hpp>
 
 
 namespace tangram::state {
     
-    class Menu : public StateAbstract {
+    class Menu : public State {
         
         private:
             std::vector<std::shared_ptr<game::Updatable>> updatables = {};

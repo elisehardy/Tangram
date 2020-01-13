@@ -1,59 +1,52 @@
 #include <tangram/game/Engine.hpp>
-
-#include <tangram/state/StateAbstract.hpp>
+#include <tangram/state/State.hpp>
 
 
 namespace tangram::game {
     
     void Engine::init() {
         MLV_create_window("Tangram", nullptr, WIDTH, HEIGHT);
-        MLV_change_frame_rate(240);
+        MLV_change_frame_rate(FRAME_RATE);
         this->running = true;
     }
     
     
     void Engine::cleanup() {
         while (!this->states.empty()) {
-            this->states.back()->cleanup();
-            this->states.pop_back();
+            this->states.top()->cleanup();
+            this->states.pop();
         }
         
         MLV_free_window();
     }
     
     
-    bool Engine::pushState(state::StateAbstract *state) {
+    bool Engine::pushState(state::State *state) {
         if (!this->states.empty()) {
-            this->states.back()->pause();
+            this->states.top()->pause();
         }
         
-        this->states.push_back(state);
+        this->states.push(state);
         return true;
     }
     
     
     bool Engine::popState() {
         if (!this->states.empty()) {
-            this->states.back()->cleanup();
-            this->states.pop_back();
+            this->states.top()->cleanup();
+            this->states.pop();
         }
         
         if (!this->states.empty()) {
-            this->states.back()->resume();
+            this->states.top()->resume();
         }
         
         return true;
     }
     
     
-    state::StateAbstract *Engine::current() {
-        return this->states.back();
-    }
-    
-    
     void Engine::update(const Event &event) {
-        
-        this->states.back()->update(event, *this);
+        this->states.top()->update(event, *this);
         if (this->states.empty()) {
             this->stop();
         }
@@ -62,7 +55,7 @@ namespace tangram::game {
     
     void Engine::draw() {
         if (!this->states.empty()) {
-            this->states.back()->draw();
+            this->states.top()->draw();
         }
         MLV_actualise_window();
         MLV_delay_according_to_frame_rate();

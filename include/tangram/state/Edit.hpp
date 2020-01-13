@@ -8,7 +8,7 @@
 #include <tangram/geometry/Shape.hpp>
 #include <tangram/gui/Drawable.hpp>
 #include <tangram/gui/FadingText.hpp>
-#include <tangram/state/StateAbstract.hpp>
+#include <tangram/state/State.hpp>
 #include <tangram/state/ShapeLoaderState.hpp>
 
 

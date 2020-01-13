@@ -7,12 +7,12 @@
 #include <tangram/game/Updatable.hpp>
 #include <tangram/geometry/Shape.hpp>
 #include <tangram/gui/Drawable.hpp>
-#include <tangram/state/StateAbstract.hpp>
+#include <tangram/state/State.hpp>
 
 
 namespace tangram::state {
     
-    class Create : public StateAbstract {
+    class Create : public State {
         
         private:
             static constexpr int16_t MENU_SEPARATOR = game::HEIGHT;

@@ -87,7 +87,7 @@ namespace tangram::state {
                     std::bind([](game::Engine &e, const std::string &s) {
                         e.popState();
                         return e.pushState(
-                            static_cast<state::StateAbstract *>(Load::getInstance()->nextState->loadShape(s))
+                            static_cast<state::State *>(Load::getInstance()->nextState->loadShape(s))
                         );
                     }, std::placeholders::_1, entry.path())
                 )

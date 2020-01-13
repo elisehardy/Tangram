@@ -13,12 +13,12 @@ namespace tangram::game {
 
 namespace tangram::state {
     
-    class StateAbstract : public gui::Drawable, public game::Updatable {
+    class State : public gui::Drawable, public game::Updatable {
         
         protected:
             bool initialized = false;
             
-            StateAbstract() = default;
+            State() = default;
         
         public:
             

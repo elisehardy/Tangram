@@ -12,13 +12,13 @@
 #include <tangram/gui/ButtonDraw.hpp>
 #include <tangram/gui/Drawable.hpp>
 #include <tangram/gui/ShapePreview.hpp>
-#include <tangram/state/StateAbstract.hpp>
+#include <tangram/state/State.hpp>
 #include <tangram/state/ShapeLoaderState.hpp>
 
 
 namespace tangram::state {
     
-    class Load : public StateAbstract {
+    class Load : public State {
         
         private:
             std::unordered_map<std::string, gui::ShapePreview> previews;

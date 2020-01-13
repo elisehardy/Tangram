@@ -8,7 +8,7 @@
 #include <tangram/geometry/Shape.hpp>
 #include <tangram/game/Engine.hpp>
 #include <tangram/game/Updatable.hpp>
-#include <tangram/state/StateAbstract.hpp>
+#include <tangram/state/State.hpp>
 #include <tangram/state/ShapeLoaderState.hpp>
 #include <tangram/gui/ShapePreview.hpp>
 
