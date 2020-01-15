@@ -38,6 +38,8 @@ namespace tangram::geometry {
             Shape &scale(double factor);
             
             Shape &setColor(MLV_Color color);
+
+            Polygon &rotate(int16_t n);
             
             ///////////////////////////// OTHERS ///////////////////////////////
             
