@@ -116,8 +116,8 @@ namespace tangram::geometry {
     
     
     template<typename T>
-    Point<T>::Point(T t_x, T t_y) :
-        x(t_x), y(t_y) {
+    Point<T>::Point(T x, T y) :
+        x(x), y(y) {
     }
     
     

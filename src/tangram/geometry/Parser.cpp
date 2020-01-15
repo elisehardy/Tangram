@@ -31,7 +31,8 @@ namespace tangram::geometry {
         }
         
         if (!allowEmpty && ss.str().empty()) {
-            this->error("Next character does not match regex '" + pattern + "' (character '" + tmp + "' has been found"
+            this->error(
+                "Next character does not match regex '" + pattern + "' (character '" + tmp + "' has been found"
             );
         }
         
@@ -43,6 +44,8 @@ namespace tangram::geometry {
     
     template<class I>
     I Parser::parseIntegral(uint8_t radix) {
+        static_assert(std::is_integral<I>::value, "Integral type is required");
+        
         std::string s = this->read("\\d");
         size_t idx;
         long l;
@@ -106,7 +109,7 @@ namespace tangram::geometry {
         
         MLV_Color color = parseIntegral<MLV_Color>();
         this->read("(\\s|\n)", true);
-    
+        
         geometry::Polygon polygon = geometry::Polygon(color);
         polygon.add(this->parseTriangle());
         this->read("(\\s|\n)", true);

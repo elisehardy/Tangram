@@ -1,5 +1,5 @@
-#ifndef Edit_HPP
-#define Edit_HPP
+#ifndef EDIT_HPP
+#define EDIT_HPP
 
 #include <vector>
 #include <memory>
@@ -49,4 +49,4 @@ namespace tangram::state {
     };
 }
 
-#endif // Edit_HPP
+#endif // EDIT_HPP
