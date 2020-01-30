@@ -24,10 +24,8 @@ namespace tangram::game {
         protected:
             bool hovered = false; /**< Whether this element if hovered. */
             bool enabled = true;  /**< Whether this element is enabled. */
-            /** InputState corresponding to the three mouse's buttons. */
-            std::unordered_map<MLV_Mouse_button, InputState> buttons;
-            /** InputState corresponding to every keyboard's keys. */
-            std::unordered_map<MLV_Keyboard_button, InputState> keys;
+            std::unordered_map<MLV_Mouse_button, InputState> buttons; /** InputState of the three mouse's buttons. */
+            std::unordered_map<MLV_Keyboard_button, InputState> keys; /** InputState of every keyboard's keys. */
             
             /**
              * Constructor.

@@ -43,20 +43,23 @@ namespace tangram::geometry {
             [[nodiscard]] std::string getPath() const;
             
             /**
+             * Return the line the error occurred.
              *
-             * @return
+             * @return The line the error occurred.
              */
             [[nodiscard]] uint16_t getLine() const;
-            
+        
             /**
+             * Return the column the error occurred.
              *
-             * @return
+             * @return The column the error occurred.
              */
             [[nodiscard]] uint16_t getColumn() const;
             
             /**
+             * Return the message of the error.
              *
-             * @return
+             * @return The message of the error.
              */
             [[nodiscard]] std::string getMessage() const;
             

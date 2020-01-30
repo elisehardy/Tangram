@@ -129,7 +129,7 @@ namespace tangram::geometry {
     }
     
     
-    bool tangram::geometry::Shape::update(const tangram::game::Event &event, tangram::game::Engine &engine) {
+    bool Shape::update(const tangram::game::Event &event, tangram::game::Engine &engine) {
         bool first = false, flag = false;
         
         for (auto it = this->polygons.rbegin(); it != this->polygons.rend(); ++it) {
@@ -185,7 +185,7 @@ namespace tangram::geometry {
     }
     
     
-    void tangram::geometry::Shape::draw() const {
+    void Shape::draw() const {
         std::for_each(this->polygons.begin(), this->polygons.end(), [](const Polygon &p) { p.draw(); });
     }
 }
