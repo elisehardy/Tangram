@@ -18,11 +18,11 @@ namespace tangram::game {
     
     
     void Updatable::reset() {
-        for (auto &[_, v]: this->buttons) {
-            v.reset();
+        for (auto &entry: this->buttons) {
+            entry.second.reset();
         }
-        for (auto &[_, v]: this->keys) {
-            v.reset();
+        for (auto &entry: this->keys) {
+            entry.second.reset();
         }
     }
     

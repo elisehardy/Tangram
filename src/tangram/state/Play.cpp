@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <fstream>
-#include <filesystem>
 
 #include <MLV/MLV_text.h>
 #include <MLV/MLV_shape.h>
@@ -10,7 +9,14 @@
 #include <tangram/gui/ShapePreview.hpp>
 
 
+#ifdef USE_STD_FILESYSTEM
+#include <filesystem>
 namespace fs = std::filesystem;
+#else
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#endif
+
 
 namespace tangram::state {
     
@@ -24,22 +30,22 @@ namespace tangram::state {
         this->player = geometry::Shape::square();
         
         auto menuButton = std::make_shared<gui::ButtonText>(
-            BUTTON_X, game::HEIGHT / 2 + 50, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
-            "Menu", "../resources/fonts/helvetica.ttf",
-            MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
-            MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
-            MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
-            MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) { return e.popState(); }
+                BUTTON_X, game::HEIGHT / 2 + 50, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
+                "Menu", "../resources/fonts/helvetica.ttf",
+                MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
+                MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
+                MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
+                MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
+                [](game::Engine &e) { return e.popState(); }
         );
         auto quitButton = std::make_shared<gui::ButtonText>(
-            BUTTON_X, game::HEIGHT / 2 + 150, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
-            "Quit", "../resources/fonts/helvetica.ttf",
-            MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
-            MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
-            MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
-            MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) { return e.stop(); }
+                BUTTON_X, game::HEIGHT / 2 + 150, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
+                "Quit", "../resources/fonts/helvetica.ttf",
+                MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
+                MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
+                MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
+                MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
+                [](game::Engine &e) { return e.stop(); }
         );
         
         this->updatables.push_back(menuButton);
@@ -93,21 +99,23 @@ namespace tangram::state {
         MLV_draw_line(MENU_SEPARATOR, 0, MENU_SEPARATOR, game::HEIGHT, MLV_COLOR_WHITE);
         
         std::for_each(
-            this->drawables.begin(), this->drawables.end(),
-            [](auto d) { d->draw(); }
+                this->drawables.begin(), this->drawables.end(),
+                [](auto d) { d->draw(); }
         );
         
         this->shadow.draw();
         this->player.draw();
         
         gui::ShapePreview(
-            this->goal, PREVIEW_SCALE_FACTOR, MENU_SEPARATOR, PREVIEW_X, PREVIEW_Y, MLV_COLOR_GREY50
+                this->goal, PREVIEW_SCALE_FACTOR, MENU_SEPARATOR, PREVIEW_X, PREVIEW_Y, MLV_COLOR_GREY50
         ).draw();
-
-        if(this->success){
+        
+        if (this->success) {
             font = MLV_load_font((game::FONT_DIR + "helvetica.ttf").c_str(), 40);
             MLV_get_size_of_text_with_font("Win !", &titleWidth, &titleHeight, font);
-            MLV_draw_text_with_font(game::HEIGHT / 2 - titleWidth / 2, game::HEIGHT / 2 - titleHeight / 2, "Win !", font, MLV_COLOR_WHITE);
+            MLV_draw_text_with_font(game::HEIGHT / 2 - titleWidth / 2, game::HEIGHT / 2 - titleHeight / 2, "Win !",
+                                    font, MLV_COLOR_WHITE
+            );
             MLV_free_font(font);
         }
     }
@@ -131,8 +139,8 @@ namespace tangram::state {
         }
         
         return (std::find_if(
-            this->updatables.begin(), this->updatables.end(),
-            [&](auto u) { return u->update(event, engine); }
+                this->updatables.begin(), this->updatables.end(),
+                [&](auto u) { return u->update(event, engine); }
         ) != this->updatables.end());
     }
     

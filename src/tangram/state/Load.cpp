@@ -1,4 +1,3 @@
-#include <filesystem>
 #include <algorithm>
 
 #include <MLV/MLV_shape.h>
@@ -6,8 +5,13 @@
 #include <tangram/state/Load.hpp>
 #include <tangram/geometry/Parser.hpp>
 
-
+#ifdef USE_STD_FILESYSTEM
+#include <filesystem>
 namespace fs = std::filesystem;
+#else
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#endif
 
 namespace tangram::state {
     
@@ -70,37 +74,37 @@ namespace tangram::state {
             y = OFFSET_Y + j * OFFSET_Y + j * PREVIEW_SIDE;
             
             this->previews.emplace(
-                entry.path(),
-                gui::ShapePreview(parser(entry.path()), PREVIEW_SCALE_FACTOR, game::HEIGHT, x, y)
+                    entry.path(),
+                    gui::ShapePreview(parser(entry.path()), PREVIEW_SCALE_FACTOR, game::HEIGHT, x, y)
             );
             
-//            std::cout << "Before emplace" << std::endl;
+            //            std::cout << "Before emplace" << std::endl;
             this->prevButtons.emplace(
-                entry.path(),
-                gui::ButtonText(
-                    x + PREVIEW_SIDE / 4, y + PREVIEW_SIDE + 5, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
-                    fs::path(entry).stem(), game::FONT_DIR + "helvetica.ttf",
-                    MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
-                    MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
-                    MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
-                    MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-                    std::bind([](game::Engine &e, const std::string &s) {
-                        e.popState();
-                        return e.pushState(
-                            static_cast<state::State *>(Load::getInstance()->nextState->loadShape(s))
-                        );
-                    }, std::placeholders::_1, entry.path())
-                )
+                    entry.path(),
+                    gui::ButtonText(
+                            x + PREVIEW_SIDE / 4, y + PREVIEW_SIDE + 5, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
+                            fs::path(entry).stem(), game::FONT_DIR + "helvetica.ttf",
+                            MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
+                            MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
+                            MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
+                            MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
+                            std::bind([](game::Engine &e, const std::string &s) {
+                                e.popState();
+                                return e.pushState(
+                                        static_cast<state::State *>(Load::getInstance()->nextState->loadShape(s))
+                                );
+                            }, std::placeholders::_1, entry.path())
+                    )
             );
-//            std::cout << "After emplace" << std::endl;
+            //            std::cout << "After emplace" << std::endl;
             
             this->delButtons.emplace(
-                entry.path(),
-                gui::ButtonDraw(
-                    x + PREVIEW_SIDE - DEL_BUTTON_SIDE - 1, y + 2, DEL_BUTTON_SIDE, DEL_BUTTON_SIDE,
-                    drawDelButton, drawHDelButton, drawCDelButton,
-                    std::bind(&deleteShape, std::placeholders::_1, entry.path())
-                )
+                    entry.path(),
+                    gui::ButtonDraw(
+                            x + PREVIEW_SIDE - DEL_BUTTON_SIDE - 1, y + 2, DEL_BUTTON_SIDE, DEL_BUTTON_SIDE,
+                            drawDelButton, drawHDelButton, drawCDelButton,
+                            std::bind(&deleteShape, std::placeholders::_1, entry.path())
+                    )
             );
             
             this->prevOrder.push_back(entry.path());
@@ -115,37 +119,37 @@ namespace tangram::state {
         x = game::WIDTH / 2;
         
         this->next = std::make_unique<gui::ButtonText>(
-            x + BUTTON_WIDTH * 0.5, y, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
-            "-->", game::FONT_DIR + "helvetica.ttf",
-            MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
-            MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
-            MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
-            MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) {
-                Load::getInstance()->page++;
-                return false;
-            }
+                x + BUTTON_WIDTH * 0.5, y, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
+                "-->", game::FONT_DIR + "helvetica.ttf",
+                MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
+                MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
+                MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
+                MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
+                [](game::Engine &e) {
+                    Load::getInstance()->page++;
+                    return false;
+                }
         );
         this->prev = std::make_unique<gui::ButtonText>(
-            x - BUTTON_WIDTH * 1.5, y, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
-            "<--", game::FONT_DIR + "helvetica.ttf",
-            MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
-            MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
-            MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
-            MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) {
-                Load::getInstance()->page--;
-                return false;
-            }
+                x - BUTTON_WIDTH * 1.5, y, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
+                "<--", game::FONT_DIR + "helvetica.ttf",
+                MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
+                MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
+                MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
+                MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
+                [](game::Engine &e) {
+                    Load::getInstance()->page--;
+                    return false;
+                }
         );
         this->menu = std::make_unique<gui::ButtonText>(
-            x - BUTTON_WIDTH / 2, 0, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
-            "Menu", game::FONT_DIR + "helvetica.ttf",
-            MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
-            MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
-            MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
-            MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
-            [](game::Engine &e) { return e.popState(); }
+                x - BUTTON_WIDTH / 2, 0, BUTTON_WIDTH, BUTTON_HEIGHT, 1,
+                "Menu", game::FONT_DIR + "helvetica.ttf",
+                MLV_rgba(0, 0, 0, 255), MLV_COLOR_BLACK, MLV_COLOR_WHITE,
+                MLV_COLOR_GREY70, MLV_COLOR_BLACK, MLV_COLOR_GREY70,
+                MLV_COLOR_GREY40, MLV_COLOR_BLACK, MLV_COLOR_GREY40,
+                MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER,
+                [](game::Engine &e) { return e.popState(); }
         );
     }
     
@@ -191,7 +195,7 @@ namespace tangram::state {
             return engine.popState();
         }
         
-        bool lastPage = (page + 1) * 6 >= this->previews.size();
+        bool lastPage = (page + 1) * 6u >= this->previews.size();
         bool firstPage = page == 0;
         this->next->enable();
         this->prev->enable();
@@ -224,8 +228,8 @@ namespace tangram::state {
         }
         
         return (std::find_if(
-            begin, end,
-            [&](const auto &s) { return this->prevButtons.at(s).update(event, engine); }
+                begin, end,
+                [&](const auto &s) { return this->prevButtons.at(s).update(event, engine); }
         ) != end);
     }
     
@@ -234,13 +238,13 @@ namespace tangram::state {
         MLV_clear_window(MLV_COLOR_BLACK);
         
         std::for_each(
-            std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6)),
-            std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6 + 6)),
-            [this](const auto &s) {
-                this->prevButtons.at(s).draw();
-                this->previews.at(s).draw();
-                this->delButtons.at(s).draw();
-            }
+                std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6)),
+                std::next(this->prevOrder.begin(), std::min(static_cast<int>(this->previews.size()), page * 6 + 6)),
+                [this](const auto &s) {
+                    this->prevButtons.at(s).draw();
+                    this->previews.at(s).draw();
+                    this->delButtons.at(s).draw();
+                }
         );
         
         this->next->draw();
@@ -249,7 +253,7 @@ namespace tangram::state {
         
         MLV_Font *font = MLV_load_font((game::FONT_DIR + "helvetica.ttf").c_str(), 24);
         MLV_draw_text_with_font(
-            game::WIDTH / 2 - 3, game::HEIGHT - 47, std::to_string(this->page).c_str(), font, MLV_COLOR_WHITE
+                game::WIDTH / 2 - 3, game::HEIGHT - 47, std::to_string(this->page).c_str(), font, MLV_COLOR_WHITE
         );
         MLV_free_font(font);
     }

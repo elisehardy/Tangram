@@ -50,7 +50,7 @@ namespace tangram::geometry {
             template<typename U>
             
             Point<T> operator*(U factor) const;
-        
+            
             template<typename U>
             friend std::ostream &operator<<(std::ostream &os, const Point<U> &p);
             
@@ -98,26 +98,15 @@ namespace tangram::geometry {
     typedef Vector<uint64_t> Vectoru64;
     
     
-    static double radians(int16_t deg) {
+    static inline double radians(int16_t deg) {
         constexpr double r = M_PI / 180.0;
         return deg * r;
     }
     
     
     template<typename T>
-    static int orientation(const Point<T> &a, const Point<T> &b, const Point<T> &c) {
-        int val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y);
-        
-        if (val == 0) {
-            return 0;
-        }
-        return val > 0 ? 1 : 2;
-    }
-    
-    
-    template<typename T>
     Point<T>::Point(T x, T y) :
-        x(x), y(y) {
+            x(x), y(y) {
     }
     
     
@@ -160,8 +149,8 @@ namespace tangram::geometry {
     Point<T> Point<T>::operator*(const Point<U> &other) const {
         static_assert(std::is_arithmetic<U>::value, "Arithmetic type is required");
         return Point<T>(
-            static_cast<T>(this->x * other.x),
-            static_cast<T>(this->y * other.y)
+                static_cast<T>(this->x * other.x),
+                static_cast<T>(this->y * other.y)
         );
     }
     
@@ -178,8 +167,8 @@ namespace tangram::geometry {
     Point<T> Point<T>::operator*(U factor) const {
         static_assert(std::is_arithmetic<U>::value, "Arithmetic type is required");
         return Point<T>(
-            static_cast<T>(this->x * factor),
-            static_cast<T>(this->y * factor)
+                static_cast<T>(this->x * factor),
+                static_cast<T>(this->y * factor)
         );
     }
     
@@ -199,8 +188,8 @@ namespace tangram::geometry {
         double s = sin(rad);
         
         return Point<T>(
-            static_cast<T>(x * c - y * s + center.x),
-            static_cast<T>(x * s + y * c + center.y)
+                static_cast<T>(x * c - y * s + center.x),
+                static_cast<T>(x * s + y * c + center.y)
         );
     }
     
@@ -208,8 +197,8 @@ namespace tangram::geometry {
     template<typename T>
     Point<T> Point<T>::translate(const Point<T> &translation) const {
         return Point<T>(
-            this->x + translation.x,
-            this->y + translation.y
+                this->x + translation.x,
+                this->y + translation.y
         );
     }
     
@@ -225,8 +214,8 @@ namespace tangram::geometry {
         }
         
         return Point<double>(
-            x / size,
-            y / size
+                x / size,
+                y / size
         );
     }
     

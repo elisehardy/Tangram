@@ -1,7 +1,6 @@
 #ifndef BUTTONDRAW_HPP
 #define BUTTONDRAW_HPP
 
-#include <any>
 #include <functional>
 
 #include <tangram/game/Engine.hpp>

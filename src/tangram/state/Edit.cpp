@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <fstream>
-#include <filesystem>
 
 #include <MLV/MLV_text.h>
 #include <MLV/MLV_shape.h>
@@ -9,8 +8,15 @@
 #include <tangram/gui/ButtonText.hpp>
 #include <tangram/gui/ShapePreview.hpp>
 
-
+#ifdef USE_STD_FILESYSTEM
+#include <filesystem>
 namespace fs = std::filesystem;
+#else
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#endif
+
+
 
 namespace tangram::state {
     
