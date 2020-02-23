@@ -1,3 +1,11 @@
+/** @file Engine.hpp
+ *
+ *  @brief ***Engine***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 

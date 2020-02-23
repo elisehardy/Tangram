@@ -1,3 +1,11 @@
+/** @file ShapePreview.hpp
+ *
+ *  @brief ***ShapePreview***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef TANGRAM_SHAPEPREVIEW_HPP
 #define TANGRAM_SHAPEPREVIEW_HPP
 
@@ -11,6 +19,9 @@
 
 namespace tangram::gui {
     
+    /**
+     * Draw a Shape in a reduced and framed way, in black and white.
+     */
     class ShapePreview : public Drawable {
         private:
             const geometry::Shape shape;
@@ -19,6 +30,7 @@ namespace tangram::gui {
             const int16_t y;
         
         public:
+            
             ShapePreview(const geometry::Shape &shape, double scale, int16_t size, int16_t x, int16_t y,
                          MLV_Color color = MLV_COLOR_GREY50);
             

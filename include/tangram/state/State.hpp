@@ -1,3 +1,11 @@
+/** @file State.hpp
+ *
+ *  @brief ***State***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef STATE_HPP
 #define STATE_HPP
 
@@ -13,6 +21,9 @@ namespace tangram::game {
 
 namespace tangram::state {
     
+    /**
+     * Common interface for every State of the game.
+     */
     class State : public gui::Drawable, public game::Updatable {
         
         protected:
@@ -22,12 +33,24 @@ namespace tangram::state {
         
         public:
             
+            /**
+             * Initialize this State.
+             */
             virtual void init() = 0;
-            
+        
+            /**
+             * Pause this State.
+             */
             virtual void pause() = 0;
             
+            /**
+             * Resume this State.
+             */
             virtual void resume() = 0;
             
+            /**
+             * Cleanup this state.
+             */
             virtual void cleanup() = 0;
     };
 }

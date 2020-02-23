@@ -1,3 +1,11 @@
+/** @file Event.hpp
+ *
+ *  @brief ***Event***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef EVENT_HPP
 #define EVENT_HPP
 

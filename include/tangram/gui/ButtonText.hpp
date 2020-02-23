@@ -1,3 +1,11 @@
+/** @file ButtonText.hpp
+ *
+ *  @brief ***ButtonText***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
@@ -13,7 +21,7 @@
 namespace tangram::gui {
     
     /**
-     * Represents a clickable button on the gui.
+     * Represents a clickable button with text on the gui.
      */
     class ButtonText final : public ButtonAbstract {
         private:

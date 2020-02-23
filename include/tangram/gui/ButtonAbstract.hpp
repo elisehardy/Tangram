@@ -1,3 +1,11 @@
+/** @file ButtonAbstract.hpp
+ *
+ *  @brief ***ButtonAbstract***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef TANGRAM_BUTTONABSTRACT_HPP
 #define TANGRAM_BUTTONABSTRACT_HPP
 
@@ -10,6 +18,9 @@
 
 namespace tangram::gui {
     
+    /**
+     * Abstract class used to represent a Button.
+     */
     class ButtonAbstract : public game::Updatable, public Drawable {
         protected:
             const int16_t x; /**< X coordinate of the north-west corner. */
@@ -21,8 +32,7 @@ namespace tangram::gui {
         
         public:
             
-            ButtonAbstract(int16_t x, int16_t y, int16_t w, int16_t h,
-                           std::function<bool(game::Engine &)> execute);
+            ButtonAbstract(int16_t x, int16_t y, int16_t w, int16_t h, std::function<bool(game::Engine &)> execute);
             
             bool update(const game::Event &event, game::Engine &engine) override;
     };

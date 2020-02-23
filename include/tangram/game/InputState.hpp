@@ -1,3 +1,11 @@
+/** @file InputState.hpp
+ *
+ *  @brief ***InputState***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef TANGRAM_INPUT_HPP
 #define TANGRAM_INPUT_HPP
 

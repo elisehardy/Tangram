@@ -1,3 +1,11 @@
+/** @file ParserException.hpp
+ *
+ *  @brief ***ParserException***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef PARSEREXCEPTION_HPP
 #define PARSEREXCEPTION_HPP
 

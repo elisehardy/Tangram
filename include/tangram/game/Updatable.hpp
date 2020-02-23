@@ -1,3 +1,11 @@
+/** @file Updatable.hpp
+ *
+ *  @brief ***Updatable***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+
 #ifndef OBSERVABLE_HPP
 #define OBSERVABLE_HPP
 
@@ -36,7 +44,7 @@ namespace tangram::game {
              * Destructor.
              */
             virtual ~Updatable() = default;
-            
+        
         public:
             
             /**
@@ -61,7 +69,7 @@ namespace tangram::game {
              * @return true if this element is hovered, false otherwise.
              */
             [[nodiscard]] bool isHovered() const;
-        
+            
             /**
              * @return true if this element is enabled, false otherwise.
              */
@@ -71,13 +79,13 @@ namespace tangram::game {
              * Enable this element.
              */
             void enable();
-        
+            
             /**
              * Disable this element.
              */
             
             void disable();
-        
+            
             ////////////////////////////////////////////////////////////////////
             ////////////////////////// KEYBOARD'S KEY //////////////////////////
             ////////////////////////////////////////////////////////////////////
@@ -95,28 +103,28 @@ namespace tangram::game {
              * @return true if 'key' has been pressed, false otherwise.
              */
             [[nodiscard]] bool isKeyPressed(MLV_Keyboard_button key) const;
-        
+            
             /**
              * @param key Key that will be checked.
              *
              * @return true if 'key' is held, false otherwise.
              */
             [[nodiscard]] bool isKeyHeld(MLV_Keyboard_button key) const;
-        
+            
             /**
              * @param key Key that will be checked.
              *
              * @return true if 'key' has been released, false otherwise.
              */
             [[nodiscard]] bool isKeyReleased(MLV_Keyboard_button key) const;
-        
+            
             /**
              * @param key Key that will be checked.
              *
              * @return true if 'key' has been clicked, false otherwise.
              */
             [[nodiscard]] bool isKeyClicked(MLV_Keyboard_button key) const;
-        
+            
             /**
              * @param key Which key's pressed point will be retrieved.
              *
@@ -127,49 +135,49 @@ namespace tangram::game {
             ////////////////////////////////////////////////////////////////////
             ////////////////////////// MOUSE'S BUTTON //////////////////////////
             ////////////////////////////////////////////////////////////////////
-        
+            
             /**
              * @param button Button from which the InputState will be retrieved.
              *
              * @return InputState corresponding to 'button'.
              */
             [[nodiscard]] InputState getButtonInputState(MLV_Mouse_button button) const;
-        
+            
             /**
              * @param button Button that will be checked.
              *
              * @return true if 'button' has been pressed, false otherwise.
              */
             [[nodiscard]] bool isButtonPressed(MLV_Mouse_button button) const;
-        
+            
             /**
              * @param button Button that will be checked.
              *
              * @return true if 'button' is held, false otherwise.
              */
             [[nodiscard]] bool isButtonHeld(MLV_Mouse_button button) const;
-        
+            
             /**
              * @param button Button that will be checked.
              *
              * @return true if 'button' has been released, false otherwise.
              */
             [[nodiscard]] bool isButtonReleased(MLV_Mouse_button button) const;
-        
+            
             /**
              * @param button Button that will be checked.
              *
              * @return true if 'button' has been clicked, false otherwise.
              */
             [[nodiscard]] bool isButtonClicked(MLV_Mouse_button button) const;
-        
+            
             /**
              * @param button Which button's pressed point will be retrieved.
              *
              * @return The pressed Point corresponding to 'button'.
              */
             [[nodiscard]] geometry::Point16 getButtonPressedPoint(MLV_Mouse_button button) const;
-        
+            
             ////////////////////////////////////////////////////////////////////
             //////////////////////// RIGHT BUTTON'S SHORTCUTS //////////////////
             ////////////////////////////////////////////////////////////////////
@@ -178,51 +186,51 @@ namespace tangram::game {
              * @return true if the mouse's right button has been pressed, false otherwise.
              */
             [[nodiscard]] bool isRightPressed() const;
-        
+            
             /**
              * @return true if the mouse's right button is held, false otherwise.
              */
             [[nodiscard]] bool isRightHeld() const;
-        
+            
             /**
              * @return true if the mouse's right button has been released, false otherwise.
              */
             [[nodiscard]] bool isRightReleased() const;
-        
+            
             /**
              * @return true if the mouse's right button has been clicked, false otherwise.
              */
             [[nodiscard]] bool isRightClicked() const;
-        
+            
             /**
              * @return The pressed Point of the mouse's right button.
              */
             [[nodiscard]] geometry::Point16 getRightPressedPoint() const;
-        
+            
             ////////////////////////////////////////////////////////////////////
             //////////////////////// LEFT BUTTON'S SHORTCUTS ///////////////////
             ////////////////////////////////////////////////////////////////////
-        
+            
             /**
             * @return true if the mouse's left button has been pressed, false otherwise.
             */
             [[nodiscard]] bool isLeftPressed() const;
-        
+            
             /**
              * @return true if the mouse's left button is held, false otherwise.
              */
             [[nodiscard]] bool isLeftHeld() const;
-        
+            
             /**
              * @return true if the mouse's left button has been released, false otherwise.
              */
             [[nodiscard]] bool isLeftReleased() const;
-        
+            
             /**
              * @return true if the mouse's left button has been clicked, false otherwise.
              */
             [[nodiscard]] bool isLeftClicked() const;
-        
+            
             /**
              * @return The pressed Point of the mouse's left button.
              */

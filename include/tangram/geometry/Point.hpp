@@ -1,3 +1,11 @@
+/** @file Point.hpp
+ *
+ *  @brief ***Point***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef POINT_HPP
 #define POINT_HPP
 
@@ -10,6 +18,11 @@
 
 namespace tangram::geometry {
     
+    /**
+     * Template class used to represent a 2D Point.
+     *
+     * @tparam T Arithmetic type used for the Point's coordinates.
+     */
     template<typename T>
     class Point {
             static_assert(std::is_arithmetic<T>::value, "Arithmetic type is required");
@@ -20,6 +33,7 @@ namespace tangram::geometry {
             T x = static_cast<T>(0);
             T y = static_cast<T>(0);
             
+            
             ///////////////////// CONSTRUCTOR & DESTRUCTOR /////////////////////
             
             Point() = default;
@@ -28,6 +42,7 @@ namespace tangram::geometry {
             
             template<typename U>
             Point<T>(const Point<U> &p);
+            
             
             ///////////////////////////// OPERATORS ////////////////////////////
             
@@ -54,16 +69,44 @@ namespace tangram::geometry {
             template<typename U>
             friend std::ostream &operator<<(std::ostream &os, const Point<U> &p);
             
+            
             ///////////////////////////// OTHERS ///////////////////////////////
             
+            /**
+             * Rotate this Point around *center* by *angle* degrees.
+             *
+             * @param angle Angle of rotation in degrees.
+             * @param center Center of rotation.
+             *
+             * @return The Point resulting of the rotation.
+             */
             [[nodiscard]] Point<T> rotate(int16_t angle, const Point<double> &center) const;
-            
+        
+            /**
+             * Translate this Point by the vector *translation*.
+             *
+             * @param translation Vector of translation.
+             *
+             * @return The Point resulting of the translation.
+             */
             [[nodiscard]] Point<T> translate(const Point<T> &translation) const;
             
+            /**
+             * Compute the center of mass of the given Points.
+             *
+             * @param points Vector of points.
+             *
+             * @return The computed center of mass.
+             */
             [[nodiscard]] static Point<double> center(const std::vector<Point<T>> &points);
             
             [[nodiscard]] static Point<double> center(Point<T> first);
-            
+        
+            /**
+             * Compute the center of mass of the given Points.
+             *
+             * @return The computed center of mass.
+             */
             template<typename... Args>
             [[nodiscard]] static Point<double> center(Point<T> first, Args... args);
     };

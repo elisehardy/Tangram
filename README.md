@@ -14,6 +14,8 @@ cmake ..
 make
 ```
 
+This will also build the documentation inside `build/doc/`.
+
 ## Utilisation
 
 ### Launching the game

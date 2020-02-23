@@ -14,14 +14,14 @@ namespace tangram::gui {
     }
     
     
-    bool FadingText::update(const game::Event &event, game::Engine &engine) {
-        this->width = this->width > 0 ? this->width - 2 : 0;
-        return false;
+    void FadingText::rewind() {
+        MLV_get_size_of_text_with_font(this->text.c_str(), &(this->width), nullptr, font);
     }
     
     
-    void FadingText::rewind() {
-        MLV_get_size_of_text_with_font(this->text.c_str(), &(this->width), nullptr, font);
+    bool FadingText::update(const game::Event &event, game::Engine &engine) {
+        this->width = this->width > 0 ? this->width - 2 : 0;
+        return false;
     }
     
     

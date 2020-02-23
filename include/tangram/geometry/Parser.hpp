@@ -1,3 +1,11 @@
+/** @file Parser.hpp
+ *
+ *  @brief ***Parser***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef PARSER_HPP
 #define PARSER_HPP
 

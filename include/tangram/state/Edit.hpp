@@ -1,3 +1,11 @@
+/** @file Edit.hpp
+ *
+ *  @brief ***Edit***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef EDIT_HPP
 #define EDIT_HPP
 
@@ -14,6 +22,10 @@
 
 namespace tangram::state {
     
+    
+    /**
+     * State used to edit a Shape.
+     */
     class Edit : public ShapeLoaderState {
         
         private:
@@ -33,6 +45,12 @@ namespace tangram::state {
             static bool save(game::Engine &engine);
         
         public:
+        
+            /**
+             * Return the instance of the Singleton corresponding to this State.
+             *
+             * @return The instance of the Singleton corresponding to this State.
+             */
             static Edit *getInstance();
             
             Edit *loadShape(const std::string &path) override;

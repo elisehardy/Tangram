@@ -1,3 +1,11 @@
+/** @file Load.hpp
+ *
+ *  @brief ***Load***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef MAIN_LOAD_HPP
 #define MAIN_LOAD_HPP
 
@@ -18,6 +26,9 @@
 
 namespace tangram::state {
     
+    /**
+     * State used to load a Shape.
+     */
     class Load : public State {
         
         private:
@@ -38,6 +49,12 @@ namespace tangram::state {
             void init() override;
         
         public:
+        
+            /**
+             * Return the instance of the Singleton corresponding to this State.
+             *
+             * @return The instance of the Singleton corresponding to this State.
+             */
             static Load *getInstance();
             
             Load *setNextState(ShapeLoaderState *nextState);

@@ -1,3 +1,11 @@
+/** @file ButtonDraw.hpp
+ *
+ *  @brief ***ButtonDraw***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef BUTTONDRAW_HPP
 #define BUTTONDRAW_HPP
 

@@ -1,3 +1,11 @@
+/** @file Create.hpp
+ *
+ *  @brief ***Create***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef Create_HPP
 #define Create_HPP
 
@@ -12,6 +20,9 @@
 
 namespace tangram::state {
     
+    /**
+     * State used to create a new Shape.
+     */
     class Create : public State {
         
         private:
@@ -29,6 +40,12 @@ namespace tangram::state {
             static bool save(game::Engine &engine);
         
         public:
+        
+            /**
+             * Return the instance of the Singleton corresponding to this State.
+             *
+             * @return The instance of the Singleton corresponding to this State.
+             */
             static Create *getInstance();
             
             void cleanup() override;

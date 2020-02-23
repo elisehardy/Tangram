@@ -1,3 +1,11 @@
+/** @file Menu.hpp
+ *
+ *  @brief ***Menu***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef MAIN_MENU_HPP
 #define MAIN_MENU_HPP
 
@@ -19,6 +27,9 @@
 
 namespace tangram::state {
     
+    /**
+     * State representing the Main Menu of the Tangram.
+     */
     class Menu : public State {
         
         private:
@@ -30,6 +41,12 @@ namespace tangram::state {
             void init() override;
         
         public:
+        
+            /**
+             * Return the instance of the Singleton corresponding to this State.
+             *
+             * @return The instance of the Singleton corresponding to this State.
+             */
             static Menu *getInstance();
             
             void cleanup() override;

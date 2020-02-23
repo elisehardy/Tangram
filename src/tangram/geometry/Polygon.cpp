@@ -8,73 +8,20 @@
 namespace tangram::geometry {
     
     Polygon::Polygon(MLV_Color t_color) :
-        color(t_color) {
+            color(t_color) {
     }
     
     
-    Polygon Polygon::custom(const std::vector<Triangle> &triangles, MLV_Color color) {
-        Polygon p = Polygon(color);
-        p.add(triangles);
-        return p;
-    }
-    
-    
-    Polygon Polygon::smallTriangle(const Point16 &offset, MLV_Color color) {
-        return custom({ Triangle(offset) }, color);
-    }
-    
-    
-    Polygon Polygon::mediumTriangle(const Point16 &offset, MLV_Color color) {
-        Triangle t1(offset);
-        return custom(
-            {
-                t1.rotate(135, offset).translate(Triangle::HEIGHT, Triangle::HEIGHT),
-                t1.rotate(225, offset).translate(Triangle::HEIGHT, Triangle::HEIGHT)
-            },
-            color
-        );
-    }
-    
-    
-    Polygon Polygon::largeTriangle(const Point16 &offset, MLV_Color color) {
-        Triangle t1(offset);
-        return custom(
-            {
-                t1,
-                t1.rotate(180, offset).translate(Triangle::SIDE, Triangle::SIDE),
-                t1.translate(Triangle::SIDE, 0),
-                t1.translate(0, Triangle::SIDE),
-            },
-            color
-        );
-    }
-    
-    
-    Polygon Polygon::parallelogram(const Point16 &offset, MLV_Color color) {
-        Triangle t1(offset);
-        return custom(
-            {
-                t1.rotate(225, offset).translate(Triangle::HEIGHT + 1, Triangle::HEIGHT + 1),
-                t1.rotate(45, offset).translate(Triangle::HYPOTENUSE, 0)
-            },
-            color
-        );
-    }
-    
-    
-    Polygon Polygon::square(const Point16 &offset, MLV_Color color) {
-        Triangle t1(offset);
-        return custom(
-            { t1, t1.rotate(180, offset).translate(Triangle::SIDE, Triangle::SIDE) },
-            color
-        );
+    Polygon::Polygon(const std::vector<Triangle> &t_triangles, MLV_Color t_color) :
+            color(t_color) {
+        this->add(t_triangles);
     }
     
     
     Polygon &Polygon::translate(const Vector16 &v) {
         std::for_each(
-            this->triangles.begin(), this->triangles.end(),
-            [&](Triangle &t) { t = t.translate(v); }
+                this->triangles.begin(), this->triangles.end(),
+                [&](Triangle &t) { t = t.translate(v); }
         );
         
         this->buttons[MLV_BUTTON_LEFT].pressedPoint = this->buttons[MLV_BUTTON_LEFT].pressedPoint.translate(v);
@@ -90,11 +37,11 @@ namespace tangram::geometry {
     
     Polygon &Polygon::scale(const VectorD &v) {
         std::for_each(
-            this->triangles.begin(), this->triangles.end(),
-            [&](Triangle &t) { t = t.scale(v); }
+                this->triangles.begin(), this->triangles.end(),
+                [&](Triangle &t) { t = t.scale(v); }
         );
         
-        this->buttons[MLV_BUTTON_LEFT].pressedPoint = Point16 (this->buttons[MLV_BUTTON_LEFT].pressedPoint * v);
+        this->buttons[MLV_BUTTON_LEFT].pressedPoint = Point16(this->buttons[MLV_BUTTON_LEFT].pressedPoint * v);
         this->center = this->center * v;
         return *this;
     }
@@ -122,8 +69,8 @@ namespace tangram::geometry {
         for (const Triangle &t: this->triangles) {
             auto trianglePoints = t.rotate(this->angle, this->center).getPoints();
             std::for_each(
-                trianglePoints.begin(), trianglePoints.end(),
-                [&points](const Point16 &p) { points.emplace_back(p); }
+                    trianglePoints.begin(), trianglePoints.end(),
+                    [&points](const Point16 &p) { points.emplace_back(p); }
             );
         }
         
@@ -148,15 +95,15 @@ namespace tangram::geometry {
     
     bool Polygon::contains(const Point16 &p) const {
         return std::any_of(
-            this->triangles.begin(), this->triangles.end(),
-            [&p, this](const Triangle &t) { return t.rotate(this->angle, this->center).contains(p); }
+                this->triangles.begin(), this->triangles.end(),
+                [&p, this](const Triangle &t) { return t.rotate(this->angle, this->center).contains(p); }
         );
     }
     
     
     std::ostream &operator<<(std::ostream &os, const Polygon &p) {
         os << "{" << std::endl;
-        os << "    " <<  p.color << std::endl;
+        os << "    " << p.color << std::endl;
         for (const Triangle &t: p.triangles) {
             os << "    " << t.rotate(p.angle, p.center) << std::endl;
         }
@@ -205,8 +152,8 @@ namespace tangram::geometry {
         }
         
         std::for_each(
-            this->triangles.begin(), this->triangles.end(),
-            [this, color](const Triangle &t) { t.rotate(this->angle, this->center).draw(color); }
+                this->triangles.begin(), this->triangles.end(),
+                [this, color](const Triangle &t) { t.rotate(this->angle, this->center).draw(color); }
         );
     }
 }

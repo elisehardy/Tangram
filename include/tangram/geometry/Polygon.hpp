@@ -1,3 +1,11 @@
+/** @file Polygon.hpp
+ *
+ *  @brief ***Polygon***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef POLYGON_HPP
 #define POLYGON_HPP
 
@@ -13,6 +21,9 @@
 
 namespace tangram::geometry {
     
+    /**
+     * Represent a Polygon composed of multiple Triangle.
+     */
     class Polygon : public gui::Drawable, public game::Updatable {
         
         private:
@@ -29,28 +40,16 @@ namespace tangram::geometry {
             Polygon() = default;
             
             explicit Polygon(MLV_Color color);
-            
+        
+            Polygon(const std::vector<Triangle> &triangles, MLV_Color color);
+        
             Polygon(const Polygon &) = default;
-            
+        
             Polygon(Polygon &&) = default;
-            
+        
             Polygon &operator=(const Polygon &) = default;
             
             Polygon &operator=(Polygon &&) = default;
-            
-            //////////////////////////// FACTORIES /////////////////////////////
-            
-            [[nodiscard]] static Polygon custom(const std::vector<Triangle> &triangles, MLV_Color color);
-            
-            [[nodiscard]] static Polygon smallTriangle(const Point16 &offset, MLV_Color color);
-            
-            [[nodiscard]] static Polygon mediumTriangle(const Point16 &offset, MLV_Color color);
-            
-            [[nodiscard]] static Polygon largeTriangle(const Point16 &offset, MLV_Color color);
-            
-            [[nodiscard]] static Polygon square(const Point16 &offset, MLV_Color color);
-            
-            [[nodiscard]] static Polygon parallelogram(const Point16 &offset, MLV_Color color);
             
             ///////////////////////// GETTERS & SETTERS ////////////////////////
             
@@ -64,26 +63,87 @@ namespace tangram::geometry {
             
             ///////////////////////// TRANSFORMATIONS //////////////////////////
             
+            /**
+             * Translate this Polygon by the given vector.
+             *
+             * @param v Vector of translation.
+             *
+             * @return A reference to this.
+             */
             Polygon &translate(const Vector16 &v);
-            
+        
+            /**
+             * Translate this Polygon by the given coordinates.
+             *
+             * @param x Translation on X.
+             * @param y Translation on Y.
+             *
+             * @return A reference to this.
+             */
             Polygon &translate(int16_t x, int16_t y);
-            
+        
+            /**
+             * Scale this Polygon by the given vector.
+             *
+             * @param v Scaling vector.
+             *
+             * @return A reference to this.
+             */
             Polygon &scale(const VectorD &v);
-            
+        
+            /**
+             * Translate this Polygon by the given coordinates.
+             *
+             * @param x Scale on X.
+             * @param y Scale on Y.
+             *
+             * @return A reference to this.
+             */
             Polygon &scale(double x, double y);
-            
+        
+            /**
+             * Translate this Polygon by the given factor.
+             *
+             * @param factor Scaling factor.
+             *
+             * @return A reference to this.
+             */
             Polygon &scale(double factor);
-            
+        
+            /**
+             * Rotate this Polygon by the given degrees around its center.
+             *
+             * @param n Degrees of rotation.
+             *
+             * @return A reference to this.
+             */
             Polygon &rotate(int16_t n);
             
             ////////////////////////////// OTHERS //////////////////////////////
             
             friend std::ostream &operator<<(std::ostream &os, const Polygon &p);
             
+            /**
+             * Check whether a point is contained inside a Polygon.
+             *
+             * @param p Point to be checked.
+             *
+             * @return true if *p* is inside this Polygon, false otherwise.
+             */
             [[nodiscard]] bool contains(const Point16 &p) const;
             
+            /**
+             * Add triangles to this Polygon.
+             *
+             * @param triangles Triangles to be added.
+             */
             void add(const std::vector<Triangle> &triangles);
-            
+        
+            /**
+             * Add a triangle to this Polygon.
+             *
+             * @param t Triangle to be added.
+             */
             void add(const Triangle &t);
             
             bool update(const game::Event &event, game::Engine &engine) override;

@@ -1,3 +1,11 @@
+/** @file Play.hpp
+ *
+ *  @brief ***Play***'s header
+ *
+ *  @author Elise Hardy
+ *  @author Quentin Coumes
+ */
+ 
 #ifndef PLAY_HPP
 #define PLAY_HPP
 
@@ -6,6 +14,7 @@
 
 #include <tangram/gui/Drawable.hpp>
 #include <tangram/geometry/Shape.hpp>
+#include <tangram/geometry/Polygon.hpp>
 #include <tangram/game/Engine.hpp>
 #include <tangram/game/Updatable.hpp>
 #include <tangram/state/State.hpp>
@@ -15,6 +24,9 @@
 
 namespace tangram::state {
     
+    /**
+     * State representing the main game.
+     */
     class Play : public ShapeLoaderState {
         
         private:
@@ -33,6 +45,12 @@ namespace tangram::state {
             void init() override;
         
         public:
+            
+            /**
+             * Return the instance of the Singleton corresponding to this State.
+             *
+             * @return The instance of the Singleton corresponding to this State.
+             */
             static Play *getInstance();
             
             Play *loadShape(const std::string &path) override;
