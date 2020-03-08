@@ -5,7 +5,7 @@
  *  @author Elise Hardy
  *  @author Quentin Coumes
  */
- 
+
 #ifndef POINT_HPP
 #define POINT_HPP
 
@@ -28,7 +28,7 @@ namespace tangram::geometry {
             static_assert(std::is_arithmetic<T>::value, "Arithmetic type is required");
         
         public:
-            static constexpr uint16_t NEAR_THRESHOLD = 20;
+            static constexpr uint16_t NEAR_THRESHOLD = 15;
             
             T x = static_cast<T>(0);
             T y = static_cast<T>(0);
@@ -81,7 +81,7 @@ namespace tangram::geometry {
              * @return The Point resulting of the rotation.
              */
             [[nodiscard]] Point<T> rotate(int16_t angle, const Point<double> &center) const;
-        
+            
             /**
              * Translate this Point by the vector *translation*.
              *
@@ -101,7 +101,7 @@ namespace tangram::geometry {
             [[nodiscard]] static Point<double> center(const std::vector<Point<T>> &points);
             
             [[nodiscard]] static Point<double> center(Point<T> first);
-        
+            
             /**
              * Compute the center of mass of the given Points.
              *
@@ -170,8 +170,10 @@ namespace tangram::geometry {
     
     template<typename T>
     bool Point<T>::operator==(const Point<T> &other) const {
-        return (std::abs(this->x - other.x) < NEAR_THRESHOLD
-                && std::abs(this->y - other.y) < NEAR_THRESHOLD);
+        return std::sqrt(
+                (this->x - other.x) * (this->x - other.x)
+                + (this->y - other.y) * (this->y - other.y)
+        ) < NEAR_THRESHOLD;
     }
     
     

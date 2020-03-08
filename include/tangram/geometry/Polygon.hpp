@@ -24,7 +24,7 @@ namespace tangram::geometry {
     /**
      * Represent a Polygon composed of multiple Triangle.
      */
-    class Polygon : public gui::Drawable, public game::Updatable {
+    class Polygon : public gui::Drawable {
         
         private:
             std::vector<Triangle> triangles = {};

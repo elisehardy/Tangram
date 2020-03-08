@@ -8,7 +8,7 @@
 
 namespace tangram::geometry {
     
-    Shape Shape::load(const std::string& path) {
+    Shape Shape::load(const std::string &path) {
         return Parser()(path);
     }
     
@@ -16,12 +16,12 @@ namespace tangram::geometry {
     Shape Shape::square() {
         return load(game::DEFAULT_SHAPE_PATH);
     }
-
+    
     
     Shape &Shape::translate(const Vector16 &v) {
         std::for_each(
-            this->polygons.begin(), this->polygons.end(),
-            [&](Polygon &p) { p.translate(v); }
+                this->polygons.begin(), this->polygons.end(),
+                [&](Polygon &p) { p.translate(v); }
         );
         
         return *this;
@@ -35,8 +35,8 @@ namespace tangram::geometry {
     
     Shape &Shape::scale(const VectorD &v) {
         std::for_each(
-            this->polygons.begin(), this->polygons.end(),
-            [&](Polygon &p) { p.scale(v); }
+                this->polygons.begin(), this->polygons.end(),
+                [&](Polygon &p) { p.scale(v); }
         );
         
         return *this;
@@ -55,10 +55,10 @@ namespace tangram::geometry {
     
     Shape &Shape::setColor(MLV_Color color) {
         std::for_each(
-            this->polygons.begin(), this->polygons.end(),
-            [&](Polygon &p) { p.setColor(color); }
+                this->polygons.begin(), this->polygons.end(),
+                [&](Polygon &p) { p.setColor(color); }
         );
-    
+        
         return *this;
     }
     
@@ -83,8 +83,8 @@ namespace tangram::geometry {
         for (const Polygon &p: this->polygons) {
             auto polygonPoints = p.getPoints();
             std::for_each(
-                polygonPoints.begin(), polygonPoints.end(),
-                [&points](const Point16 &p) { points.emplace_back(p); }
+                    polygonPoints.begin(), polygonPoints.end(),
+                    [&points](const Point16 &p) { points.emplace_back(p); }
             );
         }
         
@@ -115,12 +115,12 @@ namespace tangram::geometry {
             for (const geometry::Point16 &p: this->polygons[i].getPoints()) {
                 
                 upper = {
-                    std::min(upper.x, int16_t(upperBound.x - p.x)),
-                    std::min(upper.y, int16_t(upperBound.y - p.y))
+                        std::min(upper.x, int16_t(upperBound.x - p.x)),
+                        std::min(upper.y, int16_t(upperBound.y - p.y))
                 };
                 lower = {
-                    std::max(lower.x, int16_t(lowerBound.x - p.x)),
-                    std::max(lower.y, int16_t(lowerBound.y - p.y))
+                        std::max(lower.x, int16_t(lowerBound.x - p.x)),
+                        std::max(lower.y, int16_t(lowerBound.y - p.y))
                 };
             }
             
@@ -134,7 +134,7 @@ namespace tangram::geometry {
         
         for (auto it = this->polygons.rbegin(); it != this->polygons.rend(); ++it) {
             Polygon &p = *it;
-    
+            
             p.update(event, engine);
             if (!first) {
                 // Moving the Shape
@@ -158,7 +158,7 @@ namespace tangram::geometry {
                     flag = true;
                     p.translate(geometry::Point16(-1, 0));
                 }
-        
+                
                 // Rotating the shape
                 if (p.isRightHeld()) {
                     flag = true;
@@ -175,7 +175,7 @@ namespace tangram::geometry {
                     p.rotate(Triangle::ANGLE_STEP);
                 }
             }
-        
+            
             if (flag) { // In case of overlapping polygons, update only the one above
                 first = true;
             }

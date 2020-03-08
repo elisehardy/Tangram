@@ -21,7 +21,7 @@ namespace tangram::gui {
     /**
      * Abstract class used to represent a Button.
      */
-    class ButtonAbstract : public game::Updatable, public Drawable {
+    class ButtonAbstract : public Drawable {
         protected:
             const int16_t x; /**< X coordinate of the north-west corner. */
             const int16_t y; /**< Y coordinate of the north-west corner. */

@@ -13,13 +13,15 @@
 
 #include <MLV/MLV_text.h>
 
+#include <tangram/game/Updatable.hpp>
+
 
 namespace tangram::gui {
     
     /**
      * Common interface for every Drawable element of the Tangram.
      */
-    class Drawable {
+    class Drawable : public game::Updatable {
         public:
             
             /**

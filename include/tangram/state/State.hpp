@@ -24,7 +24,7 @@ namespace tangram::state {
     /**
      * Common interface for every State of the game.
      */
-    class State : public gui::Drawable, public game::Updatable {
+    class State : public gui::Drawable {
         
         protected:
             bool initialized = false;

@@ -21,7 +21,7 @@ namespace tangram::gui {
     /**
      * Represent a element with text fading over time.
      */
-    class FadingText : public gui::Drawable, public game::Updatable {
+    class FadingText : public gui::Drawable {
         private:
             const std::string text;
             const int16_t x;

@@ -36,7 +36,7 @@ namespace tangram::state {
             std::vector<std::shared_ptr<gui::Drawable>> drawables = {};
             geometry::Shape player = geometry::Shape();
             geometry::Shape goal = geometry::Shape();
-            geometry::Polygon shadow;
+            geometry::Shape shadow = geometry::Shape();
             bool success = false;
             std::string title;
             

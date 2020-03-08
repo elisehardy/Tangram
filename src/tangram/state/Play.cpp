@@ -71,7 +71,7 @@ namespace tangram::state {
     Play *Play::loadShape(const std::string &path) {
         this->title = fs::path(path).stem();
         this->goal = geometry::Shape::load(path);
-        this->shadow = this->goal.getRandomPolygon();
+        this->shadow = goal;
         this->shadow.setColor(MLV_COLOR_GREY10);
         this->cleanup();
         this->init();

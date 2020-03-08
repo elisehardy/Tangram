@@ -22,7 +22,7 @@ namespace tangram::geometry {
     /**
      * Represent a Shape composed of multiple Polygon.
      */
-    class Shape : public gui::Drawable, public game::Updatable {
+    class Shape : public gui::Drawable {
         
         private:
             std::vector<Polygon> polygons = {};

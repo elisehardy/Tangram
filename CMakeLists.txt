@@ -28,7 +28,7 @@ TARGET_LINK_LIBRARIES(${TARGET_NAME} PUBLIC PkgConfig::MLV stdc++fs)
 TARGET_COMPILE_OPTIONS(
     ${TARGET_NAME} PRIVATE
     -g
-    -O3
+    -O2
     -std=c++17
 )
 
