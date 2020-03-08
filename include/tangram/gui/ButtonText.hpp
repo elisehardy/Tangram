@@ -52,7 +52,7 @@ namespace tangram::gui {
             
             ~ButtonText() override;
             
-            void draw() const override;
+            void draw() const final;
     };
 }
 

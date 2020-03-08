@@ -152,7 +152,7 @@ namespace tangram::geometry {
         }
         
         std::for_each(
-                this->triangles.begin(), this->triangles.end(),
+                this->triangles.cbegin(), this->triangles.cend(),
                 [this, color](const Triangle &t) { t.rotate(this->angle, this->center).draw(color); }
         );
     }

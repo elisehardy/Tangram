@@ -38,7 +38,7 @@ namespace tangram::gui {
                        std::function<void(int16_t, int16_t, int16_t, int16_t)> cdraw,
                        const std::function<bool(game::Engine &)> &execute);
             
-            void draw() const override;
+            void draw() const final;
     };
 }
 

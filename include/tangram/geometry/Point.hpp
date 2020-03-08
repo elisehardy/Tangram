@@ -41,7 +41,7 @@ namespace tangram::geometry {
             Point(T x, T y);
             
             template<typename U>
-            Point<T>(const Point<U> &p);
+            explicit Point<T>(const Point<U> &p);
             
             
             ///////////////////////////// OPERATORS ////////////////////////////
@@ -52,7 +52,7 @@ namespace tangram::geometry {
             T &operator[](int i);
             
             bool operator==(const Point<T> &other) const;
-            
+        
             Point<T> operator+(const Point<T> &other) const;
             
             Point<T> operator-(const Point<T> &other) const;
